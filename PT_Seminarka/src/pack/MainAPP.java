@@ -19,7 +19,7 @@ public class MainAPP extends JFrame {
 	static Scanner sc = new Scanner (System.in);
 	
 	public static void main(String[] args) {
-		MainAPP frame = new MainAPP();
+		final MainAPP frame = new MainAPP();
 		frame.setTitle("Postapokalipse");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.add(drawarea);
@@ -30,11 +30,13 @@ public class MainAPP extends JFrame {
 		JButton tlacitkoSave = new JButton ("save");
 		JButton tlacitkoLoad = new JButton ("load");
 		JButton tlacitkoNew = new JButton ("nova mapa");
-		JButton tlacitkoStart = new JButton ("start simulace");
+		JButton tlacitkoStart = new JButton ("start");
 		JButton tlacitkoExit = new JButton ("exit");
+		JButton tlacitkoNewCiti = new JButton ("nove mesto");
 		
 		tlacitka.add(tlacitkoStart);
 		tlacitka.add(tlacitkoNew);
+		tlacitka.add(tlacitkoNewCiti);
 		tlacitka.add(tlacitkoSave);
 		tlacitka.add(tlacitkoLoad);
 		tlacitka.add(tlacitkoExit);
@@ -47,6 +49,18 @@ public class MainAPP extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent arg0)
 			{
+				drawarea = new Mapa (500,500);
+				frame.repaint();
+			}
+		});
+		
+		//tlacitko na vytvareni noveho mesta
+		tlacitkoNewCiti.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent arg0)
+			{
+				
 				
 			}
 		});
@@ -62,6 +76,18 @@ public class MainAPP extends JFrame {
 				cteni.vystupMapa(Mapa.poleMest, Mapa.poleLetist, vystup);
 			}
 		});
+		
+		//tlacitko na nacitani mapy - poloha mest a letist
+				tlacitkoLoad.addActionListener(new ActionListener()
+				{
+					@Override
+					public void actionPerformed(ActionEvent arg0)
+					{
+						//vyskoci popup okno kde napisu jmeno vystupniho souboru
+						String vstup = JOptionPane.showInputDialog(parent,"Jmeno vstupniho souboru",null);
+						cteni.vstupMapa(vstup);
+					}
+				});
 		
 		//tlacitko ukoncujici program
 		tlacitkoExit.addActionListener(new ActionListener()

@@ -39,7 +39,7 @@ public class Mapa extends JPanel {
 	 */
 	public void paint (Graphics g)
 	{
-		super.paint(g);
+		//super.paint(g);
 		Graphics2D g2 = (Graphics2D) g;
 		kresliMapu(g2, new Rectangle(0, 0, width, height));
 	}
@@ -197,4 +197,5 @@ public class Mapa extends JPanel {
 		}
 		return false;
 	}
+
 }
