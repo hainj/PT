@@ -51,7 +51,7 @@ public class cteni {
 		FileInputStream stream;
 		try {
 			stream = new FileInputStream(new File(vstup));
-		
+		int x =50;
 		BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
 		 reader.readLine();
 		reader.close();
