@@ -11,13 +11,6 @@ public class Mesto {
 			this.X = x;
 			this.Y = y;
 		}
-		
-		public Mesto (int x, int y, int obyvatel)
-		{
-			this.X = x;
-			this.Y = y;
-			this.obyvatel = obyvatel;
-		}
 
 		public int getObyvatel() {
 			return obyvatel;

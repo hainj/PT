@@ -12,7 +12,7 @@ import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 
 public class cteni {
-/*
+/**
  * Vypise mesta a letiste do souboru
  */
 	public static void vystupMapa(ArrayList<Mesto> poleMest, Letiste let[], String vystup) {
