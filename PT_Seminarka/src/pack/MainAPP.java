@@ -78,16 +78,16 @@ public class MainAPP extends JFrame {
 		});
 		
 		//tlacitko na nacitani mapy - poloha mest a letist
-				tlacitkoLoad.addActionListener(new ActionListener()
-				{
-					@Override
-					public void actionPerformed(ActionEvent arg0)
-					{
-						//vyskoci popup okno kde napisu jmeno vystupniho souboru
-						String vstup = JOptionPane.showInputDialog(parent,"Jmeno vstupniho souboru",null);
-						cteni.vstupMapa(vstup);
-					}
-				});
+		tlacitkoLoad.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent arg0)
+			{
+				//vyskoci popup okno kde napisu jmeno vystupniho souboru
+				String vstup = JOptionPane.showInputDialog(parent,"Jmeno vstupniho souboru",null);
+				cteni.vstupMapa(vstup);
+			}
+		});
 		
 		//tlacitko ukoncujici program
 		tlacitkoExit.addActionListener(new ActionListener()
