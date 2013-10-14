@@ -73,7 +73,8 @@ public class MainAPP extends JFrame {
 			{
 				//vyskoci popup okno kde napisu jmeno vystupniho souboru
 				String vystup = JOptionPane.showInputDialog(parent,"Jmeno vystupniho souboru",null);
-				cteni.vystupMapa(Mapa.poleMest, Mapa.poleLetist, vystup);
+				if (vystup == null) JOptionPane.showMessageDialog(parent, "Mapa se neulozila");
+				else cteni.vystupMapa(Mapa.poleMest, Mapa.poleLetist, vystup);
 			}
 		});
 		
@@ -85,7 +86,8 @@ public class MainAPP extends JFrame {
 			{
 				//vyskoci popup okno kde napisu jmeno vystupniho souboru
 				String vstup = JOptionPane.showInputDialog(parent,"Jmeno vstupniho souboru",null);
-				cteni.vstupMapa(vstup);
+				if (vstup == null) JOptionPane.showMessageDialog(parent, "Mapa se nenacetla");
+				else cteni.vstupMapa(vstup);				
 			}
 		});
 		
