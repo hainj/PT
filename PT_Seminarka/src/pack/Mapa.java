@@ -63,7 +63,7 @@ public class Mapa extends JPanel {
 		
 		g2.setColor(Color.BLACK);
 		//kresleni mest
-		for(int i = 0; i<3000; i++)
+		for(int i = 0; i<poleMest.size()-1; i++)
 		{
 			g2.fillRect(poleMest.get(i).getX(), poleMest.get(i).getY(), 2, 2);
 		}
@@ -107,8 +107,8 @@ public class Mapa extends JPanel {
 	{
 		int x = generujSour();
 		int y = generujSour();
-		int stredniHodnota = 5000; //stredni hodnota pro vypocet poctu obyvatel
-		int rozptyl = 1300; //nahodne zvoleny rozptyl tak aby nevznikala mesta se zapornym poctem obyv
+		int stredniHodnota = 6000; //stredni hodnota pro vypocet poctu obyvatel
+		int rozptyl = 1550; //nahodne zvoleny rozptyl tak aby nevznikala mesta se zapornym poctem obyv
 		int obyv = 0;
 		
 		int obyvCelkem = 0; //kontrolni promenna  - soucet obyvatel vsech mest

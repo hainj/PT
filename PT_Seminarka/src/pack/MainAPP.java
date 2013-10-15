@@ -49,7 +49,9 @@ public class MainAPP extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent arg0)
 			{
-				drawarea = new Mapa (500,500);
+				Mapa.poleMest.clear();
+				drawarea = new Mapa (500 , 500);
+				drawarea.repaint();
 				frame.repaint();
 			}
 		});
@@ -60,7 +62,25 @@ public class MainAPP extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent arg0)
 			{
+				int x = 0;
+				int y = 0;
+				int index = Mapa.poleMest.size()-1;
+				do
+				{
+					x = Mapa.generujSour();
+					y = Mapa.generujSour();
+				}while(Mapa.porovnejMesta (x,y,Mapa.poleMest.size()) == true);
+				Mapa.poleMest.add(new Mesto(x,y));
 				
+				int obyv = (int) (6000 + 1500 * Mapa.r.nextGaussian());
+				Mapa.poleMest.get(index).setObyvatel(obyv);
+				
+				drawarea.repaint();
+				frame.repaint();
+				
+				System.out.println("nove mesto: "+ Mapa.poleMest.get(index).getX() +" "
+						+ Mapa.poleMest.get(index).getY() + " "
+						+ Mapa.poleMest.get(index).getObyvatel());
 				
 			}
 		});
