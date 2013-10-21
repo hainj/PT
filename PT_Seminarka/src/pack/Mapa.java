@@ -39,7 +39,7 @@ public class Mapa extends JPanel {
 	 */
 	public void paint (Graphics g)
 	{
-		//super.paint(g);
+		super.paint(g);
 		Graphics2D g2 = (Graphics2D) g;
 		kresliMapu(g2, new Rectangle(0, 0, width, height));
 	}
@@ -107,8 +107,8 @@ public class Mapa extends JPanel {
 	{
 		int x = generujSour();
 		int y = generujSour();
-		int stredniHodnota = 6000; //stredni hodnota pro vypocet poctu obyvatel
-		int rozptyl = 1550; //nahodne zvoleny rozptyl tak aby nevznikala mesta se zapornym poctem obyv
+		int stredniHodnota = 5400; //stredni hodnota pro vypocet poctu obyvatel
+		int rozptyl = 1600; //nahodne zvoleny rozptyl tak aby nevznikala mesta se zapornym poctem obyv
 		int obyv = 0;
 		
 		int obyvCelkem = 0; //kontrolni promenna  - soucet obyvatel vsech mest
@@ -120,9 +120,10 @@ public class Mapa extends JPanel {
 				x = generujSour();
 				y = generujSour();
 				obyv = (int) (stredniHodnota + rozptyl * r.nextGaussian());//vypocet obyvatel pro mesto
-				poleMest.add(new Mesto(x,y));
-				poleMest.get(i).setObyvatel(obyv);
-				System.out.println(poleMest.get(i).getObyvatel());
+				obyv = Math.abs(obyv);
+				poleMest.add(new Mesto(x,y,obyv));
+				//poleMest.get(i).setObyvatel(obyv);
+				//System.out.println(poleMest.get(i).getObyvatel());
 				obyvCelkem +=poleMest.get(i).getObyvatel();
 			}
 			else
@@ -132,13 +133,17 @@ public class Mapa extends JPanel {
 					x = generujSour();
 					y = generujSour();
 				}while(porovnejMesta (x,y,i) == true);
-				poleMest.add(new Mesto(x,y));
-				
 				obyv = (int) (stredniHodnota + rozptyl * r.nextGaussian());
-				poleMest.get(i).setObyvatel(obyv);
+				obyv = Math.abs(obyv);
+				poleMest.add(new Mesto(x,y,obyv));
+				
+				if(obyv<=2000){
+					System.out.println(obyv);
+				}
+				//poleMest.get(i).setObyvatel(obyv);
 				obyvCelkem +=poleMest.get(i).getObyvatel();	
 			}
-			System.out.println((i+1)+". mesto ma: "+ poleMest.get(i).getObyvatel()+ " obyvatel");
+			//System.out.println((i+1)+". mesto ma: "+ poleMest.get(i).getObyvatel()+ " obyvatel");
 		}
 		System.out.println("Celkem obyv: "+ obyvCelkem);
 	}

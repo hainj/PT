@@ -1,17 +1,42 @@
 package pack;
 
+
+
 public class Mesto {
 
-		public int obyvatel = 0;
-		public int X = 0;
-		public int Y = 0;
-		
-		public Mesto(int x, int y)
-		{
-			this.X = x;
-			this.Y = y;
-		}
+		private int obyvatel = 0;
+	
 
+		private int x = 0;
+		private int y = 0;
+		private Mesto[]sousedi;
+		
+	
+		public Mesto(int x, int y, int obyvatel)
+		{
+			this.x = x;
+			this.y = y;
+			this.obyvatel = obyvatel;
+		}
+		
+		
+		public Mesto(int obyvatel, int x, int y, Mesto[] sousedi) {
+			super();
+			this.obyvatel = obyvatel;
+			this.x = x;
+			this.y = y;
+			this.sousedi = sousedi;
+		}
+		
+		
+		public Mesto[] getSousedi() {
+			return sousedi;
+		}
+		
+		public void setSousedi(Mesto[] sousedi) {
+			this.sousedi = sousedi;
+		}
+		
 		public int getObyvatel() {
 			return obyvatel;
 		}
@@ -21,19 +46,19 @@ public class Mesto {
 		}
 
 		public int getX() {
-			return X;
+			return x;
 		}
 
 		public void setX(int x) {
-			X = x;
+			this.x = x;
 		}
 
 		public int getY() {
-			return Y;
+			return y;
 		}
 
 		public void setY(int y) {
-			Y = y;
+			this.x = y;
 		}
 		
 		

@@ -2,30 +2,30 @@ package pack;
 
 public class Letiste {
 
-	public int X = 0;
-	public int Y = 0;
-	public int jidlo = 0;
+	private int x = 0;
+	private int y = 0;
+	private int jidlo = 0;
 	
 	public Letiste(int x, int y) {
-		super();
-		X = x;
-		Y = y;
+		
+		this.x = x;
+		this.y = y;
 	}
 
 	public int getX() {
-		return X;
+		return x;
 	}
 
 	public void setX(int x) {
-		X = x;
+		this.x = x;
 	}
 
 	public int getY() {
-		return Y;
+		return y;
 	}
 
 	public void setY(int y) {
-		Y = y;
+		this.y = y;
 	}
 
 	public int getJidlo() {
