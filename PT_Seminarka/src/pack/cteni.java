@@ -47,8 +47,6 @@ public class cteni {
 	static void vstupMapa(File f) {
 		// TODO Auto-generated method stub
 
-
-
 		FileInputStream stream;
 		try {
 			stream = new FileInputStream(f);

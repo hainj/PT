@@ -7,6 +7,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 
+import javax.swing.JTextArea;
+
 import java.awt.BorderLayout;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
@@ -18,8 +20,10 @@ public class MainAPP extends JFrame {
 	final static JFrame parent = new JFrame();
 
 	static JPanel tlacitka = new JPanel();
-	static Mapa drawarea = new Mapa (500 , 550); //vytvori drawing areu o velikosti 500 x500
+	static JPanel textBlok = new JPanel();
+	static Mapa drawarea = new Mapa(700,550, false); //vytvori drawing areu o velikosti 500 x500
 	static Scanner sc = new Scanner (System.in);
+	static Random R = new Random();
 
 	public static void main(String[] args) {
 		final MainAPP frame = new MainAPP();
@@ -46,6 +50,13 @@ public class MainAPP extends JFrame {
 
 		frame.add(tlacitka,BorderLayout.SOUTH);
 		tlacitka.repaint();
+		
+		JTextArea dialogOkno = new JTextArea();
+		textBlok.add(dialogOkno);
+		frame.add(textBlok,BorderLayout.EAST);
+		
+		
+		
 		//tlacitko na vytvareni nove mapy
 		tlacitkoNew.addActionListener(new ActionListener()
 		{
@@ -53,7 +64,7 @@ public class MainAPP extends JFrame {
 			public void actionPerformed(ActionEvent arg0)
 			{
 				Mapa.poleMest.clear();
-				drawarea = new Mapa (500 , 500);
+				drawarea = new Mapa (500 , 500, true);
 				drawarea.repaint();
 				frame.repaint();
 			}
@@ -65,27 +76,33 @@ public class MainAPP extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent arg0)
 			{
-				int x = 0;
-				int y = 0;
-				int index = Mapa.poleMest.size()-1;
-				do
+				if(Mapa.poleMest.size()!=0)
 				{
-					x = Mapa.generujSour();
-					y = Mapa.generujSour();
-				}while(Mapa.porovnejMesta (x,y,Mapa.poleMest.size()) == true);
-				int obyv = (int) (5400 + 1600 * Mapa.r.nextGaussian());
-				Mapa.poleMest.add(new Mesto(x,y,obyv));
-
-				
-				Mapa.poleMest.get(index).setObyvatel(obyv);
-
-				drawarea.repaint();
-				frame.repaint();
-
-				System.out.println("nove mesto: "+ Mapa.poleMest.get(index).getX() +" "
-						+ Mapa.poleMest.get(index).getY() + " "
-						+ Mapa.poleMest.get(index).getObyvatel());
-
+					int x = 0;
+					int y = 0;
+					int index = Mapa.poleMest.size()-1;
+					do
+					{
+						x = generujSour();
+						y = generujSour();
+					}while(Generator.porovnejMesta (x,y,index) == true);
+					int obyv = (int) (5400 + 1600 * R.nextGaussian());
+					Mapa.poleMest.add(new Mesto(x,y,obyv));
+	
+					index = Mapa.poleMest.size()-1;
+					Mapa.poleMest.get(index).setObyvatel(obyv);
+	
+					drawarea.repaint();
+					frame.repaint();
+	
+					System.out.println("nove mesto: "+ Mapa.poleMest.get(index).getX() +" "
+							+ Mapa.poleMest.get(index).getY() + " "
+							+ Mapa.poleMest.get(index).getObyvatel());
+				}
+				else
+				{
+					JOptionPane.showMessageDialog(parent, "Neni nactena zadna mapa");
+				}
 			}
 		});
 
@@ -139,6 +156,12 @@ public class MainAPP extends JFrame {
 			}
 		});
 
+	}
+	
+	public static int generujSour ()
+	{
+		int x = R.nextInt(500);
+		return x;
 	}
 
 }
