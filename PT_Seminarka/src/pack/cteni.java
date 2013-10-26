@@ -43,7 +43,10 @@ public class cteni {
 			e.printStackTrace();
 		}
 	}
-
+	/**
+	 * Nacte letiste a mesta ze vstupniho souboru
+	 * @param f vstupni soubor
+	 */
 	static void vstupMapa(File f) {
 		// TODO Auto-generated method stub
 
@@ -52,26 +55,28 @@ public class cteni {
 			stream = new FileInputStream(f);
 			BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
 			String str;
+			Letiste[]letist = new Letiste[5];
 			for(int i = 0; i<5;i++){
 				str = reader.readLine();
-				String[]s = str.split(" ");
-				//System.out.println(str);
-				//for(int j = 0; j<s.length; j++){
-				Mapa.poleLetist[i] = new Letiste(Integer.parseInt(s[0]),Integer.parseInt(s[1]));
 				
-				System.out.println(Integer.parseInt(s[0]));
-				//}
+				String[]s = str.split(" ");
+				
+			
+				letist[i] = new Letiste(Integer.parseInt(s[0]), Integer.parseInt(s[1]));
+				
 
 			}	
+			Mapa.setLetiste(letist);
 			str = reader.readLine();
-			Mapa.poleMest.clear();
+			Mapa.getPoleMest().clear();
 			
-			while(str!= "exit"){
+			while(!str.equalsIgnoreCase("exit")){
+			
 				String[]s = str.split(" ");
-				Mapa.poleMest.add(new Mesto(Integer.parseInt(s[0]),Integer.parseInt(s[1]),Integer.parseInt(s[2])));
-				
+				Mapa.addPoleMest(new Mesto(Integer.parseInt(s[0]),Integer.parseInt(s[1]),Integer.parseInt(s[2])));
+				str = reader.readLine();
 			}
-			reader.close();
+					reader.close();
 			stream.close();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block

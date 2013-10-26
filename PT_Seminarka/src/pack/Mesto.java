@@ -1,5 +1,7 @@
 package pack;
 
+import java.util.ArrayList;
+
 
 
 public class Mesto {
@@ -9,9 +11,14 @@ public class Mesto {
 
 		private int x = 0;
 		private int y = 0;
-		private Mesto[]sousedi;
+		private ArrayList<Mesto> sousedi;
 		
-	
+	/**
+	 * Konstruktor mest pro jeho polohu a pocet obyvatel
+	 * @param x x-ova souradnice
+	 * @param y y-ova souradnice
+	 * @param obyvatel pocet obyv
+	 */
 		public Mesto(int x, int y, int obyvatel)
 		{
 			this.x = x;
@@ -19,8 +26,14 @@ public class Mesto {
 			this.obyvatel = obyvatel;
 		}
 		
-		
-		public Mesto(int obyvatel, int x, int y, Mesto[] sousedi) {
+		/**
+		 *  Konstruktor mesta s polohou, poctem obyvatel a jeho sousedy
+		 * @param x x-ova souradnice
+		 * @param y y-ova souradnice
+		 * @param obyvatel pocet obyv
+		 * @param sousedi pole sousedu mesta
+		 */
+		public Mesto( int x, int y, int obyvatel,ArrayList<Mesto> sousedi) {
 			super();
 			this.obyvatel = obyvatel;
 			this.x = x;
@@ -29,11 +42,11 @@ public class Mesto {
 		}
 		
 		
-		public Mesto[] getSousedi() {
+		public ArrayList<Mesto> getSousedi() {
 			return sousedi;
 		}
 		
-		public void setSousedi(Mesto[] sousedi) {
+		public void setSousedi(ArrayList<Mesto> sousedi) {
 			this.sousedi = sousedi;
 		}
 		

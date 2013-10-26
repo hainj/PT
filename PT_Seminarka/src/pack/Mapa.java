@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
@@ -11,10 +12,11 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class Mapa extends JPanel {
-	static ArrayList<Mesto>poleMest = new ArrayList<Mesto>();;
+	private static ArrayList<Mesto>poleMest = new ArrayList<Mesto>();;
+	
 	public static int width;
 	public static int height;
-	public static Letiste [] poleLetist;
+	private static Letiste [] poleLetist;
 	static Boolean ovladani = false;
 
 	/**
@@ -30,14 +32,34 @@ public class Mapa extends JPanel {
 		this.height = vyska;
 		this.ovladani = ovladani;
 	}
+	/**
+	 * Vraci pole letist
+	 * @return pole letist
+	 */
+	public static Letiste[] getPoleLetist() {
+		return poleLetist;
+	}
 	
+	/**
+	 * Prida mesto do seznamu poli
+	 * @param mesto
+	 */
+	public static void addPoleMest(Mesto mesto) {
+		poleMest.add(mesto);
+		
+	}
+	
+	public static ArrayList<Mesto> getPoleMest() {
+		return poleMest;
+	}
+
 	public void setMesta(ArrayList<Mesto> poleMest)
 	{
 		this.poleMest = poleMest;
 	}
-	public void setLetiste(Letiste [] poleLetist)
+	public static void setLetiste(Letiste [] poleLetist)
 	{
-		this.poleLetist = poleLetist;
+		Mapa.poleLetist = poleLetist;
 	}
 	
 	/**
@@ -97,7 +119,7 @@ public class Mapa extends JPanel {
 		}
 		else
 		{
-			//cteni.vstupMapa("ZakladniMapa.txt");//////////////TUTO/////////////////
+			cteni.vstupMapa(new File("ZakladniMapa.txt"));
 			
 			//kresleni mest
 			g2.setColor(Color.BLACK);
@@ -112,9 +134,11 @@ public class Mapa extends JPanel {
 			{
 				g2.fillRect(poleLetist[i].getX(), poleLetist[i].getY(), 5, 5);
 			}
+			
 		}
 		
 	}
+
 	
 	/**
 	 * Metoda vytvarejici souradnice pro letiste

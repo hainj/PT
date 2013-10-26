@@ -54,6 +54,7 @@ public class MainAPP extends JFrame {
 		JTextArea dialogOkno = new JTextArea();
 		textBlok.add(dialogOkno);
 		frame.add(textBlok,BorderLayout.EAST);
+		tlacitka.repaint();
 		
 		
 		
@@ -63,7 +64,7 @@ public class MainAPP extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent arg0)
 			{
-				Mapa.poleMest.clear();
+				Mapa.getPoleMest().clear();
 				drawarea = new Mapa (500 , 500, true);
 				drawarea.repaint();
 				frame.repaint();
@@ -76,28 +77,28 @@ public class MainAPP extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent arg0)
 			{
-				if(Mapa.poleMest.size()!=0)
+				if(Mapa.getPoleMest().size()!=0)
 				{
 					int x = 0;
 					int y = 0;
-					int index = Mapa.poleMest.size()-1;
+					int index = Mapa.getPoleMest().size()-1;
 					do
 					{
 						x = generujSour();
 						y = generujSour();
 					}while(Generator.porovnejMesta (x,y,index) == true);
 					int obyv = (int) (5400 + 1600 * R.nextGaussian());
-					Mapa.poleMest.add(new Mesto(x,y,obyv));
+					Mapa.getPoleMest().add(new Mesto(x,y,obyv));
 	
-					index = Mapa.poleMest.size()-1;
-					Mapa.poleMest.get(index).setObyvatel(obyv);
+					index = Mapa.getPoleMest().size()-1;
+					Mapa.getPoleMest().get(index).setObyvatel(obyv);
 	
 					drawarea.repaint();
 					frame.repaint();
 	
-					System.out.println("nove mesto: "+ Mapa.poleMest.get(index).getX() +" "
-							+ Mapa.poleMest.get(index).getY() + " "
-							+ Mapa.poleMest.get(index).getObyvatel());
+					System.out.println("nove mesto: "+ Mapa.getPoleMest().get(index).getX() +" "
+							+ Mapa.getPoleMest().get(index).getY() + " "
+							+ Mapa.getPoleMest().get(index).getObyvatel());
 				}
 				else
 				{
@@ -118,7 +119,7 @@ public class MainAPP extends JFrame {
 				filec.showSaveDialog(null);
 				File souborF = filec.getSelectedFile(); 
 				if(souborF != null){ 
-				 cteni.vystupMapa(Mapa.poleMest, Mapa.poleLetist, souborF);
+				 cteni.vystupMapa(Mapa.getPoleMest(), Mapa.getPoleLetist(), souborF);
 			}
 			}
 			});
@@ -142,7 +143,10 @@ public class MainAPP extends JFrame {
 					System.out.println(souborF.getAbsolutePath());
 					cteni.vstupMapa(souborF);
 				}
-
+				Mapa.getPoleMest().clear();
+				drawarea = new Mapa (500 , 500, true);
+				drawarea.repaint();
+				frame.repaint();
 			}
 		});
 

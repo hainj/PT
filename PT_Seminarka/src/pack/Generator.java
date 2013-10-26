@@ -7,18 +7,18 @@ public class Generator {
 	public static ArrayList<Mesto>poleMest = new ArrayList<Mesto>();
 	public static Letiste [] poleLetist = new Letiste [5];  //neni treba arraylist, pocet letist se nemeni
 	static Random R = new Random();
-	
+
 	public Generator()
 	{
 		generujLetiste();
 		generujMesta();
 	}
-	
+
 	public static void generujLetiste ()
 	{
 		int x = 0;
 		int y = 0;
-		
+
 		x = generujSour();
 		y = generujSour();
 		poleLetist[0]= new Letiste(x,y);
@@ -31,9 +31,9 @@ public class Generator {
 				poleLetist[i]= new Letiste(x,y);
 			}
 		}
-		
+
 	}
-	
+
 	/**
 	 * Metoda vytvarejici souradnice pro mesta
 	 * Vytvorena mesta ulozi do ArrayListu
@@ -45,7 +45,7 @@ public class Generator {
 		int stredniHodnota = 5400; //stredni hodnota pro vypocet poctu obyvatel
 		int rozptyl = 1600; //nahodne zvoleny rozptyl tak aby nevznikala mesta se zapornym poctem obyv
 		int obyv = 0;
-		
+
 		int obyvCelkem = 0; //kontrolni promenna  - soucet obyvatel vsech mest
 
 		for(int i = 0; i <3000; i++)
@@ -71,7 +71,7 @@ public class Generator {
 				obyv = (int) (stredniHodnota + rozptyl * R.nextGaussian());
 				obyv = Math.abs(obyv);
 				poleMest.add(new Mesto(x,y,obyv));
-				
+
 				if(obyv<=2000){
 					System.out.println(obyv);
 				}
@@ -93,7 +93,7 @@ public class Generator {
 		int x = R.nextInt(500);
 		return x;
 	}
-	
+
 	/**
 	 * Metoda pro zajisteni podminky ze letiste budou mit min. vzdalenost 100km od sebe
 	 * @param x - souradnice
@@ -106,13 +106,16 @@ public class Generator {
 		double vysledek = 0.0;
 		int stredX = Math.abs(250 - x) ;
 		int stredY = Math.abs(250 - y) ;
+		
 		for (int i = 0; i < j; i++)
 		{
 			vysledek = Math.sqrt(Math.pow(x - poleLetist[i].getX(), 2)+ Math.pow(y - poleLetist[i].getY(), 2));
 			if (vysledek < 150.0 || (stredX < 25 && stredY < 25)) return true;
 		}
+		
 		return false;
 	}
+
 	
 	/**
 	 * Metoda pro zajisteni podminky ze mesta budou mit min. vzdalenost 5km od sebe
@@ -126,17 +129,32 @@ public class Generator {
 		double vysledekMesto = 0.0;
 		double vysledekLetiste = 0.0;
 		for (int i = 0; i < 5; i++)//vzdalenost mest a letist je take min. 5km
+			
 		{
 			vysledekLetiste = Math.sqrt(Math.pow(x - poleLetist[i].getX(), 2)+ Math.pow(y - poleLetist[i].getY(), 2));
 			if (vysledekLetiste < 5.0) return true;
 		}
+		
 		for (int i = 0; i < j; i++)
 		{
 			vysledekMesto = Math.sqrt(Math.pow(x - poleMest.get(i).getX(), 2)+ Math.pow(y - poleMest.get(i).getY(), 2));
 			if (vysledekMesto < 5.0) return true;
 		}
+		
 		return false;
 	}
 
-
+	
+	
+	public static void genSousMest(ArrayList<Mesto> poleMesta){
+		
+		for( int i = 0; i <poleMesta.size(); i++){
+			
+			int maSous = poleMesta.get(i).getSousedi().size();
+			
+			for(int j = 0+maSous; j<10; j++){
+				
+			}
+		}
+	}
 }
