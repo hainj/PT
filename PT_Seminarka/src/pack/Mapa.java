@@ -99,24 +99,11 @@ public class Mapa extends JPanel {
 			this.setLetiste(mapa.poleLetist);
 			this.setMesta(mapa.poleMest);
 			
-			//kresleni mest
-			g2.setColor(Color.BLACK);
-			for(int i = 0; i<poleMest.size()-1; i++)
-			{
-				g2.fillRect(poleMest.get(i).getX(), poleMest.get(i).getY(), 2, 2);
-			}
-			//kresleni letist
-			g2.setColor(Color.RED);
-			
-			for(int i = 0; i<poleLetist.length; i++)
-			{
-				g2.fillRect(poleLetist[i].getX(), poleLetist[i].getY(), 5, 5);
-			}
-			
+			//vykresleni cest
 			g2.setStroke(new BasicStroke(1));
 			g2.setColor(Color.BLUE);
 			
-			for(int i = 0; i <3; i++)
+			for(int i = 0; i <poleMest.size(); i++)
 			{
 				for (int j = 0; j <10; j++)
 				{
@@ -124,6 +111,20 @@ public class Mapa extends JPanel {
 							poleMest.get(i).getSousedi().get(j).getX(), 
 							poleMest.get(i).getSousedi().get(j).getY());
 				}
+			}
+			
+			//kresleni mest
+			g2.setColor(Color.BLACK);
+			for(int i = 0; i<poleMest.size()-1; i++)
+			{
+				g2.fillRect(poleMest.get(i).getX()-1, poleMest.get(i).getY()-1, 3, 3);
+			}
+			//kresleni letist
+			g2.setColor(Color.RED);
+			
+			for(int i = 0; i<poleLetist.length; i++)
+			{
+				g2.fillRect(poleLetist[i].getX()-2, poleLetist[i].getY()-2, 5, 5);
 			}
 		}
 		else

@@ -75,9 +75,9 @@ public class Generator {
 				obyv = Math.abs(obyv);
 				poleMest.add(new Mesto(x,y,obyv));
 
-				if(obyv<=2000){
+				/**if(obyv<=2000){
 					System.out.println(obyv);
-				}
+				}*/
 				//poleMest.get(i).setObyvatel(obyv);
 				obyvCelkem +=poleMest.get(i).getObyvatel();	
 			}
@@ -153,7 +153,7 @@ public class Generator {
 	{
 		ArrayList<Vzdalenost> vzdalenosti = new ArrayList<Vzdalenost>();
 		//poleMesta.size()
-		for( int i = 0; i <3; i++)
+		for( int i = 0; i < poleMesta.size(); i++)
 		{
 
 			//int maSous = poleMesta.get(i).getSousedi().size();
@@ -167,10 +167,10 @@ public class Generator {
 			Collections.sort(vzdalenosti, new Komparator());
 			ArrayList<Mesto> pomoc = new ArrayList<Mesto>();
 
-			for(int l = 0; l < vzdalenosti.size(); l++)
+			/**for(int l = 0; l < vzdalenosti.size(); l++)
 			{
 				System.out.println(i+ ". mesto: "+vzdalenosti.get(l).vzdalenost);
-			}
+			}*/
 
 			for (int k = 1; k <11; k++)
 			{
