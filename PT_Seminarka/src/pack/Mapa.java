@@ -95,13 +95,9 @@ public class Mapa extends JPanel {
 		
 		if(this.ovladani == true)
 		{
-			if(poleMest.size() == 0)
-			{
-				Generator mapa = new Generator();
-				this.setLetiste(mapa.poleLetist);
-				this.setMesta(mapa.poleMest);
-			}
-
+			Generator mapa = new Generator();
+			this.setLetiste(mapa.poleLetist);
+			this.setMesta(mapa.poleMest);
 			
 			//kresleni mest
 			g2.setColor(Color.BLACK);
@@ -115,6 +111,19 @@ public class Mapa extends JPanel {
 			for(int i = 0; i<poleLetist.length; i++)
 			{
 				g2.fillRect(poleLetist[i].getX(), poleLetist[i].getY(), 5, 5);
+			}
+			
+			g2.setStroke(new BasicStroke(1));
+			g2.setColor(Color.BLUE);
+			
+			for(int i = 0; i <3; i++)
+			{
+				for (int j = 0; j <10; j++)
+				{
+					g2.drawLine(poleMest.get(i).getX(), poleMest.get(i).getY(),
+							poleMest.get(i).getSousedi().get(j).getX(), 
+							poleMest.get(i).getSousedi().get(j).getY());
+				}
 			}
 		}
 		else

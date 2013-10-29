@@ -1,6 +1,8 @@
 package pack;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Random;
 
 public class Generator {
@@ -12,6 +14,7 @@ public class Generator {
 	{
 		generujLetiste();
 		generujMesta();
+		genSousMest(poleMest);
 	}
 
 	public static void generujLetiste ()
@@ -106,17 +109,17 @@ public class Generator {
 		double vysledek = 0.0;
 		int stredX = Math.abs(250 - x) ;
 		int stredY = Math.abs(250 - y) ;
-		
+
 		for (int i = 0; i < j; i++)
 		{
 			vysledek = Math.sqrt(Math.pow(x - poleLetist[i].getX(), 2)+ Math.pow(y - poleLetist[i].getY(), 2));
 			if (vysledek < 150.0 || (stredX < 25 && stredY < 25)) return true;
 		}
-		
+
 		return false;
 	}
 
-	
+
 	/**
 	 * Metoda pro zajisteni podminky ze mesta budou mit min. vzdalenost 5km od sebe
 	 * @param x - souradnice
@@ -129,32 +132,53 @@ public class Generator {
 		double vysledekMesto = 0.0;
 		double vysledekLetiste = 0.0;
 		for (int i = 0; i < 5; i++)//vzdalenost mest a letist je take min. 5km
-			
+
 		{
 			vysledekLetiste = Math.sqrt(Math.pow(x - poleLetist[i].getX(), 2)+ Math.pow(y - poleLetist[i].getY(), 2));
 			if (vysledekLetiste < 5.0) return true;
 		}
-		
+
 		for (int i = 0; i < j; i++)
 		{
 			vysledekMesto = Math.sqrt(Math.pow(x - poleMest.get(i).getX(), 2)+ Math.pow(y - poleMest.get(i).getY(), 2));
 			if (vysledekMesto < 5.0) return true;
 		}
-		
+
 		return false;
 	}
 
-	
-	
-	public static void genSousMest(ArrayList<Mesto> poleMesta){
+
+
+	public static void genSousMest(ArrayList<Mesto> poleMesta)
+	{
+		ArrayList<Vzdalenost> vzdalenosti = new ArrayList<Vzdalenost>();
+		//poleMesta.size()
+		for( int i = 0; i <3; i++)
+		{
+
+			//int maSous = poleMesta.get(i).getSousedi().size();
+			for(int j = 0; j<poleMesta.size(); j++)
+			{
 		
-		for( int i = 0; i <poleMesta.size(); i++){
-			
-			int maSous = poleMesta.get(i).getSousedi().size();
-			
-			for(int j = 0+maSous; j<10; j++){
-				
+				double vysledekMesto = Math.sqrt(Math.pow(poleMest.get(i).getX() - poleMest.get(j).getX(), 2)+ 
+						Math.pow(poleMest.get(i).getY() - poleMest.get(j).getY(), 2));
+				vzdalenosti.add(new Vzdalenost (j,vysledekMesto));
 			}
+			Collections.sort(vzdalenosti, new Komparator());
+			ArrayList<Mesto> pomoc = new ArrayList<Mesto>();
+
+			for(int l = 0; l < vzdalenosti.size(); l++)
+			{
+				System.out.println(i+ ". mesto: "+vzdalenosti.get(l).vzdalenost);
+			}
+
+			for (int k = 1; k <11; k++)
+			{
+				pomoc.add(poleMesta.get(vzdalenosti.get(k).index));
+			}
+			poleMesta.get(i).setSousedi(pomoc);
+			vzdalenosti.clear();
 		}
+
 	}
 }
