@@ -13,7 +13,7 @@ import javax.swing.JPanel;
 
 public class Mapa extends JPanel {
 	private static ArrayList<Mesto>poleMest = new ArrayList<Mesto>();;
-	
+
 	public static int width;
 	public static int height;
 	private static Letiste [] poleLetist;
@@ -39,16 +39,27 @@ public class Mapa extends JPanel {
 	public static Letiste[] getPoleLetist() {
 		return poleLetist;
 	}
-	
+
 	/**
 	 * Prida mesto do seznamu poli
 	 * @param mesto
 	 */
 	public static void addPoleMest(Mesto mesto) {
 		poleMest.add(mesto);
-		
+
 	}
-	
+	public static int getIndexMest(Mesto mest){
+
+		for(int i = 0; i<poleMest.size(); i++){
+			if(mest.equals(poleMest.get(i))){
+
+				return i;
+			}
+		}
+
+		return -1;
+
+	}
 	public static ArrayList<Mesto> getPoleMest() {
 		return poleMest;
 	}
@@ -61,7 +72,7 @@ public class Mapa extends JPanel {
 	{
 		Mapa.poleLetist = poleLetist;
 	}
-	
+
 	/**
 	 * zakladni kreslici metoda
 	 */
@@ -84,26 +95,27 @@ public class Mapa extends JPanel {
 		g2.fillRect(0, 0, width, height);
 
 		g2.setStroke(new BasicStroke(2));
-		
+
 		//vykresleni centralni oblasti
 		g2.setColor(Color.GREEN);
 		g2.drawRect(225, 225, 50, 50);
-		
+
 		g2.setColor(Color.BLACK);
-		
+
 		g2.drawRect(502, 0, 700, 550);
-		
+
 		if(this.ovladani == true)
 		{
-			Generator mapa = new Generator();
-			this.setLetiste(mapa.poleLetist);
-			this.setMesta(mapa.poleMest);
-			
+			if(poleMest.size()==0){
+				Generator mapa = new Generator();
+				this.setLetiste(mapa.poleLetist);
+				this.setMesta(mapa.poleMest);
+			}
 			//vykresleni cest
 			g2.setStroke(new BasicStroke(1));
 			g2.setColor(Color.BLUE);
-			
-			for(int i = 0; i <poleMest.size(); i++)
+
+			for(int i = 0; i <3000; i++)
 			{
 				for (int j = 0; j <10; j++)
 				{
@@ -112,7 +124,7 @@ public class Mapa extends JPanel {
 							poleMest.get(i).getSousedi().get(j).getY());
 				}
 			}
-			
+
 			//kresleni mest
 			g2.setColor(Color.BLACK);
 			for(int i = 0; i<poleMest.size()-1; i++)
@@ -121,7 +133,7 @@ public class Mapa extends JPanel {
 			}
 			//kresleni letist
 			g2.setColor(Color.RED);
-			
+
 			for(int i = 0; i<poleLetist.length; i++)
 			{
 				g2.fillRect(poleLetist[i].getX()-2, poleLetist[i].getY()-2, 5, 5);
@@ -129,8 +141,8 @@ public class Mapa extends JPanel {
 		}
 		else
 		{
-			cteni.vstupMapa(new File("ZakladniMapa.txt"));
-			
+			/*cteni.vstupMapa(new File("ZakladniMapa.txt"));
+
 			//kresleni mest
 			g2.setColor(Color.BLACK);
 			for(int i = 0; i<poleMest.size()-1; i++)
@@ -139,20 +151,20 @@ public class Mapa extends JPanel {
 			}
 			//kresleni letist
 			g2.setColor(Color.RED);
-			
+
 			for(int i = 0; i<poleLetist.length; i++)
 			{
 				g2.fillRect(poleLetist[i].getX(), poleLetist[i].getY(), 5, 5);
 			}
-			
+			 */
 		}
-		
+
 	}
 
-	
+
 	/**
 	 * Metoda vytvarejici souradnice pro letiste
 	 * Vytvorene letiste rovnou uklada do pole
 	 */
-	
+
 }

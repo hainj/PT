@@ -93,12 +93,12 @@ public class MainAPP extends JFrame {
 					index = Mapa.getPoleMest().size()-1;
 					Mapa.getPoleMest().get(index).setObyvatel(obyv);
 	
-					drawarea.repaint();
+					//drawarea.repaint();
 					frame.repaint();
 	
-					System.out.println("nove mesto: "+ Mapa.getPoleMest().get(index).getX() +" "
+					/*System.out.println("nove mesto: "+ Mapa.getPoleMest().get(index).getX() +" "
 							+ Mapa.getPoleMest().get(index).getY() + " "
-							+ Mapa.getPoleMest().get(index).getObyvatel());
+							+ Mapa.getPoleMest().get(index).getObyvatel());*/
 				}
 				else
 				{

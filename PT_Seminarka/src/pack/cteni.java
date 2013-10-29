@@ -29,7 +29,21 @@ public class cteni {
 				writer.newLine();
 			}
 			for(int i = 0; i<poleMest.size();i++){
-				writer.append(poleMest.get(i).getX() + " " +  poleMest.get(i).getY() + " " + poleMest.get(i).getObyvatel());
+				Mesto mesto = poleMest.get(i);
+				
+				writer.append(mesto.getX() + " " +  mesto.getY() + " " + mesto.getObyvatel());
+				writer.newLine();
+			}
+			writer.append("sousedi");
+			writer.newLine();
+			for(int i = 0; i<poleMest.size();i++){
+				Mesto mesto = poleMest.get(i);
+				String str = "";
+				for (int j = 0; j<mesto.getSousedi().size();j++){
+					str = str + Mapa.getIndexMest(mesto.getSousedi().get(j)) + " ";	
+					
+				}
+				writer.append(str);
 				writer.newLine();
 			}
 			writer.append("exit");
@@ -58,25 +72,41 @@ public class cteni {
 			Letiste[]letist = new Letiste[5];
 			for(int i = 0; i<5;i++){
 				str = reader.readLine();
-				
+
 				String[]s = str.split(" ");
-				
-			
+
+
 				letist[i] = new Letiste(Integer.parseInt(s[0]), Integer.parseInt(s[1]));
-				
+
 
 			}	
 			Mapa.setLetiste(letist);
 			str = reader.readLine();
 			Mapa.getPoleMest().clear();
-			
-			while(!str.equalsIgnoreCase("exit")){
-			
+
+			while(!str.equalsIgnoreCase("sousedi")){
+
 				String[]s = str.split(" ");
+				
 				Mapa.addPoleMest(new Mesto(Integer.parseInt(s[0]),Integer.parseInt(s[1]),Integer.parseInt(s[2])));
 				str = reader.readLine();
 			}
-					reader.close();
+			str = reader.readLine();
+			int z = 0;
+			while(!str.equalsIgnoreCase("exit")){
+				ArrayList<Mesto> pomoc = new ArrayList<Mesto>();
+				String[]s = str.split(" ");
+				for (int i = 0; i<s.length; i++){
+					int k = Integer.parseInt(s[i]);
+					pomoc.add(Mapa.getPoleMest().get(k));
+					
+				}
+				Mapa.getPoleMest().get(z).setSousedi(pomoc);
+				str = reader.readLine();
+				z++;
+			}
+			
+			reader.close();
 			stream.close();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
