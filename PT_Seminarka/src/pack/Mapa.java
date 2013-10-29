@@ -111,7 +111,7 @@ public class Mapa extends JPanel {
 				this.setLetiste(mapa.poleLetist);
 				this.setMesta(mapa.poleMest);
 			}
-			//vykresleni cest
+			//vykresleni cest mezi mesty
 			g2.setStroke(new BasicStroke(1));
 			g2.setColor(Color.BLUE);
 
@@ -125,6 +125,20 @@ public class Mapa extends JPanel {
 				}
 			}
 
+			//kresleni cest z letist
+			g2.setStroke(new BasicStroke(1));
+			g2.setColor(Color.RED);
+
+			for(int i = 0; i <poleLetist.length; i++)
+			{
+				for (int j = 0; j <60; j++)
+				{
+					g2.drawLine(poleLetist[i].getX(), poleLetist[i].getY(),
+							poleLetist[i].getSousedi().get(j).getX(), 
+							poleLetist[i].getSousedi().get(j).getY());
+				}
+			}
+			
 			//kresleni mest
 			g2.setColor(Color.BLACK);
 			for(int i = 0; i<poleMest.size()-1; i++)
