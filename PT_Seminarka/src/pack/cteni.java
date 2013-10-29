@@ -31,15 +31,15 @@ public class cteni {
 			for(int i = 0; i<poleMest.size();i++){
 				Mesto mesto = poleMest.get(i);
 				
-				writer.append(mesto.getX() + " " +  mesto.getY() + " " + mesto.getObyvatel());
+				writer.append(mesto.getX() + " " +  mesto.getY() + " " + mesto.getObyvatel() + " " + mesto.getHeliport());
 				writer.newLine();
 			}
 			writer.append("sousedi");
 			writer.newLine();
-			for(int i = 0; i<poleMest.size();i++){
+			for(int i =  Generator.indexMestPod2+1; i<poleMest.size();i++){
 				Mesto mesto = poleMest.get(i);
 				String str = "";
-				for (int j = 0; j<mesto.getSousedi().size();j++){
+				for (int j =0; j<mesto.getSousedi().size();j++){
 					str = str + Mapa.getIndexMest(mesto.getSousedi().get(j)) + " ";	
 					
 				}
@@ -88,13 +88,15 @@ public class cteni {
 
 				String[]s = str.split(" ");
 				
-				Mapa.addPoleMest(new Mesto(Integer.parseInt(s[0]),Integer.parseInt(s[1]),Integer.parseInt(s[2])));
+				Mapa.addPoleMest(new Mesto(Integer.parseInt(s[0]),Integer.parseInt(s[1]),Integer.parseInt(s[2]),Boolean.parseBoolean(s[3])));
 				str = reader.readLine();
 			}
+		
 			str = reader.readLine();
-			int z = 0;
+			int z = Generator.zjistiPod2(Mapa.getPoleMest())+1;
 			while(!str.equalsIgnoreCase("exit")){
 				ArrayList<Mesto> pomoc = new ArrayList<Mesto>();
+				
 				String[]s = str.split(" ");
 				for (int i = 0; i<s.length; i++){
 					int k = Integer.parseInt(s[i]);
@@ -103,6 +105,8 @@ public class cteni {
 				}
 				Mapa.getPoleMest().get(z).setSousedi(pomoc);
 				str = reader.readLine();
+				
+				System.out.println(z+". :"+Mapa.getPoleMest().get(z).getSousedi().get(0).getObyvatel());
 				z++;
 			}
 			

@@ -88,7 +88,7 @@ public class MainAPP extends JFrame {
 						y = generujSour();
 					}while(Generator.porovnejMesta (x,y,index) == true);
 					int obyv = (int) (5400 + 1600 * R.nextGaussian());
-					Mapa.getPoleMest().add(new Mesto(x,y,obyv));
+					Mapa.getPoleMest().add(new Mesto(x,y,obyv,true));
 	
 					index = Mapa.getPoleMest().size()-1;
 					Mapa.getPoleMest().get(index).setObyvatel(obyv);
@@ -135,6 +135,7 @@ public class MainAPP extends JFrame {
 				if (vstup == null) JOptionPane.showMessageDialog(parent, "Mapa se nenacetla");
 				else 
 					cteni.vstupMapa();*/
+				Mapa.getPoleMest().clear();
 				JFileChooser filec = new JFileChooser(); 
 
 				filec.showOpenDialog(null);
@@ -143,7 +144,7 @@ public class MainAPP extends JFrame {
 					System.out.println(souborF.getAbsolutePath());
 					cteni.vstupMapa(souborF);
 				}
-				Mapa.getPoleMest().clear();
+				
 				drawarea = new Mapa (500 , 500, true);
 				drawarea.repaint();
 				frame.repaint();

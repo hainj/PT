@@ -12,8 +12,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class Mapa extends JPanel {
+	
 	private static ArrayList<Mesto>poleMest = new ArrayList<Mesto>();;
-
 	public static int width;
 	public static int height;
 	private static Letiste [] poleLetist;
@@ -46,8 +46,8 @@ public class Mapa extends JPanel {
 	 */
 	public static void addPoleMest(Mesto mesto) {
 		poleMest.add(mesto);
-
 	}
+	
 	public static int getIndexMest(Mesto mest){
 
 		for(int i = 0; i<poleMest.size(); i++){
@@ -107,15 +107,17 @@ public class Mapa extends JPanel {
 		if(this.ovladani == true)
 		{
 			if(poleMest.size()==0){
-				Generator mapa = new Generator();
-				this.setLetiste(mapa.poleLetist);
-				this.setMesta(mapa.poleMest);
+				Generator gen = new Generator();
+				this.setLetiste(gen.poleLetist);
+				this.setMesta(gen.poleMest);
 			}
 			//vykresleni cest mezi mesty
 			g2.setStroke(new BasicStroke(1));
 			g2.setColor(Color.BLUE);
 
-			for(int i = 0; i <3000; i++)
+			int indexMestPod2 = Generator.zjistiPod2(poleMest);
+			
+			for(int i = indexMestPod2+1; i <3000; i++)
 			{
 				for (int j = 0; j <10; j++)
 				{
