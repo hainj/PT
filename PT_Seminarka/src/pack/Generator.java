@@ -11,7 +11,7 @@ import java.util.Random;
 
 public class Generator {
 	public static ArrayList<Mesto>poleMest = new ArrayList<Mesto>();
-	public static Letiste [] poleLetist = new Letiste [5];  //neni treba arraylist, pocet letist se nemeni
+	public static ArrayList<Letiste>poleLetist = new ArrayList<Letiste>();
 	static Random R = new Random();
 	public static int indexMestPod2 = 0;
 
@@ -30,14 +30,14 @@ public class Generator {
 
 		x = generujSour();
 		y = generujSour();
-		poleLetist[0]= new Letiste(x,y);
-		for(int i = 1; i <poleLetist.length; i++)
+		poleLetist.add(new Letiste(x,y));
+		for(int i = 1; i <5; i++)
 		{
 			while(porovnejLetiste (x,y,i)== true)
 			{
 				x = generujSour();
 				y = generujSour();
-				poleLetist[i]= new Letiste(x,y);
+				poleLetist.add(new Letiste(x,y));
 			}
 		}
 
@@ -135,7 +135,7 @@ public class Generator {
 
 		for (int i = 0; i < j; i++)
 		{
-			vysledek = Math.sqrt(Math.pow(x - poleLetist[i].getX(), 2)+ Math.pow(y - poleLetist[i].getY(), 2));
+			vysledek = Math.sqrt(Math.pow(x - poleLetist.get(i).getX(), 2)+ Math.pow(y - poleLetist.get(i).getY(), 2));
 			if (vysledek < 150.0 || (stredX < 25 && stredY < 25)) return true;
 		}
 
@@ -157,7 +157,7 @@ public class Generator {
 		for (int i = 0; i < 5; i++)//vzdalenost mest a letist je take min. 5km
 
 		{
-			vysledekLetiste = Math.sqrt(Math.pow(x - poleLetist[i].getX(), 2)+ Math.pow(y - poleLetist[i].getY(), 2));
+			vysledekLetiste = Math.sqrt(Math.pow(x - poleLetist.get(i).getX(), 2)+ Math.pow(y - poleLetist.get(i).getY(), 2));
 			if (vysledekLetiste < 5.0) return true;
 		}
 
@@ -215,18 +215,18 @@ public class Generator {
 
 	}
 	
-	public static void genSousLetist(Letiste [] poleLetist)
+	public static void genSousLetist(ArrayList<Letiste> poleLetist)
 	{
 		ArrayList<Vzdalenost> vzdalenosti = new ArrayList<Vzdalenost>();
-		for( int i = 0; i < poleLetist.length; i++)
+		for( int i = 0; i < poleLetist.size(); i++)
 		{
 
 			//int maSous = poleMesta.get(i).getSousedi().size();
 			for(int j = indexMestPod2+1; j<poleMest.size(); j++)
 			{
 		
-				double vysledekMesto = Math.sqrt(Math.pow(poleLetist[i].getX() - poleMest.get(j).getX(), 2)+ 
-						Math.pow(poleLetist[i].getY() - poleMest.get(j).getY(), 2));
+				double vysledekMesto = Math.sqrt(Math.pow(poleLetist.get(i).getX() - poleMest.get(j).getX(), 2)+ 
+						Math.pow(poleLetist.get(i).getY() - poleMest.get(j).getY(), 2));
 				vzdalenosti.add(new Vzdalenost (j,vysledekMesto));
 			}
 			Collections.sort(vzdalenosti, new Komparator());
@@ -236,7 +236,7 @@ public class Generator {
 			{
 				pomoc.add(poleMest.get(vzdalenosti.get(k).index));
 			}
-			poleLetist[i].setSousedi(pomoc);
+			poleLetist.get(i).setSousedi(pomoc);
 			vzdalenosti.clear();
 		}
 	}

@@ -17,10 +17,10 @@ import javax.swing.JPanel;
 
 public class Mapa extends JPanel {
 	
-	private static ArrayList<Mesto>poleMest = new ArrayList<Mesto>();;
+	private static ArrayList<Mesto>poleMest = new ArrayList<Mesto>();
 	public static int width;
 	public static int height;
-	private static Letiste [] poleLetist;
+	private static ArrayList<Letiste>poleLetist = new ArrayList<Letiste>();
 	static Boolean ovladani = false;
 
 	/**
@@ -40,10 +40,14 @@ public class Mapa extends JPanel {
 	 * Vraci pole letist
 	 * @return pole letist
 	 */
-	public static Letiste[] getPoleLetist() {
+	public static ArrayList<Letiste> getPoleLetist() {
 		return poleLetist;
 	}
-
+	public static void addSousLet(int index, ArrayList<Mesto> sousedi){
+		poleLetist.get(index).setSousedi(sousedi);
+		
+		System.out.println("prid    " + poleLetist.get(index).getSousedi().size());
+	}
 	/**
 	 * Prida mesto do seznamu poli
 	 * @param mesto
@@ -72,9 +76,9 @@ public class Mapa extends JPanel {
 	{
 		this.poleMest = poleMest;
 	}
-	public static void setLetiste(Letiste [] poleLetist)
+	public static void setLetiste(ArrayList<Letiste> poleLetiste)
 	{
-		Mapa.poleLetist = poleLetist;
+		poleLetist = poleLetiste;
 	}
 
 	/**
@@ -135,13 +139,15 @@ public class Mapa extends JPanel {
 			g2.setStroke(new BasicStroke(1));
 			g2.setColor(Color.RED);
 
-			for(int i = 0; i <poleLetist.length; i++)
+			for(int i = 0; i <poleLetist.size(); i++)
 			{
+				System.out.println("ahoj " + poleLetist.get(i).getSousedi().size());
 				for (int j = 0; j <60; j++)
-				{
-					g2.drawLine(poleLetist[i].getX(), poleLetist[i].getY(),
-							poleLetist[i].getSousedi().get(j).getX(), 
-							poleLetist[i].getSousedi().get(j).getY());
+				{	
+					System.out.println(j);
+					g2.drawLine(poleLetist.get(i).getX(), poleLetist.get(i).getY(),
+							poleLetist.get(i).getSousedi().get(j).getX(), 
+							poleLetist.get(i).getSousedi().get(j).getY());
 				}
 			}
 			
@@ -154,9 +160,9 @@ public class Mapa extends JPanel {
 			//kresleni letist
 			g2.setColor(Color.RED);
 
-			for(int i = 0; i<poleLetist.length; i++)
+			for(int i = 0; i<poleLetist.size(); i++)
 			{
-				g2.fillRect(poleLetist[i].getX()-2, poleLetist[i].getY()-2, 5, 5);
+				g2.fillRect(poleLetist.get(i).getX()-2, poleLetist.get(i).getY()-2, 5, 5);
 			}
 		}
 		else

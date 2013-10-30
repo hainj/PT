@@ -18,6 +18,7 @@ public class Letiste {
 		this.x = x;
 		this.y = y;
 		this.jidlo = 500;
+		
 	}
 	public Letiste(int x, int y, ArrayList<Mesto> mest) {
 		this.jidlo = 500;

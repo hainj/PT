@@ -71,6 +71,7 @@ public class MainAPP extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent arg0)
 			{
+				Mapa.getPoleLetist().clear();
 				Mapa.getPoleMest().clear();
 				drawarea = new Mapa (500 , 500, true);
 				drawarea.repaint();
@@ -142,6 +143,7 @@ public class MainAPP extends JFrame {
 				if (vstup == null) JOptionPane.showMessageDialog(parent, "Mapa se nenacetla");
 				else 
 					cteni.vstupMapa();*/
+				Mapa.getPoleLetist().clear();
 				Mapa.getPoleMest().clear();
 				JFileChooser filec = new JFileChooser(); 
 
