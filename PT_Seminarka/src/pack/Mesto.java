@@ -1,3 +1,7 @@
+                                                                     
+                                                                     
+                                                                     
+                                             
 package pack;
 
 import java.util.ArrayList;
@@ -7,23 +11,25 @@ import java.util.ArrayList;
 public class Mesto {
 
 		private int obyvatel = 0;
-	
-
 		private int x = 0;
 		private int y = 0;
 		private ArrayList<Mesto> sousedi;
+		private boolean heliport;
 		
+
+
 	/**
 	 * Konstruktor mest pro jeho polohu a pocet obyvatel
 	 * @param x x-ova souradnice
 	 * @param y y-ova souradnice
 	 * @param obyvatel pocet obyv
 	 */
-		public Mesto(int x, int y, int obyvatel)
+		public Mesto(int x, int y, int obyvatel, boolean heli)
 		{
 			this.x = x;
 			this.y = y;
 			this.obyvatel = obyvatel;
+			this.heliport = heli;
 		}
 		
 		/**
@@ -41,6 +47,13 @@ public class Mesto {
 			this.sousedi = sousedi;
 		}
 		
+		public boolean getHeliport() {
+			return heliport;
+		}
+
+		public void setHeliport(boolean heliport) {
+			this.heliport = heliport;
+		}
 		
 		public ArrayList<Mesto> getSousedi() {
 			return sousedi;
