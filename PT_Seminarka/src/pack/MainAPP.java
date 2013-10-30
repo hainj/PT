@@ -88,7 +88,11 @@ public class MainAPP extends JFrame {
 						x = generujSour();
 						y = generujSour();
 					}while(Generator.porovnejMesta (x,y,index) == true);
-					int obyv = (int) (5400 + 1600 * R.nextGaussian());
+					
+					//pop up okno na nacitani poctu obyvatel novemu mestu
+					String ob = JOptionPane.showInputDialog(parent, "Zadej pocit obyvatel: "); 
+					int obyv = Integer.parseInt(ob);
+					
 					Mapa.getPoleMest().add(new Mesto(x,y,obyv,true));
 	
 					index = Mapa.getPoleMest().size()-1;
@@ -96,10 +100,6 @@ public class MainAPP extends JFrame {
 	
 					//drawarea.repaint();
 					frame.repaint();
-	
-					/*System.out.println("nove mesto: "+ Mapa.getPoleMest().get(index).getX() +" "
-							+ Mapa.getPoleMest().get(index).getY() + " "
-							+ Mapa.getPoleMest().get(index).getObyvatel());*/
 				}
 				else
 				{
@@ -131,11 +131,6 @@ public class MainAPP extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent arg0)
 			{
-				//vyskoci popup okno kde napisu jmeno vystupniho souboru
-				/*	String vstup = JOptionPane.showInputDialog(parent,"Jmeno vstupniho souboru",null);
-				if (vstup == null) JOptionPane.showMessageDialog(parent, "Mapa se nenacetla");
-				else 
-					cteni.vstupMapa();*/
 				Mapa.getPoleLetist().clear();
 				Mapa.getPoleMest().clear();
 				JFileChooser filec = new JFileChooser(); 

@@ -17,10 +17,10 @@ import javax.swing.JPanel;
 
 public class Mapa extends JPanel {
 	
-	private static ArrayList<Mesto>poleMest = new ArrayList<Mesto>();
+	public static ArrayList<Mesto>poleMest = new ArrayList<Mesto>();
 	public static int width;
 	public static int height;
-	private static ArrayList<Letiste>poleLetist = new ArrayList<Letiste>();
+	public static ArrayList<Letiste>poleLetist = new ArrayList<Letiste>();
 	static Boolean ovladani = false;
 
 	/**
@@ -52,6 +52,11 @@ public class Mapa extends JPanel {
 		poleMest.add(mesto);
 	}
 	
+	/**
+	 * vraci index mesta v poliMest
+	 * @param mest ktereho index zjistuji
+	 * @return index mesta v poli
+	 */
 	public static int getIndexMest(Mesto mest){
 
 		for(int i = 0; i<poleMest.size(); i++){
@@ -60,10 +65,9 @@ public class Mapa extends JPanel {
 				return i;
 			}
 		}
-
 		return -1;
-
 	}
+	
 	public static ArrayList<Mesto> getPoleMest() {
 		return poleMest;
 	}
@@ -72,6 +76,7 @@ public class Mapa extends JPanel {
 	{
 		this.poleMest = poleMest;
 	}
+	
 	public static void setLetiste(ArrayList<Letiste> poleLetiste)
 	{
 		poleLetist = poleLetiste;
@@ -108,88 +113,80 @@ public class Mapa extends JPanel {
 
 		g2.drawRect(502, 0, 700, 550);
 
+		//ovladaci promenna - true program uz bezi a ma mapu nebo se spustil a je prazdny
 		if(this.ovladani == true)
 		{
+			//jeli spusteny program prazdny vygeneruje novou mapu
 			if(poleMest.size()==0){
 				Generator gen = new Generator();
-				this.setLetiste(gen.poleLetist);
-				this.setMesta(gen.poleMest);
-			}
-			//vykresleni cest mezi mesty
-			g2.setStroke(new BasicStroke(1));
-			g2.setColor(Color.BLUE);
-
-			int indexMestPod2 = Generator.zjistiPod2(poleMest);
-			
-			for(int i = indexMestPod2+1; i <3000; i++)
-			{
-				for (int j = 0; j <10; j++)
-				{
-					g2.drawLine(poleMest.get(i).getX(), poleMest.get(i).getY(),
-							poleMest.get(i).getSousedi().get(j).getX(), 
-							poleMest.get(i).getSousedi().get(j).getY());
-				}
-			}
-
-			//kresleni cest z letist
-			g2.setStroke(new BasicStroke(1));
-			g2.setColor(Color.RED);
-
-			for(int i = 0; i <poleLetist.size(); i++)
-			{
-			//	System.out.println("ahoj " + poleLetist.get(i).getSousedi().size());
-				for (int j = 0; j <60; j++)
-				{	
-					//System.out.println(j);
-					g2.drawLine(poleLetist.get(i).getX(), poleLetist.get(i).getY(),
-							poleLetist.get(i).getSousedi().get(j).getX(), 
-							poleLetist.get(i).getSousedi().get(j).getY());
-				}
 			}
 			
-			//kresleni mest
-			g2.setColor(Color.BLACK);
-			for(int i = 0; i<poleMest.size()-1; i++)
-			{
-				g2.fillRect(poleMest.get(i).getX()-1, poleMest.get(i).getY()-1, 3, 3);
-			}
-			//kresleni letist
-			g2.setColor(Color.RED);
-
-			for(int i = 0; i<poleLetist.size(); i++)
-			{
-				g2.setColor(Color.RED);
-				g2.fillRect(poleLetist.get(i).getX()-2, poleLetist.get(i).getY()-2, 5, 5);
-				g2.setColor(Color.BLACK);
-				g2.drawRect(poleLetist.get(i).getX()-2, poleLetist.get(i).getY()-2, 5, 5);
-			}
+			kresleni(g2);
 		}
+		//ovladaci promenna - false pri spusteni nacte predpripravenou mapu
 		else
 		{
-			/*cteni.vstupMapa(new File("ZakladniMapa.txt"));
+			cteni.vstupMapa(new File("ZakladniMapa.txt"));
 
-			//kresleni mest
-			g2.setColor(Color.BLACK);
-			for(int i = 0; i<poleMest.size()-1; i++)
-			{
-				g2.fillRect(poleMest.get(i).getX(), poleMest.get(i).getY(), 2, 2);
-			}
-			//kresleni letist
-			g2.setColor(Color.RED);
-
-			for(int i = 0; i<poleLetist.length; i++)
-			{
-				g2.fillRect(poleLetist[i].getX(), poleLetist[i].getY(), 5, 5);
-			}
-			 */
+			kresleni(g2);
 		}
 
 	}
 
-
 	/**
-	 * Metoda vytvarejici souradnice pro letiste
-	 * Vytvorene letiste rovnou uklada do pole
+	 * metoda vykreslujici mesta letiste a cesty
+	 * zabranuje opakovani kodu
+	 * @param g2
 	 */
+	private static void kresleni(Graphics2D g2)
+	{
+		//vykresleni cest mezi mesty
+		g2.setStroke(new BasicStroke(1));
+		g2.setColor(Color.BLUE);
 
+		int indexMestPod2 = Generator.zjistiPod2(poleMest);
+		
+		for(int i = indexMestPod2+1; i <3000; i++)
+		{
+			for (int j = 0; j <10; j++)
+			{
+				g2.drawLine(poleMest.get(i).getX(), poleMest.get(i).getY(),
+						poleMest.get(i).getSousedi().get(j).getX(), 
+						poleMest.get(i).getSousedi().get(j).getY());
+			}
+		}
+
+		//kresleni cest z letist
+		g2.setStroke(new BasicStroke(1));
+		g2.setColor(Color.RED);
+
+		for(int i = 0; i <poleLetist.size(); i++)
+		{
+		//	System.out.println("ahoj " + poleLetist.get(i).getSousedi().size());
+			for (int j = 0; j <60; j++)
+			{	
+				//System.out.println(j);
+				g2.drawLine(poleLetist.get(i).getX(), poleLetist.get(i).getY(),
+						poleLetist.get(i).getSousedi().get(j).getX(), 
+						poleLetist.get(i).getSousedi().get(j).getY());
+			}
+		}
+		
+		//kresleni mest
+		g2.setColor(Color.BLACK);
+		for(int i = 0; i<poleMest.size()-1; i++)
+		{
+			g2.fillRect(poleMest.get(i).getX()-1, poleMest.get(i).getY()-1, 3, 3);
+		}
+		//kresleni letist
+		g2.setColor(Color.RED);
+
+		for(int i = 0; i<poleLetist.size(); i++)
+		{
+			g2.setColor(Color.RED);
+			g2.fillRect(poleLetist.get(i).getX()-2, poleLetist.get(i).getY()-2, 5, 5);
+			g2.setColor(Color.BLACK);
+			g2.drawRect(poleLetist.get(i).getX()-2, poleLetist.get(i).getY()-2, 5, 5);
+		}
+	}
 }

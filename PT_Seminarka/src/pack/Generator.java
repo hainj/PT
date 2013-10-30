@@ -11,10 +11,9 @@ import java.util.Random;
 
 public class Generator {
 	public static double matice[][] = new double [3005][3000];
-	public static ArrayList<Mesto>poleMest = new ArrayList<Mesto>();
-	public static ArrayList<Letiste>poleLetist = new ArrayList<Letiste>();
 	static Random R = new Random();
 	public static int indexMestPod2 = 0;
+	
 	/**
 	 * Zakladni konstruktor ktery vytvori mesta, letiste a jejich sousedy
 	 */
@@ -22,18 +21,11 @@ public class Generator {
 	{
 		generujLetiste();
 		generujMesta();
-		genSousMest(poleMest);
-		genSousLetist(poleLetist);
-		/*for(int i = 0; i < 3005;i++){
-			for(int j=0 ; j <3000;j++){
-				System.out.print(matice[i][j] + " ");
-			}
-			System.out.println();
-		}*/
-		
+		genSousMest(Mapa.poleMest);
+		genSousLetist(Mapa.poleLetist);	
 	}
 	/**
-	 * Vygeneruje x, y letiste
+	 * Vygeneruje x, y - souradnice pro 5 letist
 	 */
 	public static void generujLetiste ()
 	{
@@ -42,7 +34,7 @@ public class Generator {
 
 		x = generujSour();
 		y = generujSour();
-		poleLetist.add(new Letiste(x,y));
+		Mapa.poleLetist.add(new Letiste(x,y));
 		for(int i = 1; i <5; i++)
 		{
 			do
@@ -50,7 +42,7 @@ public class Generator {
 				x = generujSour();
 				y = generujSour();
 			}while(porovnejLetiste (x,y,i)== true);
-			poleLetist.add(new Letiste(x,y));
+			Mapa.poleLetist.add(new Letiste(x,y));
 		}
 
 	}
@@ -71,23 +63,21 @@ public class Generator {
 
 		 for(int i = 0; i <3000; i++)
 		 {
-			 if (i==0)
+			 if (i==0)//vytvareni prvniho mesta
 			 {
 				 x = generujSour();
 				 y = generujSour();
 				 obyv = (int) (stredniHodnota + rozptyl * R.nextGaussian());//vypocet obyvatel pro mesto
 				 obyv = Math.abs(obyv);
-				 if(obyv >= 10000)
+				 if(obyv >= 10000)//nastavovani heliportu pro mesta s obyv nad 10 000
 				 {
-					 poleMest.add(new Mesto(x,y,obyv,true));
+					 Mapa.poleMest.add(new Mesto(x,y,obyv,true));
 				 }
 				 else
 				 {
-					 poleMest.add(new Mesto(x,y,obyv,false));
+					 Mapa.poleMest.add(new Mesto(x,y,obyv,false));
 				 }
-				 //poleMest.get(i).setObyvatel(obyv);
-				 //System.out.println(poleMest.get(i).getObyvatel());
-				 obyvCelkem +=poleMest.get(i).getObyvatel();
+				 obyvCelkem +=Mapa.poleMest.get(i).getObyvatel();
 			 }
 			 else
 			 {
@@ -96,33 +86,28 @@ public class Generator {
 					 x = generujSour();
 					 y = generujSour();
 				 }while(porovnejMesta (x,y,i) == true);
+				 
 				 obyv = (int) (stredniHodnota + rozptyl * R.nextGaussian());
 				 obyv = Math.abs(obyv);
-				 if(obyv >= 10000)
+				 
+				 if(obyv >= 10000)//nastavovani heliportu pro mesta s obyv nad 10 000
 				 {
-					 poleMest.add(new Mesto(x,y,obyv,true));
+					 Mapa.poleMest.add(new Mesto(x,y,obyv,true));
 				 }
 				 else
 				 {
-					 poleMest.add(new Mesto(x,y,obyv,false));
+					 Mapa.poleMest.add(new Mesto(x,y,obyv,false));
 				 }
-
-				 /**if(obyv<=2000){
-					System.out.println(obyv);
-				}*/
-				 //poleMest.get(i).setObyvatel(obyv);
-				 obyvCelkem +=poleMest.get(i).getObyvatel();	
+				 
+				 obyvCelkem +=Mapa.poleMest.get(i).getObyvatel();	
 			 }
-			 //System.out.println((i+1)+". mesto ma: "+ poleMest.get(i).getObyvatel()+ " obyvatel");
 		 }
-		 //MainAPP.dialogOkno.setText("Celkem obyv: "+ obyvCelkem);
-		 //MainAPP.dialogOkno.repaint();
-		 //System.out.println("Celkem obyv: "+ obyvCelkem);
-		 Collections.sort(poleMest, new KomparatorMest());
+		 //seradi Mapa.poleMest podle poctu obyvatel tridou KomparatorMest
+		 Collections.sort(Mapa.poleMest, new KomparatorMest());
 	 }
 
 	 /**
-	  * jednoducha metoda na vraceni nahodnych cisel
+	  * jednoducha metoda na vraceni nahodnych cisel od 0 do 500
 	  * pouzita pro generaci souradnic
 	  * @return nahodne vygenerovane cislo
 	  */
@@ -147,7 +132,9 @@ public class Generator {
 
 		 for (int i = 0; i < j; i++)
 		 {
-			 vysledek = Math.sqrt(Math.pow(x - poleLetist.get(i).getX(), 2)+ Math.pow(y - poleLetist.get(i).getY(), 2));
+			 //pocitani vzdalenosti pomoci vektoru
+			 vysledek = Math.sqrt(Math.pow(x - Mapa.poleLetist.get(i).getX(), 2)+ Math.pow(y - Mapa.poleLetist.get(i).getY(), 2));
+			 //podminka zajistujici vzdalenost letis 150km a polohu mimo centralni oblast
 			 if (vysledek < 150.0 || (stredX < 25 && stredY < 25)) return true;
 		 }
 
@@ -167,20 +154,22 @@ public class Generator {
 		 double vysledekMesto = 0.0;
 		 double vysledekLetiste = 0.0;
 		 for (int i = 0; i < 5; i++)//vzdalenost mest a letist je take min. 5km
-
 		 {
-			 vysledekLetiste = Math.sqrt(Math.pow(x - poleLetist.get(i).getX(), 2)+ Math.pow(y - poleLetist.get(i).getY(), 2));
+			//pocitani vzdalenosti pomoci vektoru
+			 vysledekLetiste = Math.sqrt(Math.pow(x - Mapa.poleLetist.get(i).getX(), 2)+ Math.pow(y - Mapa.poleLetist.get(i).getY(), 2));
 			 if (vysledekLetiste < 5.0) return true;
 		 }
 
-		 for (int i = 0; i < j; i++)
+		 for (int i = 0; i < j; i++)//vzdalenost mezi mesty
 		 {
-			 vysledekMesto = Math.sqrt(Math.pow(x - poleMest.get(i).getX(), 2)+ Math.pow(y - poleMest.get(i).getY(), 2));
+			//pocitani vzdalenosti pomoci vektoru
+			 vysledekMesto = Math.sqrt(Math.pow(x - Mapa.poleMest.get(i).getX(), 2)+ Math.pow(y - Mapa.poleMest.get(i).getY(), 2));
 			 if (vysledekMesto < 5.0) return true;
 		 }
 
 		 return false;
 	 }
+	 
 	 /**
 	  * Najde 30% mest pod 2000
 	  * @param mesta seznam mest
@@ -196,57 +185,58 @@ public class Generator {
 		 i = (int) (i*0.7);
 		 return i;
 	 }
+	 
 	 /**
 	  * Vygeneruje 10 sousedu kazdemu mestu, krome 30% mest pod 2000
-	  * @param poleMesta seznam mest
+	  * @param Mapa.poleMesta seznam mest
 	  */
 	 public static void genSousMest(ArrayList<Mesto> poleMesta)
 	 {
-		 indexMestPod2  = zjistiPod2(poleMest);
+		 indexMestPod2  = zjistiPod2(Mapa.poleMest);
 		 ArrayList<Vzdalenost> vzdalenosti = new ArrayList<Vzdalenost>();
 
+		 //diky tomu ze je Mapa.poleMest serazene si mohu dovolit prvnich x preskocit
 		 for( int i = indexMestPod2+1; i < poleMesta.size(); i++)
 		 {
-
-			 //int maSous = poleMesta.get(i).getSousedi().size();
 			 for(int j = indexMestPod2+1; j<poleMesta.size(); j++)
 			 {
 
-				 double vysledekMesto = Math.sqrt(Math.pow(poleMest.get(i).getX() - poleMest.get(j).getX(), 2)+ 
-						 Math.pow(poleMest.get(i).getY() - poleMest.get(j).getY(), 2));
+				 double vysledekMesto = Math.sqrt(Math.pow(Mapa.poleMest.get(i).getX() - Mapa.poleMest.get(j).getX(), 2)+ 
+						 Math.pow(Mapa.poleMest.get(i).getY() - Mapa.poleMest.get(j).getY(), 2));
 				 vzdalenosti.add(new Vzdalenost (j,vysledekMesto));
 			 }
+			 //serazeni pole vzdalenosti podle vzdalenosti
 			 Collections.sort(vzdalenosti, new Komparator());
 			 ArrayList<Mesto> pomoc = new ArrayList<Mesto>();
 
-		
-
+			 //naplnovani matice vzdalenosti
 			 for (int k = 1; k <11; k++)
 			 {
 				 matice[5+i][vzdalenosti.get(k).index] = vzdalenosti.get(k).vzdalenost;
 				 pomoc.add(poleMesta.get(vzdalenosti.get(k).index));
 			 }
+			 //nastavovani sousedu
 			 poleMesta.get(i).setSousedi(pomoc);
+			 //vycisteni vzdalenosti
 			 vzdalenosti.clear();
 		 }
 
 	 }
+	 
 	 /**
 	  * Vygeneruje 60 sousedu kazdemu letisti
-	  * @param poleLetist seznam letist
+	  * @param Mapa.poleLetist seznam letist
 	  */
 	 public static void genSousLetist(ArrayList<Letiste> poleLetist)
 	 {
 		 ArrayList<Vzdalenost> vzdalenosti = new ArrayList<Vzdalenost>();
-		 for( int i = 0; i < poleLetist.size(); i++)
+		 for( int i = 0; i < Mapa.poleLetist.size(); i++)
 		 {
-
-			 //int maSous = poleMesta.get(i).getSousedi().size();
-			 for(int j = indexMestPod2+1; j<poleMest.size(); j++)
+			 for(int j = indexMestPod2+1; j<Mapa.poleMest.size(); j++)
 			 {
 
-				 double vysledekMesto = Math.sqrt(Math.pow(poleLetist.get(i).getX() - poleMest.get(j).getX(), 2)+ 
-						 Math.pow(poleLetist.get(i).getY() - poleMest.get(j).getY(), 2));
+				 double vysledekMesto = Math.sqrt(Math.pow(Mapa.poleLetist.get(i).getX() - Mapa.poleMest.get(j).getX(), 2)+ 
+						 Math.pow(Mapa.poleLetist.get(i).getY() - Mapa.poleMest.get(j).getY(), 2));
 				 vzdalenosti.add(new Vzdalenost (j,vysledekMesto));
 			 }
 			 Collections.sort(vzdalenosti, new Komparator());
@@ -255,9 +245,9 @@ public class Generator {
 			 for (int k = 0; k <60; k++)
 			 {
 				 matice[i][vzdalenosti.get(k).index] = vzdalenosti.get(k).vzdalenost;
-				 pomoc.add(poleMest.get(vzdalenosti.get(k).index));
+				 pomoc.add(Mapa.poleMest.get(vzdalenosti.get(k).index));
 			 }
-			 poleLetist.get(i).setSousedi(pomoc);
+			 Mapa.poleLetist.get(i).setSousedi(pomoc);
 			 vzdalenosti.clear();
 		 }
 	 }
