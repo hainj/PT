@@ -7,9 +7,11 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 import java.awt.BorderLayout;
+import java.awt.Font;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,9 +20,9 @@ import java.util.*;
 public class MainAPP extends JFrame {
 
 	final static JFrame parent = new JFrame();
-
+	private final static String novaRadka = "\n";
 	static JPanel tlacitka = new JPanel();
-	static JPanel textBlok = new JPanel();
+	static JTextArea textBlok = new JTextArea();
 	static Mapa drawarea = new Mapa(700,550, false); //vytvori drawing areu o velikosti 500 x500
 	static Scanner sc = new Scanner (System.in);
 	static Random R = new Random();
@@ -33,6 +35,14 @@ public class MainAPP extends JFrame {
 		frame.pack();
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
+		
+		JScrollPane scrollPane = new JScrollPane(textBlok);
+		textBlok.setEditable(false);
+		textBlok.append("ahoj je to tdy strasne debilni" + novaRadka + "No a jak nnjsdnkjhkjhkjj"+ novaRadka);
+		textBlok.setCaretPosition(textBlok.getDocument().getLength());
+		
+		frame.add(textBlok, BorderLayout.EAST);
+		
 
 		JButton tlacitkoSave = new JButton ("save");
 		JButton tlacitkoLoad = new JButton ("load");
@@ -49,11 +59,8 @@ public class MainAPP extends JFrame {
 		tlacitka.add(tlacitkoExit);
 
 		frame.add(tlacitka,BorderLayout.SOUTH);
-		tlacitka.repaint();
-		
-		JTextArea dialogOkno = new JTextArea();
-		textBlok.add(dialogOkno);
-		frame.add(textBlok,BorderLayout.EAST);
+		frame.repaint(); 
+		textBlok.repaint();
 		tlacitka.repaint();
 		
 		
