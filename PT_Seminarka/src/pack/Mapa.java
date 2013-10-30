@@ -158,7 +158,10 @@ public class Mapa extends JPanel {
 
 			for(int i = 0; i<poleLetist.size(); i++)
 			{
+				g2.setColor(Color.RED);
 				g2.fillRect(poleLetist.get(i).getX()-2, poleLetist.get(i).getY()-2, 5, 5);
+				g2.setColor(Color.BLACK);
+				g2.drawRect(poleLetist.get(i).getX()-2, poleLetist.get(i).getY()-2, 5, 5);
 			}
 		}
 		else
