@@ -157,7 +157,6 @@ public class MainAPP extends JFrame {
 				System.exit(0);
 			}
 		});
-
 	}
 	
 	public static int generujSour ()

@@ -7,8 +7,8 @@ public class Auto {
 	/**
 	 * Konstruktor auta s poradim, nakladem, a zakladni rychlosti
 	 */
-	public Auto(){
-		this.poradi++;
+	public Auto(int poradi){
+		this.poradi = poradi;
 		this.naklad = 0;
 		this.rychlost = 40;
 		
@@ -17,7 +17,7 @@ public class Auto {
 		return naklad;
 	}
 	public void setNaklad(int naklad) {
-		this.naklad = naklad;
+		this.naklad += naklad;
 	}
 	public int getPoradi() {
 		return poradi;
