@@ -36,14 +36,7 @@ public class MainAPP extends JFrame {
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 		
-		JScrollPane scrollPane = new JScrollPane(textBlok);
-		textBlok.setEditable(false);
-		textBlok.append("ahoj je to tdy strasne debilni" + novaRadka + "No a jak nnjsdnkjhkjhkjj"+ novaRadka);
-		textBlok.setCaretPosition(textBlok.getDocument().getLength());
-		
-		frame.add(textBlok, BorderLayout.EAST);
-		
-
+	
 		JButton tlacitkoSave = new JButton ("save");
 		JButton tlacitkoLoad = new JButton ("load");
 		JButton tlacitkoNew = new JButton ("nova mapa");

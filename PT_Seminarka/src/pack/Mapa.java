@@ -43,11 +43,7 @@ public class Mapa extends JPanel {
 	public static ArrayList<Letiste> getPoleLetist() {
 		return poleLetist;
 	}
-	public static void addSousLet(int index, ArrayList<Mesto> sousedi){
-		poleLetist.get(index).setSousedi(sousedi);
-		
-		System.out.println("prid    " + poleLetist.get(index).getSousedi().size());
-	}
+	
 	/**
 	 * Prida mesto do seznamu poli
 	 * @param mesto
@@ -141,10 +137,10 @@ public class Mapa extends JPanel {
 
 			for(int i = 0; i <poleLetist.size(); i++)
 			{
-				System.out.println("ahoj " + poleLetist.get(i).getSousedi().size());
+			//	System.out.println("ahoj " + poleLetist.get(i).getSousedi().size());
 				for (int j = 0; j <60; j++)
 				{	
-					System.out.println(j);
+					//System.out.println(j);
 					g2.drawLine(poleLetist.get(i).getX(), poleLetist.get(i).getY(),
 							poleLetist.get(i).getSousedi().get(j).getX(), 
 							poleLetist.get(i).getSousedi().get(j).getY());

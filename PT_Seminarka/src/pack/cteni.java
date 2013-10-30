@@ -158,7 +158,6 @@ public class cteni {
 				Mapa.getPoleMest().get(z).setSousedi(pomoc);
 				str = reader.readLine();
 				
-				System.out.println(z+". :"+Mapa.getPoleMest().get(z).getSousedi().get(0).getObyvatel());
 				z++;
 			}
 			
