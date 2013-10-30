@@ -46,7 +46,10 @@ public class Mesto {
 			this.y = y;
 			this.sousedi = sousedi;
 		}
-		
+		/**
+		 * Vraci boolean, zda mesto ma nebo nema heliport
+		 * @return
+		 */
 		public boolean getHeliport() {
 			return heliport;
 		}

@@ -28,10 +28,14 @@ public class cteni {
 		try {
 			stream = new FileOutputStream(f);
 			BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(stream));
+			
+			
+			//vypise x, y a jidlo  letiste
 			for(int i = 0; i<let.size();i++){
 				writer.append(let.get(i).getX() + " " +  let.get(i).getY() + " " + let.get(i).getJidlo());
 				writer.newLine();
 			}
+			//vypise x, y, pocet obyv mesta
 			for(int i = 0; i<poleMest.size();i++){
 				Mesto mesto = poleMest.get(i);
 				
@@ -41,6 +45,8 @@ public class cteni {
 			writer.append("sousedi letist");
 			
 			writer.newLine();
+			
+			//vypise sousedy letist
 			for (int j = 0; j<let.size(); j++){
 					
 				String str = "";
@@ -56,7 +62,7 @@ public class cteni {
 			writer.write("sousedi mest");
 			writer.newLine();
 			
-			
+			//vypise sousedy mest
 			for(int i =  Generator.indexMestPod2+1; i<poleMest.size();i++){
 				Mesto mesto = poleMest.get(i);
 				String str = "";
@@ -94,7 +100,7 @@ public class cteni {
 			
 			ArrayList<Letiste> letist = new ArrayList<Letiste>();
 			
-			
+			//nacte letiste
 			for(int i = 0; i<5;i++){
 				str = reader.readLine();
 
@@ -108,7 +114,7 @@ public class cteni {
 			//Mapa.setLetiste(letist);
 			str = reader.readLine();
 			Mapa.getPoleMest().clear();
-
+			//nacte mesta
 			while(!str.equalsIgnoreCase("sousedi letist")){
 				
 				

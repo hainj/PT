@@ -33,7 +33,7 @@ public class Generator {
 		
 	}
 	/**
-	 * Vygeneruje letiste
+	 * Vygeneruje x, y letiste
 	 */
 	public static void generujLetiste ()
 	{
