@@ -90,8 +90,21 @@ public class MainAPP extends JFrame {
 					}while(Generator.porovnejMesta (x,y,index) == true);
 					
 					//pop up okno na nacitani poctu obyvatel novemu mestu
-					String ob = JOptionPane.showInputDialog(parent, "Zadej pocit obyvatel: "); 
-					int obyv = Integer.parseInt(ob);
+					 
+					int obyv = 0;
+					while(true)
+					{
+						try
+						{
+							String ob = JOptionPane.showInputDialog(parent, "Zadej pocit obyvatel: ");
+							obyv = Integer.parseInt(ob);
+							break;
+						}catch(NumberFormatException e)
+						{
+							JOptionPane.showMessageDialog(parent, "Prosim zadejte cislo");
+						}
+					}
+					
 					
 					Mapa.getPoleMest().add(new Mesto(x,y,obyv,true));
 	
