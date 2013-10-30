@@ -1,23 +1,29 @@
+                                                                     
+                                                                     
+                                                                     
+                                             
 package pack;
+
+import java.util.ArrayList;
 
 public class Letiste {
 
 	private int x = 0;
 	private int y = 0;
 	private int jidlo = 0;
-	 Mesto[] mest;
-
+	ArrayList<Mesto> sousedi = new ArrayList<Mesto>();
+	
 	public Letiste(int x, int y) {
 
 		this.x = x;
 		this.y = y;
 		this.jidlo = 500;
 	}
-	public Letiste(int x, int y, Mesto[] mest) {
+	public Letiste(int x, int y, ArrayList<Mesto> mest) {
 		this.jidlo = 500;
 		this.x = x;
 		this.y = y;
-		this.mest = mest;
+		this.sousedi = mest;
 	}
 
 
@@ -43,6 +49,12 @@ public class Letiste {
 
 	public void setJidlo(int jidlo) {
 		this.jidlo = jidlo;
+	}
+	public ArrayList<Mesto> getSousedi() {
+		return sousedi;
+	}
+	public void setSousedi(ArrayList<Mesto> pomoc) {
+		this.sousedi = pomoc;
 	}
 
 
