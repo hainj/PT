@@ -1,3 +1,7 @@
+                                                                     
+                                                                     
+                                                                     
+                                             
 package pack;
 
 import java.util.ArrayList;
@@ -9,12 +13,14 @@ public class Generator {
 	public static ArrayList<Mesto>poleMest = new ArrayList<Mesto>();
 	public static Letiste [] poleLetist = new Letiste [5];  //neni treba arraylist, pocet letist se nemeni
 	static Random R = new Random();
+	public static int indexMestPod2 = 0;
 
 	public Generator()
 	{
 		generujLetiste();
 		generujMesta();
 		genSousMest(poleMest);
+		genSousLetist(poleLetist);
 	}
 
 	public static void generujLetiste ()
@@ -59,7 +65,14 @@ public class Generator {
 				y = generujSour();
 				obyv = (int) (stredniHodnota + rozptyl * R.nextGaussian());//vypocet obyvatel pro mesto
 				obyv = Math.abs(obyv);
-				poleMest.add(new Mesto(x,y,obyv));
+				if(obyv >= 10000)
+				{
+					poleMest.add(new Mesto(x,y,obyv,true));
+				}
+				else
+				{
+					poleMest.add(new Mesto(x,y,obyv,false));
+				}
 				//poleMest.get(i).setObyvatel(obyv);
 				//System.out.println(poleMest.get(i).getObyvatel());
 				obyvCelkem +=poleMest.get(i).getObyvatel();
@@ -73,7 +86,14 @@ public class Generator {
 				}while(porovnejMesta (x,y,i) == true);
 				obyv = (int) (stredniHodnota + rozptyl * R.nextGaussian());
 				obyv = Math.abs(obyv);
-				poleMest.add(new Mesto(x,y,obyv));
+				if(obyv >= 10000)
+				{
+					poleMest.add(new Mesto(x,y,obyv,true));
+				}
+				else
+				{
+					poleMest.add(new Mesto(x,y,obyv,false));
+				}
 
 				/**if(obyv<=2000){
 					System.out.println(obyv);
@@ -83,7 +103,10 @@ public class Generator {
 			}
 			//System.out.println((i+1)+". mesto ma: "+ poleMest.get(i).getObyvatel()+ " obyvatel");
 		}
-		System.out.println("Celkem obyv: "+ obyvCelkem);
+		//MainAPP.dialogOkno.setText("Celkem obyv: "+ obyvCelkem);
+		//MainAPP.dialogOkno.repaint();
+		//System.out.println("Celkem obyv: "+ obyvCelkem);
+		Collections.sort(poleMest, new KomparatorMest());
 	}
 
 	/**
@@ -147,17 +170,27 @@ public class Generator {
 		return false;
 	}
 
-
+	public static int zjistiPod2 (ArrayList<Mesto> mesta)
+	{
+		int i = 0;
+		while(mesta.get(i).getObyvatel() <= 2000)
+		{
+			i++;
+		}
+		i = (int) (i*0.7);
+		return i;
+	}
 
 	public static void genSousMest(ArrayList<Mesto> poleMesta)
 	{
+		indexMestPod2  = zjistiPod2(poleMest);
 		ArrayList<Vzdalenost> vzdalenosti = new ArrayList<Vzdalenost>();
-		//poleMesta.size()
-		for( int i = 0; i < poleMesta.size(); i++)
+		
+		for( int i = indexMestPod2+1; i < poleMesta.size(); i++)
 		{
 
 			//int maSous = poleMesta.get(i).getSousedi().size();
-			for(int j = 0; j<poleMesta.size(); j++)
+			for(int j = indexMestPod2+1; j<poleMesta.size(); j++)
 			{
 		
 				double vysledekMesto = Math.sqrt(Math.pow(poleMest.get(i).getX() - poleMest.get(j).getX(), 2)+ 
@@ -180,5 +213,31 @@ public class Generator {
 			vzdalenosti.clear();
 		}
 
+	}
+	
+	public static void genSousLetist(Letiste [] poleLetist)
+	{
+		ArrayList<Vzdalenost> vzdalenosti = new ArrayList<Vzdalenost>();
+		for( int i = 0; i < poleLetist.length; i++)
+		{
+
+			//int maSous = poleMesta.get(i).getSousedi().size();
+			for(int j = indexMestPod2+1; j<poleMest.size(); j++)
+			{
+		
+				double vysledekMesto = Math.sqrt(Math.pow(poleLetist[i].getX() - poleMest.get(j).getX(), 2)+ 
+						Math.pow(poleLetist[i].getY() - poleMest.get(j).getY(), 2));
+				vzdalenosti.add(new Vzdalenost (j,vysledekMesto));
+			}
+			Collections.sort(vzdalenosti, new Komparator());
+			ArrayList<Mesto> pomoc = new ArrayList<Mesto>();
+
+			for (int k = 0; k <60; k++)
+			{
+				pomoc.add(poleMest.get(vzdalenosti.get(k).index));
+			}
+			poleLetist[i].setSousedi(pomoc);
+			vzdalenosti.clear();
+		}
 	}
 }
