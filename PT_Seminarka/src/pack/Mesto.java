@@ -1,15 +1,12 @@
-                                                                     
-                                                                     
-                                                                     
-                                             
+                                       
 package pack;
 
 import java.util.ArrayList;
 
-
-
 public class Mesto {
 
+		private int jidlo = 0;
+		private int jidlaTreba = 0;
 		private int obyvatel = 0;
 		private int x = 0;
 		private int y = 0;
@@ -30,6 +27,8 @@ public class Mesto {
 			this.y = y;
 			this.obyvatel = obyvatel;
 			this.heliport = heli;
+			//mesto potrebuje 2kg jidla na obyv na den - je mozno skladovat 3 dny
+			this.jidlaTreba = obyvatel*2*3;
 		}
 		
 		/**
@@ -45,6 +44,8 @@ public class Mesto {
 			this.x = x;
 			this.y = y;
 			this.sousedi = sousedi;
+			//mesto potrebuje 2kg jidla na obyv na den - je mozno skladovat 3 dny
+			this.jidlaTreba = obyvatel*2*3;
 		}
 		/**
 		 * Vraci boolean, zda mesto ma nebo nema heliport
