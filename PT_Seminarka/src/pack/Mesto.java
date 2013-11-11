@@ -12,8 +12,53 @@ public class Mesto {
 		private int y = 0;
 		private ArrayList<Mesto> sousedi;
 		private boolean heliport;
+		double vzdalenost = 100000;
+		Mesto predchudce;
+		Letiste odkud;
 		
 
+
+	/**
+		 * @return the vzdalenost
+		 */
+		public double getVzdalenost() {
+			return vzdalenost;
+		}
+
+		/**
+		 * @param vzdalenost the vzdalenost to set
+		 */
+		public void setVzdalenost(double vzdalenost) {
+			this.vzdalenost = vzdalenost;
+		}
+
+		/**
+		 * @return the predchudce
+		 */
+		public Mesto getPredchudce() {
+			return predchudce;
+		}
+
+		/**
+		 * @param predchudce the predchudce to set
+		 */
+		public void setPredchudce(Mesto predchudce) {
+			this.predchudce = predchudce;
+		}
+
+		/**
+		 * @return the odkud
+		 */
+		public Letiste getOdkud() {
+			return odkud;
+		}
+
+		/**
+		 * @param odkud the odkud to set
+		 */
+		public void setOdkud(Letiste odkud) {
+			this.odkud = odkud;
+		}
 
 	/**
 	 * Konstruktor mest pro jeho polohu a pocet obyvatel
