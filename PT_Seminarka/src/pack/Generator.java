@@ -4,6 +4,7 @@
 
 package pack;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -29,6 +30,7 @@ public class Generator {
 		for(int i =0; i< Mapa.poleLetist.size(); i++){
 			dijkstra(Mapa.poleLetist.get(i), i);
 		}
+
 
 	}
 	/**
@@ -163,7 +165,8 @@ public class Generator {
 		for (int i = 0; i < 5; i++)//vzdalenost mest a letist je take min. 5km
 		{
 			//pocitani vzdalenosti pomoci vektoru
-			vysledekLetiste = Math.sqrt(Math.pow(x - Mapa.poleLetist.get(i).getX(), 2)+ Math.pow(y - Mapa.poleLetist.get(i).getY(), 2));
+			vysledekLetiste = Math.sqrt(Math.pow(x - Mapa.poleLetist.get(i).getX(),
+							  2)+ Math.pow(y - Mapa.poleLetist.get(i).getY(), 2));
 			if (vysledekLetiste < 5.0) return true;
 		}
 
@@ -290,5 +293,40 @@ public class Generator {
 			}
 
 		}
+		
+		for(int i = 0; i<=indexMestPod2;i++){
+			mestoBezSousVzdal(Mapa.getPoleMest().get(i),Mapa.getPoleMest());
+			
+		}
+	}
+	
+	public static void mestoBezSousVzdal(Mesto mest, ArrayList<Mesto>mesta){
+		
+	ArrayList<Vzdalenost> vzdal= new ArrayList<Vzdalenost>();
+		for(int i =0; i <mesta.size();i++ ){
+			if(mesta.get(i).getHeliport()){
+				double vysledekMesto = Math.sqrt(Math.pow(mesta.get(i).getX() - mest.getX(), 2)+ 
+						Math.pow(mesta.get(i).getY() - mest.getY(), 2));
+						vzdal.add(new Vzdalenost(i, vysledekMesto));
+			}
+			
+			
+		}
+		Collections.sort(vzdal, new Komparator());
+		mest.setPredchudce(mesta.get(vzdal.get(0).index));
+		mest.setOdkud(mesta.get(vzdal.get(0).index).getOdkud());
+		
+		
+	}
+	
+	
+	
+	public static void vytvorMatici(ArrayList<Mesto> mest, ArrayList<Letiste> letist){
+		/*
+		 * nevim co chci
+		 */
+		
+		
+		
 	}
 }

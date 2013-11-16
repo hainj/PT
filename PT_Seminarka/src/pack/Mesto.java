@@ -12,9 +12,9 @@ public class Mesto {
 		private int y = 0;
 		private ArrayList<Mesto> sousedi;
 		private boolean heliport;
-		double vzdalenost = 100000;
-		Mesto predchudce;
-		Letiste odkud;
+		private double vzdalenost = 100000;
+		private Mesto predchudce;
+		private Letiste odkud;
 		
 
 

@@ -109,8 +109,10 @@ public class MainAPP extends JFrame {
 					Mapa.getPoleMest().add(new Mesto(x,y,obyv,true));
 	
 					index = Mapa.getPoleMest().size()-1;
+					
 					Mapa.getPoleMest().get(index).setObyvatel(obyv);
-	
+					Mapa.getPoleMest().get(index).setHeliport(false);
+					Generator.mestoBezSousVzdal(Mapa.getPoleMest().get(index), Mapa.getPoleMest());
 					//drawarea.repaint();
 					frame.repaint();
 				}

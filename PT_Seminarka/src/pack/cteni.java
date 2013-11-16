@@ -66,12 +66,20 @@ public class cteni {
 			for(int i =  Generator.indexMestPod2+1; i<poleMest.size();i++){
 				Mesto mesto = poleMest.get(i);
 				String str = "";
-				for (int j =0; j<mesto.getSousedi().size();j++){
-					str = str + Mapa.getIndexMest(mesto.getSousedi().get(j)) + " ";	
+				//System.out.println(i);
+				try {
+					int pocetSous = mesto.getSousedi().size();
+					System.out.println(pocetSous);
+					for (int j =0; j<pocetSous;j++){
+						str = str + Mapa.getIndexMest(mesto.getSousedi().get(j)) + " ";	
+						
+					}
+					writer.append(str);
+					writer.newLine();
+				} catch (Exception e) {
 					
 				}
-				writer.append(str);
-				writer.newLine();
+				
 			}
 			writer.append("exit");
 			writer.close();
