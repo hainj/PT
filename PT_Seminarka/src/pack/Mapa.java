@@ -124,12 +124,12 @@ public class Mapa extends JPanel {
 			kresleni(g2);
 		}
 		//ovladaci promenna - false pri spusteni nacte predpripravenou mapu
-		else
+		/*else
 		{
 			cteni.vstupMapa(new File("ZakladniMapa.txt"));
 
 			kresleni(g2);
-		}
+		}*/
 
 	}
 

@@ -135,7 +135,7 @@ public class MainAPP extends JFrame {
 				filec.showSaveDialog(null);
 				File souborF = filec.getSelectedFile(); 
 				if(souborF != null){ 
-				 cteni.vystupMapa(Mapa.getPoleMest(), Mapa.getPoleLetist(), souborF);
+				 cteni.vystupMapa(Mapa.getPoleMest(), Mapa.getPoleLetist(), souborF,Generator.indexMestPod2);
 			}
 			}
 			});

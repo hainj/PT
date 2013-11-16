@@ -166,7 +166,7 @@ public class Generator {
 		{
 			//pocitani vzdalenosti pomoci vektoru
 			vysledekLetiste = Math.sqrt(Math.pow(x - Mapa.poleLetist.get(i).getX(),
-							  2)+ Math.pow(y - Mapa.poleLetist.get(i).getY(), 2));
+					2)+ Math.pow(y - Mapa.poleLetist.get(i).getY(), 2));
 			if (vysledekLetiste < 5.0) return true;
 		}
 
@@ -293,40 +293,52 @@ public class Generator {
 			}
 
 		}
-		
+
 		for(int i = 0; i<=indexMestPod2;i++){
 			mestoBezSousVzdal(Mapa.getPoleMest().get(i),Mapa.getPoleMest());
-			
+
 		}
 	}
-	
+
 	public static void mestoBezSousVzdal(Mesto mest, ArrayList<Mesto>mesta){
-		
-	ArrayList<Vzdalenost> vzdal= new ArrayList<Vzdalenost>();
+
+		ArrayList<Vzdalenost> vzdal= new ArrayList<Vzdalenost>();
 		for(int i =0; i <mesta.size();i++ ){
 			if(mesta.get(i).getHeliport()){
 				double vysledekMesto = Math.sqrt(Math.pow(mesta.get(i).getX() - mest.getX(), 2)+ 
 						Math.pow(mesta.get(i).getY() - mest.getY(), 2));
-						vzdal.add(new Vzdalenost(i, vysledekMesto));
+				vzdal.add(new Vzdalenost(i, vysledekMesto));
 			}
-			
-			
+
+
 		}
 		Collections.sort(vzdal, new Komparator());
 		mest.setPredchudce(mesta.get(vzdal.get(0).index));
 		mest.setOdkud(mesta.get(vzdal.get(0).index).getOdkud());
-		
-		
+
+
 	}
-	
-	
-	
-	public static void vytvorMatici(ArrayList<Mesto> mest, ArrayList<Letiste> letist){
-		/*
-		 * nevim co chci
-		 */
-		
-		
-		
+
+
+
+	public static void vytvorMatici(ArrayList<Mesto> mest, ArrayList<Letiste> letist, int min){
+
+		for(int i = 0; i< letist.size();i++){
+			Letiste pomLet = letist.get(i);
+			for(int q = 0; q< letist.get(i).getSousedi().size();q++){
+				Mesto a = letist.get(i).getSousedi().get(q);
+				matice[i][Mapa.getIndexMest(a)] = Math.sqrt(Math.pow(pomLet.getX() - a.getX(), 2)+ 
+						Math.pow(pomLet.getY() - a.getY(), 2));
+			}	
+		}
+		for(int i = min; i< 3000;i++){
+			Mesto pomMest = mest.get(i);
+			for(int q = 0; q< pomMest.getSousedi().size();q++){
+				Mesto a = mest.get(i).getSousedi().get(q);
+				matice[i][Mapa.getIndexMest(a)] = Math.sqrt(Math.pow(pomMest.getX() - a.getX(), 2)+ 
+						Math.pow(pomMest.getY() - a.getY(), 2));
+			}	
+		}
+
 	}
 }
