@@ -1,20 +1,18 @@
 package pack;
 
-public class Auto {
+public class Vrtulnik {
 	
 	private int naklad;
 	private int poradi=0;
 	private double ujetaVzdalenost = 0;
 	private String status;
-	
 	/**
-	 * Konstruktor auta s poradim, nakladem
+	 * Konstruktor vrtulníku s poradim, nakladem
 	 */
-	public Auto(String status){
+	public Vrtulnik(String status){
 		poradi++;
 		this.naklad = 0;
-		this.setStatus(status);
-		
+		this.status = status;
 		
 	}
 	

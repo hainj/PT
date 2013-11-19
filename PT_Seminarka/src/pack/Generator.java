@@ -312,6 +312,7 @@ public class Generator {
 
 
 		}
+		mest.setMaCesty(false);
 		Collections.sort(vzdal, new Komparator());
 		mest.setPredchudce(mesta.get(vzdal.get(0).index));
 		mest.setOdkud(mesta.get(vzdal.get(0).index).getOdkud());
