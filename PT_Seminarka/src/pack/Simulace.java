@@ -36,6 +36,7 @@ public class Simulace {
 				Auto pomAut = udalosti.get(j).getAuta().get(0);
 
 				if(pomAut.getNalozeno()){
+					
 					if(!(pomAut.getUjetaVzdalenost() >= udalosti.get(j).getMesto().getVzdalenost())){
 						jed(udalosti.get(j));
 					}
