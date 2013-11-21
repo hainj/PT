@@ -18,6 +18,7 @@ public class Simulace {
 		vytvorUdalosti();
 		//simulacni cyklus pocita cas
 		for(int i = 0; i<=CAS;i++ ){
+			
 			//////////////////////////////////////******zacatek simulace******///////////////////////////////////
 			if(i == 60*k){
 				nakladejLetiste(i);
@@ -67,7 +68,9 @@ public class Simulace {
 				ArrayList<Jidlo> pomJidlo = ud.getMesto().getOdkud().getJidlo();
 
 				if(ud.getMesto().getOdkud().getJidlo().size()>0){
+					
 					if(pomJidlo.get(0).getJidlo()==0){
+						
 						pomJidlo.remove(0);
 
 					}
