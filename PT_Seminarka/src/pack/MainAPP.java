@@ -11,6 +11,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
@@ -22,7 +23,7 @@ public class MainAPP extends JFrame {
 	final static JFrame parent = new JFrame();
 	private final static String novaRadka = "\n";
 	static JPanel tlacitka = new JPanel();
-	static JTextArea textBlok = new JTextArea();
+	static JTextArea textBlok = new JTextArea(20,20);
 	static Mapa drawarea = new Mapa(700,550, false); //vytvori drawing areu o velikosti 500 x500
 	static Scanner sc = new Scanner (System.in);
 	static Random R = new Random();
@@ -31,6 +32,7 @@ public class MainAPP extends JFrame {
 		final MainAPP frame = new MainAPP();
 		frame.setTitle("Postapokalipse");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setMinimumSize(new Dimension(750, 600));
 		frame.add(drawarea);
 		frame.pack();
 		frame.setLocationRelativeTo(null);
@@ -50,9 +52,19 @@ public class MainAPP extends JFrame {
 		tlacitka.add(tlacitkoSave);
 		tlacitka.add(tlacitkoLoad);
 		tlacitka.add(tlacitkoExit);
-
+		
+		
+		textBlok.setColumns(20);
+		//textBlok.setBounds(515, 0, 40, 500);
+		JScrollPane textScroller = new JScrollPane();
+		//System.out.println(textBlok.getBounds().x);
+		textBlok.setLineWrap(true);
+		textBlok.setWrapStyleWord(true);
+		textScroller.setViewportView(textBlok);
 		frame.add(tlacitka,BorderLayout.SOUTH);
 		frame.repaint(); 
+		
+		frame.add(textScroller,BorderLayout.EAST);
 		textBlok.repaint();
 		tlacitka.repaint();
 
@@ -176,7 +188,7 @@ public class MainAPP extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Simulace baf = new Simulace();				
+				Simulace baf = new Simulace(textBlok);				
 			}
 		});
 	}

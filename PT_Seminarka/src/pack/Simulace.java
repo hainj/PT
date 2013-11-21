@@ -2,6 +2,8 @@ package pack;
 
 import java.util.ArrayList;
 
+import javax.swing.JTextArea;
+
 public class Simulace {
 	private final int CAS = 10080;
 	private final double URAZENAVZDAL = 40/60;
@@ -11,7 +13,7 @@ public class Simulace {
 
 
 
-	public Simulace(){
+	public Simulace(JTextArea textBlok){
 
 		vytvorUdalosti();
 		//simulacni cyklus pocita cas
@@ -20,12 +22,14 @@ public class Simulace {
 			if(i == 60*k){
 				nakladejLetiste(i);
 				vytvorUdalosti();
+				
+				vypisLog.vypis(textBlok);
 			}
 
 			if(i == z*30){
 				nakladej();
 			}
-
+			
 			//////////////////////////////////////******konec simulace******///////////////////////////////////
 		}
 	}
@@ -56,6 +60,7 @@ public class Simulace {
 
 	private void nakladej() {
 		for(int i = 0; i <udalosti.size();i++){
+			
 			Udalost ud = udalosti.get(i);
 			for(int j = 0; j <ud.getAuta().size();j++){
 
@@ -78,6 +83,7 @@ public class Simulace {
 
 				}
 				else{
+					
 					break;
 				}
 			}
