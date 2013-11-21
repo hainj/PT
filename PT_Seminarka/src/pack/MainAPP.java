@@ -35,8 +35,8 @@ public class MainAPP extends JFrame {
 		frame.pack();
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
-		
-	
+
+
 		JButton tlacitkoSave = new JButton ("save");
 		JButton tlacitkoLoad = new JButton ("load");
 		JButton tlacitkoNew = new JButton ("nova mapa");
@@ -55,9 +55,9 @@ public class MainAPP extends JFrame {
 		frame.repaint(); 
 		textBlok.repaint();
 		tlacitka.repaint();
-		
-		
-		
+
+
+
 		//tlacitko na vytvareni nove mapy
 		tlacitkoNew.addActionListener(new ActionListener()
 		{
@@ -88,9 +88,9 @@ public class MainAPP extends JFrame {
 						x = generujSour();
 						y = generujSour();
 					}while(Generator.porovnejMesta (x,y,index) == true);
-					
+
 					//pop up okno na nacitani poctu obyvatel novemu mestu
-					 
+
 					int obyv = 0;
 					while(true)
 					{
@@ -104,12 +104,12 @@ public class MainAPP extends JFrame {
 							JOptionPane.showMessageDialog(parent, "Prosim zadejte cislo");
 						}
 					}
-					
-					
+
+
 					Mapa.getPoleMest().add(new Mesto(x,y,obyv,true));
-	
+
 					index = Mapa.getPoleMest().size()-1;
-					
+
 					Mapa.getPoleMest().get(index).setObyvatel(obyv);
 					Mapa.getPoleMest().get(index).setHeliport(false);
 					Generator.mestoBezSousVzdal(Mapa.getPoleMest().get(index), Mapa.getPoleMest());
@@ -129,16 +129,16 @@ public class MainAPP extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent arg0)
 			{
-				
+
 				JFileChooser filec = new JFileChooser(); 
 
 				filec.showSaveDialog(null);
 				File souborF = filec.getSelectedFile(); 
 				if(souborF != null){ 
-				 cteni.vystupMapa(Mapa.getPoleMest(), Mapa.getPoleLetist(), souborF,Generator.indexMestPod2);
+					cteni.vystupMapa(Mapa.getPoleMest(), Mapa.getPoleLetist(), souborF,Generator.indexMestPod2);
+				}
 			}
-			}
-			});
+		});
 
 		//tlacitko na nacitani mapy - poloha mest a letist
 		tlacitkoLoad.addActionListener(new ActionListener()
@@ -156,7 +156,7 @@ public class MainAPP extends JFrame {
 					System.out.println(souborF.getAbsolutePath());
 					cteni.vstupMapa(souborF);
 				}
-				
+
 				drawarea = new Mapa (500 , 500, true);
 				drawarea.repaint();
 				frame.repaint();
@@ -172,8 +172,17 @@ public class MainAPP extends JFrame {
 				System.exit(0);
 			}
 		});
+		tlacitkoStart.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Simulace baf = new Simulace();				
+			}
+		});
 	}
-	
+
+
+
 	public static int generujSour ()
 	{
 		int x = R.nextInt(500);

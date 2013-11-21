@@ -77,13 +77,6 @@ public class Letiste {
 
 
 
-	public int getCelkJidlo() {
-		int pomJidlo;
-		for(int i = 0; i < jidlo.size(); i++){
-			pomJidlo
-		}
-		return 0;
-	}
 
 
 }

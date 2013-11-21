@@ -285,6 +285,7 @@ public class Generator {
 			for(int i = 0; i <m.getSousedi().size();i++){
 				if((pomVzdal = m.getVzdalenost() + matice[5+Mapa.getIndexMest(m)][Mapa.getIndexMest(pom)])<pom.getVzdalenost()){
 					pom.setPredchudce(m);
+					pom.setOdkud(letiste);
 					pom.setVzdalenost(pomVzdal);
 					fronta.add(pom);
 

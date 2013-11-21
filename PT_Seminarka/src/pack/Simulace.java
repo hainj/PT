@@ -61,21 +61,26 @@ public class Simulace {
 
 				ArrayList<Jidlo> pomJidlo = ud.getMesto().getOdkud().getJidlo();
 
-				if(pomJidlo.get(0).getJidlo()==0){
-					pomJidlo.remove(0);
+				if(ud.getMesto().getOdkud().getJidlo().size()>0){
+					if(pomJidlo.get(0).getJidlo()==0){
+						pomJidlo.remove(0);
+
+					}
+
+					else if(ud.getAuta().get(j).getStatus().compareToIgnoreCase("Ceka")==0 ||
+							ud.getAuta().get(j).getStatus().compareToIgnoreCase("Naklada")==0){
+						ud.getAuta().get(j).setStatus("Naklada");
+						ud.getAuta().get(j).setNaklad(ud.getAuta().get(j).getNaklad() + 1000);
+
+						pomJidlo.get(0).setJidlo(pomJidlo.get(0).getJidlo() - 1000);
+					}
+
+
 				}
-
-				else if(ud.getAuta().get(j).getStatus().compareToIgnoreCase("Ceka")==0 ||
-						ud.getAuta().get(j).getStatus().compareToIgnoreCase("Naklada")==0){
-					ud.getAuta().get(j).setStatus("Naklada");
-					ud.getAuta().get(j).setNaklad(ud.getAuta().get(j).getNaklad() + 1000);
-
-					pomJidlo.get(0).setJidlo(pomJidlo.get(0).getJidlo() - 1000);
+				else{
+					break;
 				}
-				
-
 			}
-
 		}
 		z++;
 	}
