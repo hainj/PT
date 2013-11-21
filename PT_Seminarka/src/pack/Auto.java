@@ -3,21 +3,42 @@ package pack;
 public class Auto {
 	
 	private int naklad;
-	private int poradi=0;
+	
+	private int pocet = 0;
 	private double ujetaVzdalenost = 0;
 	private String status;
+	private boolean nalozeno = false;
 	
+	public boolean getNalozeno() {
+		return nalozeno;
+	}
+
+	public void setNalozeno(boolean nalozeno) {
+		this.nalozeno = nalozeno;
+	}
+
 	/**
 	 * Konstruktor auta s poradim, nakladem
 	 */
 	public Auto(String status){
-		poradi++;
+		this.pocet++;
 		this.naklad = 0;
 		this.setStatus(status);
+		this.nalozeno = false;
 		
 		
 	}
 	
+
+
+	public int getPocet() {
+		return pocet;
+	}
+
+	public void setPocet(int pocet) {
+		this.pocet = pocet;
+	}
+
 	public int getNaklad() {
 		return naklad;
 	}
@@ -26,14 +47,13 @@ public class Auto {
 		this.naklad += naklad;
 	}
 	
-	public int getPoradi() {
-		return poradi;
-	}
+
 	
+	/**
 	public void setPoradi(int poradi) {
 		this.poradi = poradi;
-	}
-	
+	}*/
+
 	/**
 	 * @return the ujetaVzdalenost
 	 */
