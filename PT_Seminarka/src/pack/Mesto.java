@@ -67,7 +67,7 @@ public class Mesto {
 	 * @param jidlo the jidlo to set
 	 */
 	public void setJidlo(int jidlo) {
-		this.jidlo = jidlo;
+		this.jidlo += jidlo;
 	}
 
 	/**

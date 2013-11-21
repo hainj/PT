@@ -33,6 +33,7 @@ public class MainAPP extends JFrame {
 		frame.setTitle("Postapokalipse");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setMinimumSize(new Dimension(750, 600));
+		frame.setResizable(false);
 		frame.add(drawarea);
 		frame.pack();
 		frame.setLocationRelativeTo(null);
@@ -61,8 +62,11 @@ public class MainAPP extends JFrame {
 		textBlok.setLineWrap(true);
 		textBlok.setWrapStyleWord(true);
 		textScroller.setViewportView(textBlok);
+		textBlok.setEditable(false);
+		
 		frame.add(tlacitka,BorderLayout.SOUTH);
 		frame.repaint(); 
+		
 		
 		frame.add(textScroller,BorderLayout.EAST);
 		textBlok.repaint();
