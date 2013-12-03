@@ -199,8 +199,9 @@ public class MainAPP extends JFrame {
 				    chooser.showOpenDialog(null);
 				  
 				    File f = chooser.getSelectedFile();
+				    String str = null;
 				   try{
-				    String str = f.getAbsolutePath();
+				    str = f.getAbsolutePath();
 				    System.out.println(str);
 				    }
 				   catch(NullPointerException except){
@@ -208,7 +209,7 @@ public class MainAPP extends JFrame {
 				   }
 				   
 
-				new Simulace(textBlok,Mapa.getPoleMest(), Mapa.getPoleLetist());				
+				new Simulace(textBlok,Mapa.getPoleMest(), Mapa.getPoleLetist(), str);				
 			}
 		});
 	}

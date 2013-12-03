@@ -4,12 +4,9 @@
 
 package pack;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
-import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Random;
 
@@ -35,7 +32,7 @@ public class Generator {
 	}
 	public Generator(ArrayList<Mesto> poleMest, ArrayList<Letiste> poleLetist) {
 		vytvorMatici(poleMest, poleLetist, indexMestPod2+1);
-		
+
 		for(int i =0; i< poleLetist.size(); i++){
 			dijkstra(poleLetist.get(i), i);
 		}
@@ -296,7 +293,7 @@ public class Generator {
 					pom.setPredchudce(m);
 					pom.setOdkud(letiste);
 					pom.setVzdalenost(pomVzdal);
-					
+
 					fronta.add(pom);
 
 				}
@@ -342,25 +339,45 @@ public class Generator {
 				Mesto a = letist.get(i).getSousedi().get(q);
 				matice[i][Mapa.getIndexMest(a)] = Math.sqrt(Math.pow(pomLet.getX() - a.getX(), 2)+ 
 						Math.pow(pomLet.getY() - a.getY(), 2));
-			//	System.out.print(matice[i][Mapa.getIndexMest(a)]+ " ");
+				//	System.out.print(matice[i][Mapa.getIndexMest(a)]+ " ");
 			}	
-		//System.out.println();
+			//System.out.println();
 		}
 		for(int i = min; i< 3000;i++){
-			
+
 			Mesto pomMest = mest.get(i);
-			
+
 			for(int q = 0; q< pomMest.getSousedi().size();q++){
-			
+
 				Mesto a = mest.get(i).getSousedi().get(q);
-				
+
 				matice[i+5][Mapa.getIndexMest(a)] = Math.sqrt(Math.pow(pomMest.getX() - a.getX(), 2)+ 
 						Math.pow(pomMest.getY() - a.getY(), 2));
 				//System.out.print(matice[i][Mapa.getIndexMest(a)]+ " ");
 			}	
-		//System.out.println();
+			//System.out.println();
 		}
-		
 
+
+	}
+
+	public static String cesta(Mesto mesto){
+		ArrayList<String> str = new ArrayList<String>();
+
+		str.add(String.valueOf(Mapa.getIndexMest(mesto.getPredchudce())));
+		str = rekurCesta(mesto.getPredchudce(), str);
+
+		return null;
+
+
+	}
+	private static ArrayList<String> rekurCesta(Mesto predchudce,
+			ArrayList<String> str) {
+		try{
+		str.add(String.valueOf(Mapa.getIndexMest(predchudce.getPredchudce())));
+		}catch(NullPointerException e){
+			str.add(String.valueOf(predchudce.getOdkud()));
+		}
+		return str;
 	}
 }

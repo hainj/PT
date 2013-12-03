@@ -7,7 +7,7 @@ public class Udalost {
 	private ArrayList<Auto> auta = new ArrayList<Auto>();
 	private ArrayList<Vrtulnik> vrtulniky = new ArrayList<Vrtulnik>();
 	private String status;
-	private boolean vrtulník;
+	private boolean vrtulnik;
 	private Mesto odkudVrtulnik;
 	private boolean dokonceno;
 	
@@ -18,7 +18,7 @@ public class Udalost {
 	 */
 	public Udalost(Mesto mesto, ArrayList<Auto> auta, boolean vrtulnik, boolean dokonceno) {
 		this.mesto = mesto;
-		this.vrtulník = vrtulnik;
+		this.vrtulnik = vrtulnik;
 		this.auta = auta;
 		this.dokonceno = dokonceno;
 	
@@ -26,7 +26,7 @@ public class Udalost {
 
 	public Udalost(Mesto mesto,Mesto odkudVrtulnik, ArrayList<Auto> auta, ArrayList<Vrtulnik> vrtulniky, boolean vrtulnik, boolean dokonceno) {
 		this.mesto = mesto;
-		this.vrtulník = vrtulnik;
+		this.vrtulnik = vrtulnik;
 		this.odkudVrtulnik = odkudVrtulnik;
 		this.auta = auta;
 		this.vrtulniky = vrtulniky;
@@ -108,10 +108,10 @@ public class Udalost {
 	}
 
 	/**
-	 * @return the vrtulník
+	 * @return the vrtulnik
 	 */
 	public boolean isVrtulnik() {
-		return vrtulník;
+		return vrtulnik;
 	}
 
 	/**

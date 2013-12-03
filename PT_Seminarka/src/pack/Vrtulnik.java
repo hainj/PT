@@ -62,7 +62,7 @@ public class Vrtulnik {
 	 * @param ujetaVzdalenost the ujetaVzdalenost to set
 	 */
 	public void setUjetaVzdalenost(double ujetaVzdalenost) {
-		this.ujetaVzdalenost = ujetaVzdalenost;
+		this.ujetaVzdalenost += ujetaVzdalenost;
 	}
 
 	/**
@@ -95,5 +95,15 @@ public class Vrtulnik {
 		this.nakladTreba = nakladTreba;
 	}
 	
+	@Override
+	public String toString() {
+
+		String str = "Naklad = " + this.getNaklad() + " \n" +
+				" Potreba nalozit: " + this.getNakladTreba() + " \n" + 
+				" Ujeta vzdalenost: " + this.getUjetaVzdalenost()+ " \n" +
+				" Status: " + this.getStatus() + " Nalozeno: " + this.isNalozeno();
+		
+		return str;
+	}
 	
 }

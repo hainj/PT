@@ -7,7 +7,7 @@ public class Auto {
 	private int pocet = 0;
 	private double ujetaVzdalenost = 0.0;
 	private String status;
-	private int potrebaNalozit;
+	private double potrebaNalozit;
 	private boolean nalozeno = false;
 	
 	public boolean getNalozeno() {
@@ -21,7 +21,7 @@ public class Auto {
 	/**
 	 * Konstruktor auta s poradim, nakladem
 	 */
-	public Auto(String status, int potrebaNalozit){
+	public Auto(String status, double potrebaNalozit){
 		this.pocet++;
 		this.naklad = 0;
 		this.setStatus(status);
@@ -36,7 +36,7 @@ public class Auto {
 	/**
 	 * @return the potrebaNalozit
 	 */
-	public int getPotrebaNalozit() {
+	public double getPotrebaNalozit() {
 		return potrebaNalozit;
 	}
 
@@ -94,9 +94,9 @@ public class Auto {
 	@Override
 	public String toString() {
 		String str = "Naklad = " + this.getNaklad() + "\n" +
-					" Potreba nalozit: " + this.getPotrebaNalozit() + "\n" + 
-					" Ujeta vzdalenost: " + this.getUjetaVzdalenost()+ "\n" +
-					" Status: " + this.getStatus();
+					"  Potreba nalozit: " + this.getPotrebaNalozit() + "\n" + 
+					"  Ujeta vzdalenost: " + this.getUjetaVzdalenost()+ "\n" +
+					"  Status: " + this.getStatus();
 		return str;
 	}
 	
