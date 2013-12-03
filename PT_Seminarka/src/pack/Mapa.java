@@ -120,7 +120,7 @@ public class Mapa extends JPanel {
 		 {
 			 //jeli spusteny program prazdny vygeneruje novou mapu
 			 if(poleMest.size()==0){
-				 Generator gen = new Generator();
+				new Generator();
 			 }
 
 			 kresleni(g2);
@@ -129,7 +129,8 @@ public class Mapa extends JPanel {
 		 else
 		 {
 			 cteni.vstupMapa(new File("ZakladniMapa.txt"));
-
+			 new Generator(poleMest, poleLetist);
+			 
 			 kresleni(g2);
 		 }
 
