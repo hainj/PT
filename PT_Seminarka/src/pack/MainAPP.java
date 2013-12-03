@@ -33,7 +33,6 @@ public class MainAPP extends JFrame {
 		frame.setTitle("Postapokalipse");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setMinimumSize(new Dimension(750, 600));
-		frame.setResizable(false);
 		frame.add(drawarea);
 		frame.pack();
 		frame.setLocationRelativeTo(null);
@@ -62,11 +61,8 @@ public class MainAPP extends JFrame {
 		textBlok.setLineWrap(true);
 		textBlok.setWrapStyleWord(true);
 		textScroller.setViewportView(textBlok);
-		textBlok.setEditable(false);
-		
 		frame.add(tlacitka,BorderLayout.SOUTH);
 		frame.repaint(); 
-		
 		
 		frame.add(textScroller,BorderLayout.EAST);
 		textBlok.repaint();
@@ -192,7 +188,23 @@ public class MainAPP extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Simulace baf = new Simulace(textBlok);				
+				  JFileChooser chooser = new JFileChooser(); 
+				    chooser.setCurrentDirectory(new java.io.File("."));
+				    chooser.setDialogTitle("Složka kam budou uloženy logy");
+				    chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+				    //
+				    // disable the "All files" option.
+				    //
+				    chooser.setAcceptAllFileFilterUsed(false);
+				    chooser.showOpenDialog(null);
+				  
+				    File f = chooser.getSelectedFile();
+				    String str = f.getPath() + "\\adsdsds";
+				    System.out.println(str);
+				    
+				   
+
+				new Simulace(textBlok,Mapa.getPoleMest(), Mapa.getPoleLetist());				
 			}
 		});
 	}
