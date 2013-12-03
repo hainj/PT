@@ -33,6 +33,16 @@ public class Generator {
 
 
 	}
+	public Generator(ArrayList<Mesto> poleMest, ArrayList<Letiste> poleLetist) {
+		vytvorMatici(poleMest, poleLetist, indexMestPod2+1);
+		
+		for(int i =0; i< poleLetist.size(); i++){
+			dijkstra(poleLetist.get(i), i);
+		}
+		/*for (int i = 0; i < poleMest.size(); i++) {
+			System.out.println(poleMest.get(i).getVzdalenost());
+		}*/
+	}
 	/**
 	 * Vygeneruje x, y - souradnice pro 5 letist
 	 */
@@ -41,10 +51,7 @@ public class Generator {
 		int x = 0;
 		int y = 0;
 
-		x = generujSour();
-		y = generujSour();
-		Mapa.poleLetist.add(new Letiste(x,y));
-		for(int i = 1; i <5; i++)
+		for(int i = 0; i <5; i++)
 		{
 			do
 			{
@@ -272,6 +279,7 @@ public class Generator {
 			Mesto l;
 			l = letiste.getSousedi().get(i);
 			l.setVzdalenost(matice[indexLet][Mapa.getIndexMest(l)]);
+			//System.out.println(matice[indexLet][Mapa.getIndexMest(l)]);
 			l.setOdkud(letiste);
 			fronta.add(l);
 
@@ -282,11 +290,13 @@ public class Generator {
 			m = fronta.poll();
 			pom = m.getSousedi().get(0);
 
-			for(int i = 0; i <m.getSousedi().size();i++){
+			for(int i = 1; i <m.getSousedi().size();i++){
 				if((pomVzdal = m.getVzdalenost() + matice[5+Mapa.getIndexMest(m)][Mapa.getIndexMest(pom)])<pom.getVzdalenost()){
+					//System.out.println(pomVzdal);
 					pom.setPredchudce(m);
 					pom.setOdkud(letiste);
 					pom.setVzdalenost(pomVzdal);
+					
 					fronta.add(pom);
 
 				}
@@ -316,6 +326,7 @@ public class Generator {
 		mest.setMaCesty(false);
 		Collections.sort(vzdal, new Komparator());
 		mest.setPredchudce(mesta.get(vzdal.get(0).index));
+		mest.setVzdalenost(vzdal.get(0).vzdalenost);
 		mest.setOdkud(mesta.get(vzdal.get(0).index).getOdkud());
 
 
@@ -331,16 +342,25 @@ public class Generator {
 				Mesto a = letist.get(i).getSousedi().get(q);
 				matice[i][Mapa.getIndexMest(a)] = Math.sqrt(Math.pow(pomLet.getX() - a.getX(), 2)+ 
 						Math.pow(pomLet.getY() - a.getY(), 2));
+			//	System.out.print(matice[i][Mapa.getIndexMest(a)]+ " ");
 			}	
+		//System.out.println();
 		}
 		for(int i = min; i< 3000;i++){
+			
 			Mesto pomMest = mest.get(i);
+			
 			for(int q = 0; q< pomMest.getSousedi().size();q++){
+			
 				Mesto a = mest.get(i).getSousedi().get(q);
-				matice[i][Mapa.getIndexMest(a)] = Math.sqrt(Math.pow(pomMest.getX() - a.getX(), 2)+ 
+				
+				matice[i+5][Mapa.getIndexMest(a)] = Math.sqrt(Math.pow(pomMest.getX() - a.getX(), 2)+ 
 						Math.pow(pomMest.getY() - a.getY(), 2));
+				//System.out.print(matice[i][Mapa.getIndexMest(a)]+ " ");
 			}	
+		//System.out.println();
 		}
+		
 
 	}
 }
