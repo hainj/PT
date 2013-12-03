@@ -98,7 +98,7 @@ public class Vrtulnik {
 	@Override
 	public String toString() {
 
-		String str = "Naklad = " + this.getNaklad() + " \n" +
+		String str = "Naklad = " + Math.floor(this.getNaklad()) + " \n" +
 				" Potreba nalozit: " + this.getNakladTreba() + " \n" + 
 				" Ujeta vzdalenost: " + this.getUjetaVzdalenost()+ " \n" +
 				" Status: " + this.getStatus() + " Nalozeno: " + this.isNalozeno();

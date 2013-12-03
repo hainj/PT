@@ -93,7 +93,7 @@ public class Auto {
 	
 	@Override
 	public String toString() {
-		String str = "Naklad = " + this.getNaklad() + "\n" +
+		String str = "Naklad = " + Math.floor(this.getNaklad()) + "\n" +
 					"  Potreba nalozit: " + this.getPotrebaNalozit() + "\n" + 
 					"  Ujeta vzdalenost: " + this.getUjetaVzdalenost()+ "\n" +
 					"  Status: " + this.getStatus();

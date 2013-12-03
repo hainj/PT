@@ -202,13 +202,13 @@ public class Mesto {
 	public String toString() {
 		String str = "";
 		if(this.isMaCesty()){
-			str = "Jidlo: " + this.jidlo + "\n" + 
+			str = "Jidlo: " + Math.ceil(this.jidlo) + "\n" + 
 					" Jidlo treba: " + this.getJidlaTreba() + "\n" + 
 					" Hlad: " + this.getHlad() + "\n" + 
 					" Vzdalenost: " + this.getVzdalenost();
 		}
 		else{
-			str = "Jidlo: " + this.jidlo + "\n" +  
+			str = "Jidlo: " + Math.ceil(this.jidlo) + "\n" +  
 					" Jidlo treba: " + this.getJidlaTreba() + "\n" + 
 					" Hlad: " + this.getHlad() + "\n" + 
 					" Vzdalenost: od mesta s heliportem " + this.getVzdalenost()+ "\n" +

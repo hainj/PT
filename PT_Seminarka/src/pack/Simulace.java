@@ -30,7 +30,7 @@ public class Simulace {
 		vytvorUdalosti(poleMest);
 		//simulacni cyklus pocita cas
 		for(int i = 0; i<=CAS;i++ ){
-			System.out.println(poleMest.size() + "   " +udalosti.size());
+			//System.out.println(poleMest.size() + "   " +udalosti.size());
 			//System.out.println(i);
 			//////////////////////////////////////******zacatek simulace******///////////////////////////////////
 			if(i == 60*k){
@@ -104,7 +104,7 @@ public class Simulace {
 							else{
 								//System.out.println("avc");
 								//System.out.println(pomAut.getNalozeno());
-								vykladej(udalosti.get(j));
+								vykladej(udalosti.get(j),pomAut);
 								//System.out.println(i + "q");
 
 							}
@@ -114,8 +114,8 @@ public class Simulace {
 			}
 
 			if(i == m*1440){
-
-				vypisLog.zapis(udalosti, cesta, m);
+				System.out.println(udalosti.size());
+				//vypisLog.zapis(udalosti, cesta, m);
 				m++;
 			}
 
@@ -151,51 +151,58 @@ public class Simulace {
 		if(pomAut.getNaklad() <=0 ){
 			return;
 		}
-		
+
 		for(int i = 0; i<udalost.getVrtulniky().size();i++){
 			Vrtulnik vrt = udalost.getVrtulniky().get(i);
-			
-			if((vrt.getNaklad() + nakladMinuta) >= vrt.getNakladTreba()){
+			//System.out.println(pomAut.getNaklad());
+			//System.out.println(vrt.getNaklad());
+			if(!vrt.isNalozeno()){
+				if((vrt.getNaklad() + nakladMinuta - vrt.getNakladTreba()) >= 0){
 
-				if(pomAut.getNaklad() >= (vrt.getNakladTreba() - vrt.getNaklad())){
-					pomAut.setNaklad(-vrt.getNakladTreba() + vrt.getNaklad());
-					vrt.setNaklad(vrt.getNakladTreba() - vrt.getNaklad());
-					vrt.setStatus("Ceka");
-					vrt.setNalozeno(true);
+					if(pomAut.getNaklad()>(vrt.getNakladTreba() - vrt.getNaklad())) {
+						pomAut.setNaklad(vrt.getNaklad() - vrt.getNakladTreba());
+						vrt.setNaklad(vrt.getNakladTreba() - vrt.getNaklad());
+						vrt.setStatus("Ceka");
+						vrt.setNalozeno(true);
+						//System.out.println("B");
+					}
+					else if(nakladMinuta>=pomAut.getNaklad()){
+
+						vrt.setNaklad(pomAut.getNaklad());
+						pomAut.setNaklad(-pomAut.getNaklad());
+						//System.out.println("A");
+						pomAut.setStatus("Preklada");
+						vrt.setStatus("Naklllada");
+					}
 				}
 				else{
-					
-					vrt.setNaklad(pomAut.getNaklad());
-					
-					pomAut.setNaklad(-pomAut.getNaklad());
-					pomAut.setStatus("Preklada");
-					vrt.setStatus("Naklllada");
+					if(pomAut.getNaklad()<nakladMinuta){
+						vrt.setNaklad(pomAut.getNaklad());
+						pomAut.setNaklad(-pomAut.getNaklad());
+						pomAut.setStatus("Preklada");
+						vrt.setStatus("Nakllllllada");
+						//System.out.println("C");
+					}
+					else{
+						vrt.setNaklad(nakladMinuta);
+						pomAut.setNaklad(-nakladMinuta);
+						pomAut.setStatus("Preklada");
+						vrt.setStatus("Nakllllllllllllllada");
+						//System.out.println("D");
+					}
 				}
+
+				//System.out.println(vrt.getNaklad() + "  " + udalost.getMesto().getJidlaTreba());
+				//System.out.println(pomAut.getNaklad());
+				//System.out.println(vrt.getNaklad());
 			}
-			else{
-				if(pomAut.getNaklad()<nakladMinuta){
-					vrt.setNaklad(pomAut.getNaklad());
-					pomAut.setNaklad(-pomAut.getNaklad());
-					pomAut.setStatus("Preklada");
-					vrt.setStatus("Nakllllllada");
-				}
-				else{
-					vrt.setNaklad(nakladMinuta);
-					pomAut.setNaklad(-nakladMinuta);
-					pomAut.setStatus("Preklada");
-					vrt.setStatus("Nakllllllllllllllada");
-				}
-			}
-			if(Math.abs(vrt.getNakladTreba()-vrt.getNaklad())<0.1){
-				
-				
+			if(Math.abs(vrt.getNakladTreba()-vrt.getNaklad())<0.001){
+
+
 				vrt.setStatus("Ceka");
 				vrt.setNalozeno(true);
 			}
-			//System.out.println(vrt.getNaklad() + "  " + udalost.getMesto().getJidlaTreba());
-
 		}
-
 
 	}
 
@@ -273,46 +280,44 @@ public class Simulace {
 
 
 	}
-	private  void vykladej(Udalost ud){
+	private  void vykladej(Udalost ud, Auto pomAut){
 		//System.out.println(ud.getAuta().get(0).getNaklad());
-		for(int i = 0; i < ud.getAuta().size(); i++){
 
-			Auto pomAut = ud.getAuta().get(i);
-			if(Math.abs(pomAut.getPotrebaNalozit() - pomAut.getNaklad()) < 0.1){
-				pomAut.setStatus("Dokonceno");
-			}else{
-				if(ud.getMesto().getJidlo() + nakladMinuta > ud.getMesto().getJidlaTreba()){
-					pomAut.setNaklad(ud.getMesto().getJidlo()-ud.getMesto().getJidlaTreba());
-					ud.getMesto().setJidlo(ud.getMesto().getJidlaTreba()-ud.getMesto().getJidlo());
-					
+		if(Math.abs(pomAut.getNaklad()) == 0.0){
+			pomAut.setStatus("Dokonceno");
+		}else{
+			if(ud.getMesto().getJidlo() + nakladMinuta > ud.getMesto().getJidlaTreba()){
+				pomAut.setNaklad(ud.getMesto().getJidlo()-ud.getMesto().getJidlaTreba());
+				ud.getMesto().setJidlo(ud.getMesto().getJidlaTreba()-ud.getMesto().getJidlo());
+
+			}
+			else{
+				if(pomAut.getNaklad()<nakladMinuta){
+					ud.getMesto().setJidlo(pomAut.getNaklad());
+					pomAut.setNaklad(-pomAut.getNaklad());
+					pomAut.setStatus("Vyklada");
+
 				}
 				else{
-					if(pomAut.getNaklad()<nakladMinuta){
-						ud.getMesto().setJidlo(pomAut.getNaklad());
-						pomAut.setNaklad(pomAut.getNaklad()*-1.0);
-						pomAut.setStatus("Vyklada");
 
-					}
-					else{
-
-						pomAut.setNaklad(nakladMinuta*-1.0);
-						pomAut.setStatus("Vyklada");
-						ud.getMesto().setJidlo(nakladMinuta);
-					}
-					//System.out.println(ud.getMesto().getJidlo());
-
-
+					pomAut.setNaklad(-nakladMinuta);
+					pomAut.setStatus("Vyklada");
+					ud.getMesto().setJidlo(nakladMinuta);
 				}
+				//System.out.println(ud.getMesto().getJidlo());
+
 
 			}
-			if(pomAut.getNaklad() <=0){
 
-				pomAut.setStatus("Dokonceno");
-			}
 		}
+		if(pomAut.getNaklad() <=0.1){
 
-		//System.out.println(ud.getAuta().get(0).getNaklad());
+			pomAut.setStatus("Dokonceno");
+		}
 	}
+
+	//System.out.println(ud.getAuta().get(0).getNaklad());
+
 
 
 	private  void nakladej() {
@@ -334,7 +339,7 @@ public class Simulace {
 					else if(auto.getNalozeno()){
 						auto.setStatus("Ceka");
 					}
-					
+
 					else{
 						if(Math.abs(auto.getPotrebaNalozit() - auto.getNaklad())<0.1){
 							//System.out.println("ahoj");

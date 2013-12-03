@@ -27,6 +27,7 @@ public class vypisLog {
 			BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(stream));
 			
 			for(int i = 0; i < udalosti.size(); i++){
+				System.out.println(i);
 				writer.append("Mesto " + i);
 				writer.newLine();
 				writer.append(udalosti.get(i).getMesto().toString());
@@ -42,10 +43,10 @@ public class vypisLog {
 				if(!udalosti.get(i).getMesto().isMaCesty()){
 					writer.append("Vrtulniky");
 					writer.newLine();
-					for(int q = 0; q<udalosti.get(i).getVrtulniky().size(); q++){
-						writer.append("Vrtulnik " + q);
+					for(int l = 0; l <udalosti.get(i).getVrtulniky().size(); l++){
+						writer.append("Vrtulnik " + l);
 						writer.newLine();
-						writer.append(udalosti.get(i).getVrtulniky().get(q).toString());
+						writer.append(udalosti.get(i).getVrtulniky().get(l).toString());
 						writer.newLine();
 						
 					}
@@ -53,6 +54,8 @@ public class vypisLog {
 
 
 			}
+			writer.close();
+			stream.close();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
