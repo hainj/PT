@@ -190,7 +190,7 @@ public class MainAPP extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				  JFileChooser chooser = new JFileChooser(); 
 				    chooser.setCurrentDirectory(new java.io.File("."));
-				    chooser.setDialogTitle("Složka kam budou uloženy logy");
+				    chooser.setDialogTitle("Slozka kam budou ulozeny logy");
 				    chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 				    //
 				    // disable the "All files" option.
@@ -199,9 +199,13 @@ public class MainAPP extends JFrame {
 				    chooser.showOpenDialog(null);
 				  
 				    File f = chooser.getSelectedFile();
-				    String str = f.getPath() + "\\adsdsds";
+				   try{
+				    String str = f.getAbsolutePath();
 				    System.out.println(str);
-				    
+				    }
+				   catch(NullPointerException except){
+					   JOptionPane.showConfirmDialog(chooser, "Nevybrana zadna slozka", "Chooser", JOptionPane.DEFAULT_OPTION);
+				   }
 				   
 
 				new Simulace(textBlok,Mapa.getPoleMest(), Mapa.getPoleLetist());				

@@ -6,7 +6,10 @@ import javax.swing.JTextArea;
 
 public class Simulace {
 	private final int CAS = 10080;
-	private double URAZENAVZDAL = 40.0/60.0;
+	private double URAZENAVZDAL = 40/60;
+	private int maxVyklad = 1000;
+	private double maxAuto = 12000.0;
+	private double maxVrt = 2000.0;
 	private ArrayList<Udalost> udalosti = new ArrayList<Udalost>();
 	private int k = 1;
 	private int z = 0;
@@ -75,7 +78,7 @@ public class Simulace {
 								//System.out.println("avc");
 								//System.out.println(pomAut.getNalozeno());
 								vykladej(udalosti.get(j));
-
+								System.out.println(i + "q");
 
 							}
 						}
@@ -175,14 +178,30 @@ public class Simulace {
 
 
 	}
-
+	private void vykladejVrtulnik(Udalost ud){
+		for(int i = 0; i < ud.getVrtulniky().size(); i++){
+			Vrtulnik vrt = ud.getVrtulniky().get(i);
+			if(vrt.getNaklad()<maxVyklad){
+				ud.getMesto().setJidlo(vrt.getNaklad());
+				vrt.setNaklad(-vrt.getNaklad());
+			}
+			else{
+				ud.getMesto().setJidlo(maxVyklad);
+				vrt.setNaklad(-maxVyklad);
+			}
+			if(vrt.getNaklad()==0){
+				vrt.setStatus("Dokonceno");
+			}
+		}
+		
+	}
 	private void vykladej(Udalost ud){
 		//System.out.println(ud.getAuta().get(0).getNaklad());
 		for(int i = 0; i < ud.getAuta().size(); i++){
 
 			Auto pomAut = ud.getAuta().get(i);
 
-			if(pomAut.getNaklad()<1000){
+			if(pomAut.getNaklad()<maxVyklad){
 				ud.getMesto().setJidlo(pomAut.getNaklad());
 				pomAut.setNaklad(-pomAut.getNaklad());
 				pomAut.setStatus("Vyklada");
@@ -190,9 +209,9 @@ public class Simulace {
 			}
 			else{
 
-				pomAut.setNaklad(-1000);
+				pomAut.setNaklad(-maxVyklad);
 				pomAut.setStatus("Vyklada");
-				ud.getMesto().setJidlo(1000);
+				ud.getMesto().setJidlo(maxVyklad);
 			}
 			//System.out.println(ud.getMesto().getJidlo());
 
@@ -236,9 +255,9 @@ public class Simulace {
 							ud.getAuta().get(j).setStatus("Naklada");
 							//ud.getAuta().get(j).getNaklad() + 
 							int z;
-							if((z = auto.getPotrebaNalozit() - auto.getNaklad())>1000){
-								auto.setNaklad(1000);
-								pomJidlo.get(0).setJidlo(pomJidlo.get(0).getJidlo() - 1000);
+							if((z = auto.getPotrebaNalozit() - auto.getNaklad())>maxVyklad){
+								auto.setNaklad(maxVyklad);
+								pomJidlo.get(0).setJidlo(pomJidlo.get(0).getJidlo() - maxVyklad);
 							}else{
 								auto.setNaklad(z);
 								pomJidlo.get(0).setJidlo(pomJidlo.get(0).getJidlo() - z);
@@ -285,7 +304,7 @@ public class Simulace {
 			if(pomMest.getHlad()){
 
 				if(pomMest.isMaCesty()){
-					double jidAuta = pomMest.getJidlaTreba()/12000.0;
+					double jidAuta = pomMest.getJidlaTreba()/maxAuto;
 					int pocetAut = (int) Math.ceil(jidAuta);
 					//System.out.println(pocetAut);
 					//System.out.println(jidAuta);
@@ -293,8 +312,8 @@ public class Simulace {
 						double jidloTreb;
 						double x;
 
-						if((x= zasobTreba % 12000.0) == 0){
-							jidloTreb= 12000.0;
+						if((x= zasobTreba % maxAuto) == 0){
+							jidloTreb= maxAuto;
 						}else{
 							jidloTreb = x;
 							zasobTreba = zasobTreba - x;
@@ -311,7 +330,7 @@ public class Simulace {
 
 				}
 				else{
-					double jidAuta = pomMest.getJidlaTreba()/12000.0;
+					double jidAuta = pomMest.getJidlaTreba()/maxAuto;
 					//System.out.println(jidAuta);
 					int pocetAut = (int) Math.ceil(jidAuta);
 					//System.out.println(pocetAut);
@@ -320,8 +339,8 @@ public class Simulace {
 						double jidloTreb;
 						double x;
 
-						if((x= zasobTreba % 12000.0) == 0){
-							jidloTreb = 12000.0;
+						if((x= zasobTreba % maxAuto) == 0){
+							jidloTreb = maxAuto;
 							//System.out.println(jidloTreb);
 							//System.out.println(jidloTreb);
 						}else{
