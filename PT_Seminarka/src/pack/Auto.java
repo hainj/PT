@@ -2,10 +2,10 @@ package pack;
 
 public class Auto {
 	
-	private int naklad;
+	private double naklad;
 	
 	private int pocet = 0;
-	private double ujetaVzdalenost = 0;
+	private double ujetaVzdalenost = 0.0;
 	private String status;
 	private int potrebaNalozit;
 	private boolean nalozeno = false;
@@ -48,12 +48,12 @@ public class Auto {
 		this.pocet = pocet;
 	}
 
-	public int getNaklad() {
+	public double getNaklad() {
 		return naklad;
 	}
 	
-	public void setNaklad(int naklad) {
-		this.naklad += naklad;
+	public void setNaklad(double maxVyklad) {
+		this.naklad += maxVyklad;
 	}
 	
 

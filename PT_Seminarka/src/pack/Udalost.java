@@ -110,7 +110,7 @@ public class Udalost {
 	/**
 	 * @return the vrtulník
 	 */
-	public boolean isVrtulník() {
+	public boolean isVrtulnik() {
 		return vrtulník;
 	}
 

@@ -2,26 +2,45 @@ package pack;
 
 public class Vrtulnik {
 	
-	private int naklad;
+	private double naklad;
+	private double nakladTreba;
 	private int poradi=0;
 	private double ujetaVzdalenost = 0;
 	private String status;
+	boolean nalozeno = false;
 	/**
 	 * Konstruktor vrtulníku s poradim, nakladem
+	 * @param jidloTreb 
 	 */
-	public Vrtulnik(String status){
+	public Vrtulnik(String status, double jidloTreb){
 		poradi++;
 		this.naklad = 0;
 		this.status = status;
+		this.setNakladTreba(jidloTreb);
 		
 	}
 	
-	public int getNaklad() {
+	
+	/**
+	 * @return the nalozeno
+	 */
+	public boolean isNalozeno() {
+		return nalozeno;
+	}
+
+	/**
+	 * @param nalozeno the nalozeno to set
+	 */
+	public void setNalozeno(boolean nalozeno) {
+		this.nalozeno = nalozeno;
+	}
+
+	public double getNaklad() {
 		return naklad;
 	}
 	
-	public void setNaklad(int naklad) {
-		this.naklad += naklad;
+	public void setNaklad(double maxVyklad) {
+		this.naklad += maxVyklad;
 	}
 	
 	public int getPoradi() {
@@ -58,6 +77,22 @@ public class Vrtulnik {
 	 */
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+
+	/**
+	 * @return the nakladTreba
+	 */
+	public double getNakladTreba() {
+		return nakladTreba;
+	}
+
+
+	/**
+	 * @param nakladTreba the nakladTreba to set
+	 */
+	public void setNakladTreba(double nakladTreba) {
+		this.nakladTreba = nakladTreba;
 	}
 	
 	

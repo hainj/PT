@@ -17,14 +17,14 @@ public class Letiste {
 
 		this.x = x;
 		this.y = y;
-		jidlo.add(new Jidlo(500000, 0));
+		jidlo.add(new Jidlo(500000.0, 0));
 
 	}
 	
 	
 	
 	public Letiste(int x, int y, ArrayList<Mesto> mest) {
-		jidlo.add(new Jidlo(500000, 0));
+		jidlo.add(new Jidlo(500000.0, 0));
 		this.x = x;
 		this.y = y;
 		this.sousedi = mest;
@@ -56,7 +56,7 @@ public class Letiste {
 	}
 	
 	
-	public void addJidlo(int jidlo, int dodano){
+	public void addJidlo(double jidlo, int dodano){
 		this.jidlo.add(new Jidlo(jidlo, dodano));
 	}
 	

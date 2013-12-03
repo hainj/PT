@@ -1,7 +1,7 @@
 package pack;
 
 public class Jidlo {
-	private int jidlo;
+	private double jidlo;
 	private int dodano;
 	
 	
@@ -9,7 +9,7 @@ public class Jidlo {
 	 * @param jidlo
 	 * @param dodano
 	 */
-	public Jidlo(int jidlo, int dodano) {
+	public Jidlo(double jidlo, int dodano) {
 		
 		this.jidlo = jidlo;
 		this.dodano = dodano;
@@ -19,7 +19,7 @@ public class Jidlo {
 	/**
 	 * @return the jidlo
 	 */
-	public int getJidlo() {
+	public double getJidlo() {
 		return jidlo;
 	}
 
@@ -27,7 +27,7 @@ public class Jidlo {
 	/**
 	 * @param jidlo the jidlo to set
 	 */
-	public void setJidlo(int jidlo) {
+	public void setJidlo(double jidlo) {
 		this.jidlo = jidlo;
 	}
 

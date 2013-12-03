@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class Mesto {
 
-	private int jidlo = 0;
+	private double jidlo = 0;
 	private int jidlaTreba = 0;
 	private int obyvatel = 0;
 	private int x = 0;
@@ -59,15 +59,15 @@ public class Mesto {
 	/**
 	 * @return the jidlo
 	 */
-	public int getJidlo() {
+	public double getJidlo() {
 		return jidlo;
 	}
 
 	/**
-	 * @param jidlo the jidlo to set
+	 * @param maxVyklad the jidlo to set
 	 */
-	public void setJidlo(int jidlo) {
-		this.jidlo += jidlo;
+	public void setJidlo(double maxVyklad) {
+		this.jidlo += maxVyklad;
 	}
 
 	/**
