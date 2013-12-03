@@ -7,27 +7,30 @@ public class Udalost {
 	private ArrayList<Auto> auta = new ArrayList<Auto>();
 	private ArrayList<Vrtulnik> vrtulniky = new ArrayList<Vrtulnik>();
 	private String status;
-	private boolean vrtulník;
+	private boolean vrtulnÃ­k;
 	private Mesto odkudVrtulnik;
+	private boolean dokonceno;
 	
 	
 	/**
 	 * @param mesto
 	 * @param auta
 	 */
-	public Udalost(Mesto mesto, ArrayList<Auto> auta, boolean vrtulnik) {
+	public Udalost(Mesto mesto, ArrayList<Auto> auta, boolean vrtulnik, boolean dokonceno) {
 		this.mesto = mesto;
-		this.vrtulník = false;
+		this.vrtulnÃ­k = vrtulnik;
 		this.auta = auta;
+		this.dokonceno = dokonceno;
 	
 	}
 
-	public Udalost(Mesto mesto,Mesto odkudVrtulnik, ArrayList<Auto> auta, ArrayList<Vrtulnik> vrtulniky, boolean vrtulnik) {
+	public Udalost(Mesto mesto,Mesto odkudVrtulnik, ArrayList<Auto> auta, ArrayList<Vrtulnik> vrtulniky, boolean vrtulnik, boolean dokonceno) {
 		this.mesto = mesto;
-		this.vrtulník = true;
+		this.vrtulnÃ­k = vrtulnik;
 		this.odkudVrtulnik = odkudVrtulnik;
 		this.auta = auta;
 		this.vrtulniky = vrtulniky;
+		this.dokonceno = dokonceno;
 		
 	}
 	/**
@@ -105,10 +108,10 @@ public class Udalost {
 	}
 
 	/**
-	 * @return the vrtulník
+	 * @return the vrtulnÃ­k
 	 */
-	public boolean isVrtulník() {
-		return vrtulník;
+	public boolean isVrtulnÃ­k() {
+		return vrtulnÃ­k;
 	}
 
 	/**
@@ -116,6 +119,20 @@ public class Udalost {
 	 */
 	public Mesto getOdkudVrtulnik() {
 		return odkudVrtulnik;
+	}
+
+	/**
+	 * @return the dokonceno
+	 */
+	public boolean isDokonceno() {
+		return dokonceno;
+	}
+
+	/**
+	 * @param dokonceno the dokonceno to set
+	 */
+	public void setDokonceno(boolean dokonceno) {
+		this.dokonceno = dokonceno;
 	}
 	
 	
