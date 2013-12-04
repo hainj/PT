@@ -1,23 +1,21 @@
 package pack;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.util.Random;
+import java.util.Scanner;
+
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-
-
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Window;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.File;
-import java.util.*;
 public class MainAPP extends JFrame {
 	
 	private static boolean pause;
@@ -173,6 +171,7 @@ public class MainAPP extends JFrame {
 				filec.showSaveDialog(null);
 				File souborF = filec.getSelectedFile(); 
 				if(souborF != null){ 
+					//Cteni cteni = null;
 					Cteni.vystupMapa(Mapa.getPoleMest(), Mapa.getPoleLetist(), souborF,Generator.indexMestPod2);
 				}
 			}
@@ -181,6 +180,8 @@ public class MainAPP extends JFrame {
 		//tlacitko na nacitani mapy - poloha mest a letist
 		tlacitkoLoad.addActionListener(new ActionListener()
 		{
+			
+
 			@Override
 			public void actionPerformed(ActionEvent arg0)
 			{
@@ -192,6 +193,7 @@ public class MainAPP extends JFrame {
 				File souborF = filec.getSelectedFile(); 
 				if(souborF != null){ 
 					System.out.println(souborF.getAbsolutePath());
+					//Cteni cteni = null;
 					Cteni.vstupMapa(souborF);
 				}
 

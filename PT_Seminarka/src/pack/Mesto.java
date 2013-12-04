@@ -276,9 +276,5 @@ public class Mesto {
 			}
 	}
 
-	public void ceil() {
-		this.jidlo = Math.ceil(this.jidlo);
-		
-	}
 
 }

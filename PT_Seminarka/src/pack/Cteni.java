@@ -1,7 +1,3 @@
-
-
-
-
 package pack;
 
 import java.io.BufferedReader;

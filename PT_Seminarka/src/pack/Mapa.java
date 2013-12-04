@@ -5,24 +5,21 @@
 package pack;
 import java.awt.BasicStroke;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.io.File;
-import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
 
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class Mapa extends JPanel {
 
 	public static ArrayList<Mesto>poleMest = new ArrayList<Mesto>();
-	public static int width;
-	public static int height;
+	public int width;
+	public int height;
 	public static ArrayList<Letiste>poleLetist = new ArrayList<Letiste>();
-	static Boolean ovladani = false;
+	Boolean ovladani = false;
 
 	/**
 	 * Konstruktor tridy mapa 
@@ -128,7 +125,7 @@ public class Mapa extends JPanel {
 		 //ovladaci promenna - false pri spusteni nacte predpripravenou mapu
 		 else
 		 {
-			 cteni.vstupMapa(new File("ZakladniMapa.txt"));
+			 Cteni.vstupMapa(new File("ZakladniMapa.txt"));
 			 new Generator(poleMest, poleLetist);
 			 
 			 kresleni(g2);
