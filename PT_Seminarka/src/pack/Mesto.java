@@ -17,6 +17,10 @@ public class Mesto {
 	private Letiste odkud;
 	private boolean hlad = true;
 	private boolean maCesty = true;
+	private int zasKdy;
+	private ArrayList<Vrtulnik> vrt = new ArrayList<Vrtulnik>();
+	private ArrayList<Auto> aut = new ArrayList<Auto>();
+	
 
 
 
@@ -217,6 +221,52 @@ public class Mesto {
 		}
 
 		return str;
+	}
+
+	/**
+	 * @return the zasobPrv
+	 */
+	public int getZasobKdy() {
+		return zasKdy;
+	}
+
+	/**
+	 * @param zasobPrv the zasobPrv to set
+	 */
+	public void setZasobPrv(int zasobPrv) {
+		this.zasKdy = zasobPrv;
+	}
+
+	/**
+	 * @return the vrt
+	 */
+	public ArrayList<Vrtulnik> getVrt() {
+		return vrt;
+	}
+
+	/**
+	 * @param vrt the vrt to set
+	 */
+	public void addVrt(ArrayList<Vrtulnik> vrt) {
+		for(int q = 0; q < vrt.size(); q++){
+		this.vrt.add(vrt.get(q));
+		}
+	}
+
+	/**
+	 * @return the aut
+	 */
+	public ArrayList<Auto> getAut() {
+		return aut;
+	}
+
+	/**
+	 * @param aut the aut to add
+	 */
+	public void addAut(ArrayList<Auto> aut) {
+		for(int q = 0; q < aut.size(); q++){
+			this.aut.add(aut.get(q));
+			}
 	}
 
 }

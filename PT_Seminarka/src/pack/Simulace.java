@@ -37,7 +37,6 @@ public class Simulace {
 				mestaHlad(poleMest);
 				nakladejLetiste(i,poleLetist);
 				vytvorUdalosti(poleMest);
-
 				vypisLog.vypis(textBlok);
 				k++;
 			}
@@ -104,7 +103,7 @@ public class Simulace {
 							else{
 								//System.out.println("avc");
 								//System.out.println(pomAut.getNalozeno());
-								vykladej(udalosti.get(j),pomAut);
+								vykladej(udalosti.get(j), pomAut, i);
 								//System.out.println(i + "q");
 
 							}
@@ -114,13 +113,13 @@ public class Simulace {
 			}
 
 			if(i == m*1440){
-				System.out.println(udalosti.size());
-				//vypisLog.zapis(udalosti, cesta, m);
+				//System.out.println(udalosti.size());
+				vypisLog.zapis(udalosti, cesta, m);
 				m++;
 			}
 
 
-			smazUdalost(udalosti);
+			smazUdalost(udalosti, i);
 
 
 		}
@@ -208,11 +207,11 @@ public class Simulace {
 
 
 
-	private  void smazUdalost(ArrayList<Udalost> udalosti2) {
+	private  void smazUdalost(ArrayList<Udalost> udalosti2, int minuta) {
 
 		/*for(int i = 0; i < udalosti2.size();i++){
-
-
+			
+			
 
 			ArrayList<Boolean> dokon = new ArrayList<Boolean>(); 
 			for(int q = 0; q<udalosti2.get(i).getAuta().size();q++){
@@ -280,9 +279,11 @@ public class Simulace {
 
 
 	}
-	private  void vykladej(Udalost ud, Auto pomAut){
+	private  void vykladej(Udalost ud, Auto pomAut, int minuta){
 		//System.out.println(ud.getAuta().get(0).getNaklad());
-
+		if(ud.getMesto().getZasobKdy() == 0){
+			ud.getMesto().setZasobPrv(minuta);
+		}
 		if(Math.abs(pomAut.getNaklad()) == 0.0){
 			pomAut.setStatus("Dokonceno");
 		}else{
@@ -394,12 +395,12 @@ public class Simulace {
 			Mesto pomMest = poleMest.get(i);
 			ArrayList<Auto>aut = new ArrayList<Auto>();	
 			ArrayList<Vrtulnik>vrtulniky = new ArrayList<Vrtulnik>();	
-			double zasobTreba =pomMest.getJidlaTreba();
+			double zasobTreba =pomMest.getJidlaTreba() - pomMest.getJidlo();
 
 			if(pomMest.getHlad()){
 
 				if(pomMest.isMaCesty()){
-					double jidAuta = pomMest.getJidlaTreba()/maxAuto;
+					double jidAuta =zasobTreba/maxAuto;
 					int pocetAut = (int) Math.ceil(jidAuta);
 					//System.out.println(" aut" + pocetAut);
 					//System.out.println(jidAuta);
@@ -425,7 +426,7 @@ public class Simulace {
 
 				}
 				else{
-					double jidAuta = pomMest.getJidlaTreba()/maxAuto;
+					double jidAuta = zasobTreba/maxAuto;
 					//System.out.println(jidAuta);
 					int pocetAut = (int) Math.ceil(jidAuta);
 					//System.out.println(pocetAut);
@@ -451,7 +452,7 @@ public class Simulace {
 						aut.add(new Auto("Ceka",jidloTreb));
 						//System.out.println(aut.get(j).getPotrebaNalozit());
 					}
-					zasobTreba =pomMest.getJidlaTreba();
+					zasobTreba =pomMest.getJidlaTreba() - pomMest.getJidlo();
 					int pocetVrtulniku = (int)Math.ceil(pomMest.getJidlaTreba()/maxVrt);
 					//System.out.println(pocetVrtulniku+ "vrt");
 
