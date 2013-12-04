@@ -19,16 +19,39 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.*;
 public class MainAPP extends JFrame {
+	
+	private static boolean pause;
+	/**
+	 * @return the pause
+	 */
+	public static boolean isPause() {
+		return pause;
+	}
 
-	final static JFrame parent = new JFrame();
+
+
+	/**
+	 * @param pause the pause to set
+	 */
+	public static void setPause(boolean pause) {
+		MainAPP.pause = pause;
+	}
+
+
+
+	private static Thread sim;
+	private final static JFrame parent = new JFrame();
 	private final static String novaRadka = "\n";
-	static JPanel tlacitka = new JPanel();
-	static JTextArea textBlok = new JTextArea(20,20);
-	static Mapa drawarea = new Mapa(700,550, false); //vytvori drawing areu o velikosti 500 x500
-	static Scanner sc = new Scanner (System.in);
-	static Random R = new Random();
+	private static JPanel tlacitka = new JPanel();
+	private static JTextArea textBlok = new JTextArea(20,20);
+	private static Mapa drawarea = new Mapa(700,550, false); //vytvori drawing areu o velikosti 500 x500
+	private static Scanner sc = new Scanner (System.in);
+	private static Random R = new Random();
 
 	public static void main(String[] args) {
+		setPause(false);
+		
+		
 		final MainAPP frame = new MainAPP();
 		frame.setTitle("Postapokalipse");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -39,19 +62,22 @@ public class MainAPP extends JFrame {
 		frame.setVisible(true);
 
 
-		JButton tlacitkoSave = new JButton ("save");
-		JButton tlacitkoLoad = new JButton ("load");
-		JButton tlacitkoNew = new JButton ("nova mapa");
-		JButton tlacitkoStart = new JButton ("start");
-		JButton tlacitkoExit = new JButton ("exit");
-		JButton tlacitkoNewCiti = new JButton ("nove mesto");
+		JButton tlacitkoSave = new JButton ("Save");
+		JButton tlacitkoLoad = new JButton ("Load");
+		JButton tlacitkoNew = new JButton ("Nova mapa");
+		JButton tlacitkoStart = new JButton ("Start");
+		JButton tlacitkoExit = new JButton ("Exit");
+		JButton tlacitkoNewCiti = new JButton ("Nove mesto");
+		JButton tlacitkoPauza = new JButton ("Pauza");
 
 		tlacitka.add(tlacitkoStart);
+		tlacitka.add(tlacitkoPauza);
 		tlacitka.add(tlacitkoNew);
 		tlacitka.add(tlacitkoNewCiti);
 		tlacitka.add(tlacitkoSave);
 		tlacitka.add(tlacitkoLoad);
 		tlacitka.add(tlacitkoExit);
+	
 		
 		
 		textBlok.setColumns(20);
@@ -147,7 +173,7 @@ public class MainAPP extends JFrame {
 				filec.showSaveDialog(null);
 				File souborF = filec.getSelectedFile(); 
 				if(souborF != null){ 
-					cteni.vystupMapa(Mapa.getPoleMest(), Mapa.getPoleLetist(), souborF,Generator.indexMestPod2);
+					Cteni.vystupMapa(Mapa.getPoleMest(), Mapa.getPoleLetist(), souborF,Generator.indexMestPod2);
 				}
 			}
 		});
@@ -166,7 +192,7 @@ public class MainAPP extends JFrame {
 				File souborF = filec.getSelectedFile(); 
 				if(souborF != null){ 
 					System.out.println(souborF.getAbsolutePath());
-					cteni.vstupMapa(souborF);
+					Cteni.vstupMapa(souborF);
 				}
 
 				drawarea = new Mapa (500 , 500, true);
@@ -206,10 +232,25 @@ public class MainAPP extends JFrame {
 				    }
 				   catch(NullPointerException except){
 					   JOptionPane.showConfirmDialog(chooser, "Nevybrana zadna slozka", "Chooser", JOptionPane.DEFAULT_OPTION);
+					   return;
 				   }
 				   
-
-				new Simulace(textBlok,Mapa.getPoleMest(), Mapa.getPoleLetist(), str);				
+				   sim = new Thread(new Simulace(textBlok,Mapa.getPoleMest(), Mapa.getPoleLetist(), str));
+				   sim.start();
+				//new Simulace(textBlok,Mapa.getPoleMest(), Mapa.getPoleLetist(), str);				
+			}
+		});
+		
+		tlacitkoPauza.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				if(pause){
+					pause = false;
+				}
+				else{
+					pause = true;
+				}
 			}
 		});
 	}

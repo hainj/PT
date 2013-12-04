@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import javax.swing.JTextArea;
 
-public class Simulace {
+public class Simulace implements Runnable {
 	private final int CAS = 10080;
 	private  double nakladMinuta = 1000.0/30.0;
 	private  double urazenaVzdal = 40.0/60.0;
@@ -17,112 +17,46 @@ public class Simulace {
 	private int z = 0;
 	private int m = 0;
 	//private int l = 0;
+	private JTextArea textBlok;
+
+	private ArrayList<Mesto> poleMest;
+	private ArrayList<Letiste> poleLetist;
+	private String cesta; 
+
+	/**
+	 * @param textblok
+	 * @param poleMest
+	 * @param poleLetist
+	 * @param cesta
+	 */
+	public Simulace(JTextArea textBlok, ArrayList<Mesto> poleMest,
+			ArrayList<Letiste> poleLetist, String cesta) {
+		super();
+		this.textBlok = textBlok;
+		this.poleMest = poleMest;
+		this.poleLetist = poleLetist;
+		this.cesta = cesta;
+	}
 
 
 
-	public Simulace(JTextArea textBlok, ArrayList<Mesto> poleMest, ArrayList<Letiste> poleLetist, String cesta){
-		/*for(int i = 0; i< poleMest.size();i++){
-			System.out.println(poleMest.get(i).getVzdalenost());
-		}*/
-		k = 1;
-		z = 0;
-		m = 0;
-		vytvorUdalosti(poleMest);
-		//simulacni cyklus pocita cas
-		for(int i = 0; i<=CAS;i++ ){
-			//System.out.println(poleMest.size() + "   " +udalosti.size());
-			//System.out.println(i);
-			//////////////////////////////////////******zacatek simulace******///////////////////////////////////
-			if(i == 60*k){
-				mestaHlad(poleMest);
-				nakladejLetiste(i,poleLetist);
-				vytvorUdalosti(poleMest);
-				vypisLog.vypis(textBlok);
-				k++;
-			}
 
-			if(i == z*30){
-				nakladej();
-				z++;
-
-
-			}
-
-
-			for(int j = 0; j < udalosti.size(); j++){
-
-				if(udalosti.get(j).isVrtulnik()){
-					for(int l = 0; l < udalosti.get(j).getVrtulniky().size(); l++){
-						Vrtulnik vrt = udalosti.get(j).getVrtulniky().get(l);
-						if(vrt.isNalozeno()){
-							//System.out.println();
-							if(vrt.getUjetaVzdalenost() >= udalosti.get(j).getMesto().getVzdalenost() ){
-								vykladejVrtulnik(udalosti.get(j), vrt);
-							}
-							else{
-								vrt.setUjetaVzdalenost(urazVzdalVrt);
-								vrt.setStatus("Leti");
-							}
-						}
-						else{
-							for(int q = 0;q < udalosti.get(j).getAuta().size() ;q++){
-								Auto pomAut = udalosti.get(j).getAuta().get(q);
-								//System.out.println("ahoj");
-								//System.out.println(pomAut.getUjetaVzdalenost()+ "  "+ udalosti.get(j).getMesto().getVzdalenost());
-								if(pomAut.getNalozeno()){
-									if((pomAut.getUjetaVzdalenost() <= udalosti.get(j).getOdkudVrtulnik().getVzdalenost())){
-										//System.out.println(udalosti.get(j).getMesto().getVzdalenost());
-										jed(udalosti.get(j));
-									}
-									else{
-										prekladka(pomAut, udalosti.get(j));
-										/*if(pomAut.getNaklad()==0){
-											udalosti.get(j).getAuta().remove(q);
-										}*/
-									}
-								}
-
-							}
-						}
-					}
-
-
-				}
-
-				else{
-					for(int q = 0;q < udalosti.get(j).getAuta().size() ;q++){
-						Auto pomAut = udalosti.get(j).getAuta().get(q);
-						//System.out.println("ahoj");
-						//System.out.println(pomAut.getUjetaVzdalenost()+ "  "+ udalosti.get(j).getMesto().getVzdalenost());
-						if(pomAut.getNalozeno()){
-							if((pomAut.getUjetaVzdalenost() <= udalosti.get(j).getMesto().getVzdalenost())){
-								//System.out.println(udalosti.get(j).getMesto().getVzdalenost());
-								//System.out.println(pomAut.getUjetaVzdalenost());
-								jed(udalosti.get(j));
-							}
-							else{
-								//System.out.println("avc");
-								//System.out.println(pomAut.getNalozeno());
-								vykladej(udalosti.get(j), pomAut, i);
-								//System.out.println(i + "q");
-
-							}
-						}
-					}
-				}
-			}
-
-			if(i == m*1440){
-				//System.out.println(udalosti.size());
-				vypisLog.zapis(udalosti, cesta, m);
-				m++;
-			}
-
-
-			smazUdalost(udalosti, i);
-
+	private void odectiZasoby(Udalost udalost, int minuta) {
+		/*Mesto pomMesto = udalost.getMesto();
+		pomMesto.ceil();
+		if(pomMesto.getZasobKdy() + 1440 == minuta){
+			pomMesto.setJidlo(-pomMesto.getObyvatel()*2);
 
 		}
+		if(pomMesto.getZasobKdy() + 2880 == minuta){
+			pomMesto.setJidlo(-pomMesto.getObyvatel()*2);
+			pomMesto.setHlad(true);
+			pomMesto.setZasKdy(0);
+		}*/
+
+
+
+
 	}
 
 
@@ -171,7 +105,7 @@ public class Simulace {
 						pomAut.setNaklad(-pomAut.getNaklad());
 						//System.out.println("A");
 						pomAut.setStatus("Preklada");
-						vrt.setStatus("Naklllada");
+						vrt.setStatus("Naklada");
 					}
 				}
 				else{
@@ -179,14 +113,14 @@ public class Simulace {
 						vrt.setNaklad(pomAut.getNaklad());
 						pomAut.setNaklad(-pomAut.getNaklad());
 						pomAut.setStatus("Preklada");
-						vrt.setStatus("Nakllllllada");
+						vrt.setStatus("Naklada");
 						//System.out.println("C");
 					}
 					else{
 						vrt.setNaklad(nakladMinuta);
 						pomAut.setNaklad(-nakladMinuta);
 						pomAut.setStatus("Preklada");
-						vrt.setStatus("Nakllllllllllllllada");
+						vrt.setStatus("Naklada");
 						//System.out.println("D");
 					}
 				}
@@ -207,11 +141,16 @@ public class Simulace {
 
 
 
-	private  void smazUdalost(ArrayList<Udalost> udalosti2, int minuta) {
+	private  void smazUdalost(Udalost udalost, int minuta) {
+
+
+
+
+
 
 		/*for(int i = 0; i < udalosti2.size();i++){
-			
-			
+
+
 
 			ArrayList<Boolean> dokon = new ArrayList<Boolean>(); 
 			for(int q = 0; q<udalosti2.get(i).getAuta().size();q++){
@@ -260,62 +199,59 @@ public class Simulace {
 
 
 	}
-	private  void vykladejVrtulnik(Udalost ud, Vrtulnik vrt){
+	private  void vykladejVrtulnik(Udalost ud, Vrtulnik vrt,int minuta){
 
-
+		//System.out.println(ud.getMesto().getJidlo() + "   " + vrt.getNaklad());
+		if(ud.getMesto().getZasobKdy() == 0){
+			ud.getMesto().setZasKdy(minuta);
+		}
+		
 		if(vrt.getNaklad()<nakladMinuta){
 			ud.getMesto().setJidlo(vrt.getNaklad());
-			vrt.setNaklad(-vrt.getNaklad());
+			vrt.setNaklad(vrt.getNaklad()*(-1.0));
 			vrt.setStatus("Vyklada");
 		}
 		else{
 			ud.getMesto().setJidlo(nakladMinuta);
-			vrt.setNaklad(-nakladMinuta);
+			vrt.setNaklad(- nakladMinuta);
 			vrt.setStatus("Vyklada");
 		}
-		if(Math.abs(vrt.getNakladTreba() - vrt.getNaklad())<0.1){
+		if(Math.abs(vrt.getNaklad())<0.001){
 			vrt.setStatus("Dokonceno");
 		}
-
+		//System.out.println(ud.getMesto().getJidlo() + "   " + vrt.getNaklad());
 
 	}
 	private  void vykladej(Udalost ud, Auto pomAut, int minuta){
 		//System.out.println(ud.getAuta().get(0).getNaklad());
 		if(ud.getMesto().getZasobKdy() == 0){
-			ud.getMesto().setZasobPrv(minuta);
+			ud.getMesto().setZasKdy(minuta);
 		}
-		if(Math.abs(pomAut.getNaklad()) == 0.0){
-			pomAut.setStatus("Dokonceno");
-		}else{
-			if(ud.getMesto().getJidlo() + nakladMinuta > ud.getMesto().getJidlaTreba()){
-				pomAut.setNaklad(ud.getMesto().getJidlo()-ud.getMesto().getJidlaTreba());
-				ud.getMesto().setJidlo(ud.getMesto().getJidlaTreba()-ud.getMesto().getJidlo());
 
-			}
-			else{
-				if(pomAut.getNaklad()<nakladMinuta){
-					ud.getMesto().setJidlo(pomAut.getNaklad());
-					pomAut.setNaklad(-pomAut.getNaklad());
-					pomAut.setStatus("Vyklada");
-
-				}
-				else{
-
-					pomAut.setNaklad(-nakladMinuta);
-					pomAut.setStatus("Vyklada");
-					ud.getMesto().setJidlo(nakladMinuta);
-				}
-				//System.out.println(ud.getMesto().getJidlo());
-
-
-			}
+		if(pomAut.getNaklad()<nakladMinuta){
+			ud.getMesto().setJidlo(pomAut.getNaklad());
+			pomAut.setNaklad(-pomAut.getNaklad());
+			pomAut.setStatus("Vyklada");
 
 		}
-		if(pomAut.getNaklad() <=0.1){
+		else{
+			ud.getMesto().setJidlo(nakladMinuta);
+			pomAut.setNaklad(-nakladMinuta);
+			pomAut.setStatus("Vyklada");
+			
+		}
+		if(Math.abs(pomAut.getNaklad()) <0.001){
 
 			pomAut.setStatus("Dokonceno");
 		}
+		//System.out.println(ud.getMesto().getJidlo());
+
+
 	}
+
+	//}
+
+
 
 	//System.out.println(ud.getAuta().get(0).getNaklad());
 
@@ -343,7 +279,7 @@ public class Simulace {
 
 					else{
 						if(Math.abs(auto.getPotrebaNalozit() - auto.getNaklad())<0.1){
-							//System.out.println("ahoj");
+							//System.out.println(auto.getNaklad());
 							auto.setNalozeno(true);
 
 						}
@@ -351,7 +287,7 @@ public class Simulace {
 							ud.getAuta().get(j).setStatus("Naklada");
 							//ud.getAuta().get(j).getNaklad() + 
 							double z;
-							if((z = auto.getPotrebaNalozit() - auto.getNaklad())>maxVyklad){
+							if((z = auto.getPotrebaNalozit() - auto.getNaklad())>=maxVyklad){
 								auto.setNaklad(maxVyklad);
 								pomJidlo.get(0).setJidlo(pomJidlo.get(0).getJidlo() - maxVyklad);
 							}else{
@@ -477,6 +413,136 @@ public class Simulace {
 
 
 		}
+	}
+
+
+
+	private void pauza(){
+		try{
+			
+				while(MainAPP.isPause()){
+                  Thread.sleep(1);
+				
+        }
+   } catch (InterruptedException e) {
+        e.printStackTrace();
+   }
+}
+
+
+
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		k = 1;
+		z = 0;
+		m = 0;
+		vytvorUdalosti(poleMest);
+		//simulacni cyklus pocita cas
+		for(int i = 0; i<=CAS;i++ ){
+			pauza();
+			//System.out.println(poleMest.size() + "   " +udalosti.size());
+			//System.out.println(i);
+			//////////////////////////////////////******zacatek simulace******///////////////////////////////////
+			if(i == 60*k){
+				mestaHlad(poleMest);
+				nakladejLetiste(i,poleLetist);
+				vytvorUdalosti(poleMest);
+				vypisLog.vypis(textBlok);
+				k++;
+			}
+
+			if(i == z*30){
+				nakladej();
+				z++;
+
+
+			}
+
+
+			for(int j = 0; j < udalosti.size(); j++){
+				//for(int j = 0; j < 1; j++){
+
+				if(udalosti.get(j).isVrtulnik()){
+					for(int l = 0; l < udalosti.get(j).getVrtulniky().size(); l++){
+						Vrtulnik vrt = udalosti.get(j).getVrtulniky().get(l);
+						if(vrt.isNalozeno()){
+							//System.out.println();
+							if(vrt.getUjetaVzdalenost() >= udalosti.get(j).getMesto().getVzdalenost() ){
+
+								vykladejVrtulnik(udalosti.get(j), vrt, i);
+							}
+							else{
+								vrt.setUjetaVzdalenost(urazVzdalVrt);
+								vrt.setStatus("Leti");
+							}
+						}
+						else{
+							for(int q = 0;q < udalosti.get(j).getAuta().size() ;q++){
+								Auto pomAut = udalosti.get(j).getAuta().get(q);
+								//System.out.println("ahoj");
+								//System.out.println(pomAut.getUjetaVzdalenost()+ "  "+ udalosti.get(j).getMesto().getVzdalenost());
+								if(pomAut.getNalozeno()){
+									if((pomAut.getUjetaVzdalenost() <= udalosti.get(j).getOdkudVrtulnik().getVzdalenost())){
+
+										jed(udalosti.get(j));
+									}
+									else{
+
+										prekladka(pomAut, udalosti.get(j));
+										/*if(pomAut.getNaklad()==0){
+											udalosti.get(j).getAuta().remove(q);
+										}*/
+									}
+								}
+
+							}
+						}
+					}
+
+
+				}
+
+				else{
+					for(int q = 0;q < udalosti.get(j).getAuta().size() ;q++){
+						Auto pomAut = udalosti.get(j).getAuta().get(q);
+						//System.out.println("ahoj");
+						//System.out.println(pomAut.getUjetaVzdalenost()+ "  "+ udalosti.get(j).getMesto().getVzdalenost());
+						if(pomAut.getNalozeno()){
+							if((pomAut.getUjetaVzdalenost() <= udalosti.get(j).getMesto().getVzdalenost())){
+								//System.out.println(udalosti.get(j).getMesto().getVzdalenost());
+								//System.out.println(pomAut.getUjetaVzdalenost());
+
+								jed(udalosti.get(j));
+							}
+							else{
+
+								//System.out.println("avc");
+								//System.out.println(pomAut.getNalozeno());
+								vykladej(udalosti.get(j), pomAut, i);
+								//System.out.println(i + "q");
+
+							}
+						}
+					}
+				}
+			}
+
+			if(i == m*1440){
+				System.out.println(udalosti.size());
+				vypisLog.zapis(udalosti, cesta, m);
+				m++;
+			}
+			for(int q = 0; q < udalosti.size(); q++){
+				odectiZasoby(udalosti.get(q), i);
+				smazUdalost(udalosti.get(q), i);
+			}
+
+
+
+		}
+		
 	}
 }
 

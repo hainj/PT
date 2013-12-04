@@ -205,14 +205,21 @@ public class Mesto {
 	@Override
 	public String toString() {
 		String str = "";
+		double x = 0;
+		if(this.getJidlo()>this.getJidlaTreba()){
+			x = Math.floor(this.getJidlo());
+		}
+		else{
+			x = Math.ceil(this.getJidlo());
+		}
 		if(this.isMaCesty()){
-			str = "Jidlo: " + Math.ceil(this.jidlo) + "\n" + 
+			str = "Jidlo: " + x + "\n" + 
 					" Jidlo treba: " + this.getJidlaTreba() + "\n" + 
 					" Hlad: " + this.getHlad() + "\n" + 
 					" Vzdalenost: " + this.getVzdalenost();
 		}
 		else{
-			str = "Jidlo: " + Math.ceil(this.jidlo) + "\n" +  
+			str = "Jidlo: " + x + "\n" +  
 					" Jidlo treba: " + this.getJidlaTreba() + "\n" + 
 					" Hlad: " + this.getHlad() + "\n" + 
 					" Vzdalenost: od mesta s heliportem " + this.getVzdalenost()+ "\n" +
@@ -233,7 +240,7 @@ public class Mesto {
 	/**
 	 * @param zasobPrv the zasobPrv to set
 	 */
-	public void setZasobPrv(int zasobPrv) {
+	public void setZasKdy(int zasobPrv) {
 		this.zasKdy = zasobPrv;
 	}
 
@@ -267,6 +274,11 @@ public class Mesto {
 		for(int q = 0; q < aut.size(); q++){
 			this.aut.add(aut.get(q));
 			}
+	}
+
+	public void ceil() {
+		this.jidlo = Math.ceil(this.jidlo);
+		
 	}
 
 }

@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 import javax.swing.JTextArea;
 
-public class vypisLog {
+public class VypisLog {
 
 
 	public static void vypis(JTextArea textBlok) {
@@ -27,8 +27,8 @@ public class vypisLog {
 			BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(stream));
 			
 			for(int i = 0; i < udalosti.size(); i++){
-				System.out.println(i);
-				writer.append("Mesto " + i);
+				//System.out.println(i);
+				writer.append("Mesto " + Mapa.getIndexMest(udalosti.get(i).getMesto()));
 				writer.newLine();
 				writer.append(udalosti.get(i).getMesto().toString());
 				writer.newLine();

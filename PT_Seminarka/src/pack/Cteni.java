@@ -15,9 +15,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 
-import javax.swing.JFileChooser;
-
-public class cteni {
+public class Cteni {
 	/**
 	 * Vypise mesta a letiste do souboru
 	 */
@@ -78,7 +76,7 @@ public class cteni {
 					writer.append(str);
 					writer.newLine();
 				} catch (Exception e) {
-
+					System.out.println("mesto bez sousedu");
 				}
 
 			}
