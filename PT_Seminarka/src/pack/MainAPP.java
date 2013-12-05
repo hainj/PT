@@ -132,8 +132,9 @@ public class MainAPP extends JFrame {
 					{
 						try
 						{
-							String ob = JOptionPane.showInputDialog(parent, "Zadej pocit obyvatel: ");
+							String ob = JOptionPane.showInputDialog(parent, "Zadej pocit obyvatel(max 2000): ");
 							obyv = Integer.parseInt(ob);
+							
 							break;
 						}catch(NumberFormatException e)
 						{
@@ -141,7 +142,9 @@ public class MainAPP extends JFrame {
 						}
 					}
 
-
+					if(obyv > 2000){
+						System.out.println("Zadali jste vice nez 2000 obyv");
+					}{
 					Mapa.getPoleMest().add(new Mesto(x,y,obyv,true));
 
 					index = Mapa.getPoleMest().size()-1;
@@ -149,6 +152,8 @@ public class MainAPP extends JFrame {
 					Mapa.getPoleMest().get(index).setObyvatel(obyv);
 					Mapa.getPoleMest().get(index).setHeliport(false);
 					Generator.mestoBezSousVzdal(Mapa.getPoleMest().get(index), Mapa.getPoleMest());
+					
+					}
 					//drawarea.repaint();
 					frame.repaint();
 				}
@@ -216,6 +221,20 @@ public class MainAPP extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				int q;
+				while(true){
+				try
+				{
+					String ob = JOptionPane.showInputDialog(parent, "Zadejte ktere mesto chcete sledovat (od 0 do " + (Mapa.getPoleMest().size()-1) + "): ");
+					q = Integer.parseInt(ob);
+					
+					break;
+				}catch(NumberFormatException exc)
+				{
+					JOptionPane.showMessageDialog(parent, "Prosim zadejte cislo");
+				}
+				}
+				
 				JFileChooser chooser = new JFileChooser(); 
 				chooser.setCurrentDirectory(new java.io.File("."));
 				chooser.setDialogTitle("Slozka kam budou ulozeny logy");
@@ -231,8 +250,10 @@ public class MainAPP extends JFrame {
 				try{
 					str = f.getAbsolutePath();
 					System.out.println(str);
-					sim = new Thread(new Simulace(textBlok,Mapa.getPoleMest(), Mapa.getPoleLetist(), str));
+					if(q >= 0 && q<Mapa.getPoleMest().size()){
+					sim = new Thread(new Simulace(textBlok,Mapa.getPoleMest(), Mapa.getPoleLetist(), str, q));
 					sim.start();
+					}
 				}
 				catch(NullPointerException except){
 					JOptionPane.showConfirmDialog(chooser, "Nevybrana zadna slozka", "Chooser", JOptionPane.DEFAULT_OPTION);

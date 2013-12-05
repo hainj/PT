@@ -7,16 +7,37 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
-
 import javax.swing.JTextArea;
 
 public class VypisLog {
 
 
-	public static void vypis(JTextArea textBlok) {
-
-		textBlok.append(Mapa.poleMest.get(0).toString());
-
+	public static void vypis(JTextArea textBlok, Mesto mesto, ArrayList<Udalost> udalosti) {
+		ArrayList<Integer> listInt = new ArrayList<>();
+		textBlok.append("Mesto " + Mapa.getIndexMest(mesto));
+		textBlok.append(mesto.toString());
+		for(int i = 0; i < mesto.getAut().size() ;i++){
+			textBlok.append(mesto.getAut().get(i).toString());
+			for(int q = 0; q < udalosti.size(); q++){
+				if(Mapa.getIndexMest(udalosti.get(q).getMesto()) == Mapa.getIndexMest(mesto)){
+					listInt.add(q);
+					for(int p = 0; p < udalosti.get(q).getAuta().size(); p++){
+						textBlok.append(udalosti.get(q).getAuta().get(p).toString());
+					}
+				}
+			}
+		}
+		if(!mesto.isMaCesty()){
+			for(int i = 0; i < mesto.getVrt().size() ;i++){
+				textBlok.append(mesto.getVrt().get(i).toString());
+				for(int q = 0; q < listInt.size(); q++){
+					for(int p = 0; p < udalosti.get(q).getVrtulniky().size(); p++){
+						textBlok.append(udalosti.get(q).getVrtulniky().get(p).toString());
+					}
+				}
+			}
+		}
+		textBlok.append(" ");
 	}
 
 	public static void zapis(ArrayList<Udalost> udalosti, String cesta, int den) {
@@ -26,7 +47,7 @@ public class VypisLog {
 			stream = new FileOutputStream(f);
 			BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(stream));
 
-			
+
 			for(int l = 0; l < udalosti.size(); l++){
 				//System.out.println(l);
 				writer.append("Mesto " + Mapa.getIndexMest(udalosti.get(l).getMesto()));

@@ -273,10 +273,10 @@ public class Mesto {
 	/**
 	 * @param aut the aut to add
 	 */
-	public void setAut(ArrayList<Auto> aut) {
-		
-			this.aut = aut;
-		
+	public void addAut(ArrayList<Auto> aut) {
+		for(int q = 0; q < vrt.size(); q++){
+			this.aut.add(aut.get(q));
+		}
 	}
 
 	public double zaokr(){
