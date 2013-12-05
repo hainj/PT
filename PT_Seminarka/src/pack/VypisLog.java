@@ -16,7 +16,7 @@ public class VypisLog {
 	public static void vypis(JTextArea textBlok) {
 
 		textBlok.append(Mapa.poleMest.get(0).toString());
-		
+
 	}
 
 	public static void zapis(ArrayList<Udalost> udalosti, String cesta, int den) {
@@ -25,35 +25,37 @@ public class VypisLog {
 		try {
 			stream = new FileOutputStream(f);
 			BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(stream));
+
 			
-			for(int i = 0; i < udalosti.size(); i++){
-				//System.out.println(i);
-				writer.append("Mesto " + Mapa.getIndexMest(udalosti.get(i).getMesto()));
+			for(int l = 0; l < udalosti.size(); l++){
+				//System.out.println(l);
+				writer.append("Mesto " + Mapa.getIndexMest(udalosti.get(l).getMesto()));
 				writer.newLine();
-				writer.append(udalosti.get(i).getMesto().toString());
+				writer.append(udalosti.get(l).getMesto().toString());
 				writer.newLine();
 				writer.append("Auta");
 				writer.newLine();
-				for(int q = 0; q<udalosti.get(i).getAuta().size(); q++){
+				for(int q = 0; q<udalosti.get(l).getAuta().size(); q++){
 					writer.append("Auto " + q);
 					writer.newLine();
-					writer.append(udalosti.get(i).getAuta().get(q).toString());
+					writer.append(udalosti.get(l).getAuta().get(q).toString());
 					writer.newLine();
 				}
-				if(!udalosti.get(i).getMesto().isMaCesty()){
+				if(!udalosti.get(l).getMesto().isMaCesty()){
 					writer.append("Vrtulniky");
 					writer.newLine();
-					for(int l = 0; l <udalosti.get(i).getVrtulniky().size(); l++){
-						writer.append("Vrtulnik " + l);
+					for(int p = 0; p <udalosti.get(l).getVrtulniky().size(); p++){
+						writer.append("Vrtulnik " + p);
 						writer.newLine();
-						writer.append(udalosti.get(i).getVrtulniky().get(l).toString());
+						writer.append(udalosti.get(l).getVrtulniky().get(p).toString());
 						writer.newLine();
-						
+
 					}
 				}
 
 
 			}
+			System.out.println(udalosti.size());
 			writer.close();
 			stream.close();
 		} catch (FileNotFoundException e) {

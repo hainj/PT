@@ -13,7 +13,7 @@ public class Vrtulnik {
 	 * @param jidloTreb 
 	 */
 	public Vrtulnik(String status, double jidloTreb){
-		poradi++;
+		this.poradi++;
 		this.naklad = 0;
 		this.status = status;
 		this.setNakladTreba(jidloTreb);
@@ -25,7 +25,7 @@ public class Vrtulnik {
 	 * @return the nalozeno
 	 */
 	public boolean isNalozeno() {
-		return nalozeno;
+		return this.nalozeno;
 	}
 
 	/**
@@ -36,7 +36,7 @@ public class Vrtulnik {
 	}
 
 	public double getNaklad() {
-		return naklad;
+		return this.naklad;
 	}
 	
 	public void setNaklad(double maxVyklad) {
@@ -44,7 +44,7 @@ public class Vrtulnik {
 	}
 	
 	public int getPoradi() {
-		return poradi;
+		return this.poradi;
 	}
 	
 	public void setPoradi(int poradi) {
@@ -55,7 +55,7 @@ public class Vrtulnik {
 	 * @return the ujetaVzdalenost
 	 */
 	public double getUjetaVzdalenost() {
-		return ujetaVzdalenost;
+		return this.ujetaVzdalenost;
 	}
 	
 	/**
@@ -69,7 +69,7 @@ public class Vrtulnik {
 	 * @return the status
 	 */
 	public String getStatus() {
-		return status;
+		return this.status;
 	}
 
 	/**
@@ -84,7 +84,7 @@ public class Vrtulnik {
 	 * @return the nakladTreba
 	 */
 	public double getNakladTreba() {
-		return nakladTreba;
+		return this.nakladTreba;
 	}
 
 

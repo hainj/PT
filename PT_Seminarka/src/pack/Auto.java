@@ -7,11 +7,11 @@ public class Auto {
 	private int pocet = 0;
 	private double ujetaVzdalenost = 0.0;
 	private String status;
-	private double potrebaNalozit;
+	private final double POTREBANALOZIT;
 	private boolean nalozeno = false;
 	
 	public boolean getNalozeno() {
-		return nalozeno;
+		return this.nalozeno;
 	}
 
 	public void setNalozeno(boolean nalozeno) {
@@ -21,12 +21,12 @@ public class Auto {
 	/**
 	 * Konstruktor auta s poradim, nakladem
 	 */
-	public Auto(String status, double potrebaNalozit){
+	public Auto(String status, final double POTREBANALOZIT){
 		this.pocet++;
 		this.naklad = 0;
 		this.setStatus(status);
 		this.nalozeno = false;
-		this.potrebaNalozit = potrebaNalozit;
+		this.POTREBANALOZIT = POTREBANALOZIT;
 		
 		
 	}
@@ -34,14 +34,14 @@ public class Auto {
 
 
 	/**
-	 * @return the potrebaNalozit
+	 * @return the POTREBANALOZIT
 	 */
-	public double getPotrebaNalozit() {
-		return potrebaNalozit;
+	public final double getPotrebaNalozit() {
+		return this.POTREBANALOZIT;
 	}
 
 	public int getPocet() {
-		return pocet;
+		return this.pocet;
 	}
 
 	public void setPocet(int pocet) {
@@ -49,7 +49,7 @@ public class Auto {
 	}
 
 	public double getNaklad() {
-		return naklad;
+		return this.naklad;
 	}
 	
 	public void setNaklad(double maxVyklad) {
@@ -67,7 +67,7 @@ public class Auto {
 	 * @return the ujetaVzdalenost
 	 */
 	public double getUjetaVzdalenost() {
-		return ujetaVzdalenost;
+		return this.ujetaVzdalenost;
 	}
 	
 	/**
@@ -81,7 +81,7 @@ public class Auto {
 	 * @return the status
 	 */
 	public String getStatus() {
-		return status;
+		return this.status;
 	}
 
 	/**
@@ -96,6 +96,7 @@ public class Auto {
 		String str = "Naklad = " + Math.floor(this.getNaklad()) + "\n" +
 					"  Potreba nalozit: " + this.getPotrebaNalozit() + "\n" + 
 					"  Ujeta vzdalenost: " + this.getUjetaVzdalenost()+ "\n" +
+					"  Nalozeno: " + this.getNalozeno() + "\n" +
 					"  Status: " + this.getStatus();
 		return str;
 	}

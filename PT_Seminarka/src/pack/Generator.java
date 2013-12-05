@@ -12,7 +12,7 @@ import java.util.Random;
 
 public class Generator {
 	public static double matice[][] = new double [3005][3000];
-	static Random R = new Random();
+	static Random r = new Random();
 	public static int indexMestPod2 = 0;
 
 	/**
@@ -23,7 +23,7 @@ public class Generator {
 		generujLetiste();
 		generujMesta();
 		genSousMest(Mapa.poleMest);
-		genSousLetist(Mapa.poleLetist);	
+		genSousLetist();	
 		for(int i =0; i< Mapa.poleLetist.size(); i++){
 			dijkstra(Mapa.poleLetist.get(i), i);
 		}
@@ -54,7 +54,7 @@ public class Generator {
 			{
 				x = generujSour();
 				y = generujSour();
-			}while(porovnejLetiste (x,y,i)== true);
+			}while(porovnejLetiste (x,y,i));
 			Mapa.poleLetist.add(new Letiste(x,y));
 		}
 
@@ -72,15 +72,13 @@ public class Generator {
 		int rozptyl = 1600; //nahodne zvoleny rozptyl tak aby nevznikala mesta se zapornym poctem obyv
 		int obyv = 0;
 
-		int obyvCelkem = 0; //kontrolni promenna  - soucet obyvatel vsech mest
-
 		for(int i = 0; i <3000; i++)
 		{
 			if (i==0)//vytvareni prvniho mesta
 			{
 				x = generujSour();
 				y = generujSour();
-				obyv = (int) (stredniHodnota + rozptyl * R.nextGaussian());//vypocet obyvatel pro mesto
+				obyv = (int) (stredniHodnota + rozptyl * r.nextGaussian());//vypocet obyvatel pro mesto
 				obyv = Math.abs(obyv);
 				if(obyv >= 10000)//nastavovani heliportu pro mesta s obyv nad 10 000
 				{
@@ -90,7 +88,6 @@ public class Generator {
 				{
 					Mapa.poleMest.add(new Mesto(x,y,obyv,false));
 				}
-				obyvCelkem +=Mapa.poleMest.get(i).getObyvatel();
 			}
 			else
 			{
@@ -98,9 +95,9 @@ public class Generator {
 				{
 					x = generujSour();
 					y = generujSour();
-				}while(porovnejMesta (x,y,i) == true);
+				}while(porovnejMesta (x,y,i));
 
-				obyv = (int) (stredniHodnota + rozptyl * R.nextGaussian());
+				obyv = (int) (stredniHodnota + rozptyl * r.nextGaussian());
 				obyv = Math.abs(obyv);
 
 				if(obyv >= 10000)//nastavovani heliportu pro mesta s obyv nad 10 000
@@ -110,9 +107,7 @@ public class Generator {
 				else
 				{
 					Mapa.poleMest.add(new Mesto(x,y,obyv,false));
-				}
-
-				obyvCelkem +=Mapa.poleMest.get(i).getObyvatel();	
+				}	
 			}
 		}
 		//seradi Mapa.poleMest podle poctu obyvatel tridou KomparatorMest
@@ -126,7 +121,7 @@ public class Generator {
 	 */
 	public static int generujSour ()
 	{
-		int x = R.nextInt(500);
+		int x = r.nextInt(500);
 		return x;
 	}
 
@@ -148,7 +143,7 @@ public class Generator {
 			//pocitani vzdalenosti pomoci vektoru
 			vysledek = Math.sqrt(Math.pow(x - Mapa.poleLetist.get(i).getX(), 2)+ Math.pow(y - Mapa.poleLetist.get(i).getY(), 2));
 			//podminka zajistujici vzdalenost letis 150km a polohu mimo centralni oblast
-			if (vysledek < 150.0 || (stredX < 25 && stredY < 25)) return true;
+			if (vysledek < 150.0 || (stredX < 25 && stredY < 25)){ return true;}
 		}
 
 		return false;
@@ -171,14 +166,14 @@ public class Generator {
 			//pocitani vzdalenosti pomoci vektoru
 			vysledekLetiste = Math.sqrt(Math.pow(x - Mapa.poleLetist.get(i).getX(),
 					2)+ Math.pow(y - Mapa.poleLetist.get(i).getY(), 2));
-			if (vysledekLetiste < 5.0) return true;
+			if (vysledekLetiste < 5.0) {return true;}
 		}
 
 		for (int i = 0; i < j; i++)//vzdalenost mezi mesty
 		{
 			//pocitani vzdalenosti pomoci vektoru
 			vysledekMesto = Math.sqrt(Math.pow(x - Mapa.poleMest.get(i).getX(), 2)+ Math.pow(y - Mapa.poleMest.get(i).getY(), 2));
-			if (vysledekMesto < 5.0) return true;
+			if (vysledekMesto < 5.0){ return true;}
 		}
 
 		return false;
@@ -207,7 +202,7 @@ public class Generator {
 	public static void genSousMest(ArrayList<Mesto> poleMesta)
 	{
 		indexMestPod2  = zjistiPod2(Mapa.poleMest);
-		ArrayList<Vzdalenost> vzdalenosti = new ArrayList<Vzdalenost>();
+		ArrayList<Vzdalenost> vzdalenosti = new ArrayList<>();
 
 		//diky tomu ze je Mapa.poleMest serazene si mohu dovolit prvnich x preskocit
 		for( int i = indexMestPod2+1; i < poleMesta.size(); i++)
@@ -221,7 +216,7 @@ public class Generator {
 			}
 			//serazeni pole vzdalenosti podle vzdalenosti
 			Collections.sort(vzdalenosti, new Komparator());
-			ArrayList<Mesto> pomoc = new ArrayList<Mesto>();
+			ArrayList<Mesto> pomoc = new ArrayList<>();
 
 			//naplnovani matice vzdalenosti
 			for (int k = 1; k <11; k++)
@@ -241,9 +236,9 @@ public class Generator {
 	 * Vygeneruje 60 sousedu kazdemu letisti
 	 * @param Mapa.poleLetist seznam letist
 	 */
-	public static void genSousLetist(ArrayList<Letiste> poleLetist)
+	public static void genSousLetist()
 	{
-		ArrayList<Vzdalenost> vzdalenosti = new ArrayList<Vzdalenost>();
+		ArrayList<Vzdalenost> vzdalenosti = new ArrayList<>();
 		for( int i = 0; i < Mapa.poleLetist.size(); i++)
 		{
 			for(int j = indexMestPod2+1; j<Mapa.poleMest.size(); j++)
@@ -254,7 +249,7 @@ public class Generator {
 				vzdalenosti.add(new Vzdalenost (j,vysledekMesto));
 			}
 			Collections.sort(vzdalenosti, new Komparator());
-			ArrayList<Mesto> pomoc = new ArrayList<Mesto>();
+			ArrayList<Mesto> pomoc = new ArrayList<>();
 
 			for (int k = 0; k <60; k++)
 			{
@@ -268,7 +263,7 @@ public class Generator {
 
 
 	public static void dijkstra(Letiste letiste, int indexLet){
-		Queue<Mesto> fronta=new LinkedList<Mesto>();
+		Queue<Mesto> fronta=new LinkedList<>();
 		Mesto pom;
 		Mesto m;
 
@@ -310,7 +305,7 @@ public class Generator {
 
 	public static void mestoBezSousVzdal(Mesto mest, ArrayList<Mesto>mesta){
 
-		ArrayList<Vzdalenost> vzdal= new ArrayList<Vzdalenost>();
+		ArrayList<Vzdalenost> vzdal= new ArrayList<>();
 		for(int i =0; i <mesta.size();i++ ){
 			if(mesta.get(i).getHeliport()){
 				double vysledekMesto = Math.sqrt(Math.pow(mesta.get(i).getX() - mest.getX(), 2)+ 
@@ -362,7 +357,7 @@ public class Generator {
 	}
 
 	public static String cesta(Mesto mesto){
-		ArrayList<String> str = new ArrayList<String>();
+		ArrayList<String> str = new ArrayList<>();
 
 		str.add(String.valueOf(Mapa.getIndexMest(mesto.getPredchudce())));
 		str = rekurCesta(mesto.getPredchudce(), str);
@@ -376,6 +371,7 @@ public class Generator {
 		try{
 		str.add(String.valueOf(Mapa.getIndexMest(predchudce.getPredchudce())));
 		}catch(NullPointerException e){
+			System.out.println("letiste");
 			str.add(String.valueOf(predchudce.getOdkud()));
 		}
 		return str;

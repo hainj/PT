@@ -135,11 +135,11 @@ public class Cteni {
 			int g =0;
 			while(!str.equalsIgnoreCase("sousedi mest")){
 
-				ArrayList<Mesto> pomoc = new ArrayList<Mesto>();
+				ArrayList<Mesto> pomoc = new ArrayList<>();
 				String[]s = str.split(" ");
 				//	 
 
-				System.out.println(s.length);
+				//System.out.println(s.length);
 				for (int i = 0; i < s.length;i++){
 					int k = Integer.parseInt(s[i]);
 					pomoc.add(Mapa.getPoleMest().get(k));
@@ -161,7 +161,7 @@ public class Cteni {
 			while(!str.equalsIgnoreCase("exit")){
 
 
-				ArrayList<Mesto> pomoc = new ArrayList<Mesto>();
+				ArrayList<Mesto> pomoc = new ArrayList<>();
 
 				String[]s = str.split(" ");
 				for (int i = 0; i<s.length; i++){
@@ -175,7 +175,7 @@ public class Cteni {
 				z++;
 			}
 			z=a+1;
-			System.out.println(z);
+			//System.out.println(z);
 			Generator.vytvorMatici(Mapa.getPoleMest(), Mapa.getPoleLetist(),z);
 			for(int i = 0; i < Mapa.getPoleLetist().size(); i++){
 				Generator.dijkstra(Mapa.getPoleLetist().get(i), i);

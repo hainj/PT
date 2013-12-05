@@ -20,7 +20,7 @@ public class Jidlo {
 	 * @return the jidlo
 	 */
 	public double getJidlo() {
-		return jidlo;
+		return this.jidlo;
 	}
 
 
@@ -28,7 +28,7 @@ public class Jidlo {
 	 * @param jidlo the jidlo to set
 	 */
 	public void setJidlo(double jidlo) {
-		this.jidlo = jidlo;
+		this.jidlo += jidlo;
 	}
 
 
@@ -36,7 +36,7 @@ public class Jidlo {
 	 * @return the dodano
 	 */
 	public int getDodano() {
-		return dodano;
+		return this.dodano;
 	}
 
 

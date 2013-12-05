@@ -6,31 +6,30 @@ public class Udalost {
 	private Mesto mesto;
 	private ArrayList<Auto> auta = new ArrayList<Auto>();
 	private ArrayList<Vrtulnik> vrtulniky = new ArrayList<Vrtulnik>();
-	private String status;
-	private boolean vrtulnik;
+	private final boolean vrtulnik;
 	private Mesto odkudVrtulnik;
-	private boolean dokonceno;
+	private int casDokon =Integer.MIN_VALUE;
 	
 	
 	/**
 	 * @param mesto
 	 * @param auta
 	 */
-	public Udalost(Mesto mesto, ArrayList<Auto> auta, boolean vrtulnik, boolean dokonceno) {
+	public Udalost(Mesto mesto, ArrayList<Auto> auta, final boolean vrtulnik) {
 		this.mesto = mesto;
 		this.vrtulnik = vrtulnik;
 		this.auta = auta;
-		this.dokonceno = dokonceno;
+		
 	
 	}
 
-	public Udalost(Mesto mesto,Mesto odkudVrtulnik, ArrayList<Auto> auta, ArrayList<Vrtulnik> vrtulniky, boolean vrtulnik, boolean dokonceno) {
+	public Udalost(Mesto mesto,Mesto odkudVrtulnik, ArrayList<Auto> auta, ArrayList<Vrtulnik> vrtulniky, final boolean vrtulnik) {
 		this.mesto = mesto;
 		this.vrtulnik = vrtulnik;
 		this.odkudVrtulnik = odkudVrtulnik;
 		this.auta = auta;
 		this.vrtulniky = vrtulniky;
-		this.dokonceno = dokonceno;
+		
 		
 	}
 	/**
@@ -44,7 +43,7 @@ public class Udalost {
 	 * @return the mesto
 	 */
 	public Mesto getMesto() {
-		return mesto;
+		return this.mesto;
 	}
 
 
@@ -60,7 +59,7 @@ public class Udalost {
 	 * @return the auta
 	 */
 	public ArrayList<Auto> getAuta() {
-		return auta;
+		return this.auta;
 	}
 	public void addAuto(Auto auto) {
 		this.auta.add(auto);
@@ -78,7 +77,7 @@ public class Udalost {
 	 * @return the vrtulniky
 	 */
 	public ArrayList<Vrtulnik> getVrtulniky() {
-		return vrtulniky;
+		return this.vrtulniky;
 	}
 	
 	public void addVrtulnik(Vrtulnik vrtulnik) {
@@ -91,49 +90,38 @@ public class Udalost {
 		this.vrtulniky = vrtulniky;
 	}
 
-
-	/**
-	 * @return the status
-	 */
-	public String getStatus() {
-		return status;
-	}
-
-
-	/**
-	 * @param status the status to set
-	 */
-	public void setStatus(String status) {
-		this.status = status;
-	}
-
 	/**
 	 * @return the vrtulnik
 	 */
-	public boolean isVrtulnik() {
-		return vrtulnik;
+	public final boolean isVrtulnik() {
+		return this.vrtulnik;
 	}
 
 	/**
 	 * @return the odkudVrtulnik
 	 */
 	public Mesto getOdkudVrtulnik() {
-		return odkudVrtulnik;
+		return this.odkudVrtulnik;
+	}
+
+	/**
+	 * @return the casDokon
+	 */
+	public int getCasDokon() {
+		return this.casDokon;
+	}
+
+	/**
+	 * @param casDokon the casDokon to set
+	 */
+	public void setCasDokon(int casDokon) {
+		this.casDokon = casDokon;
 	}
 
 	/**
 	 * @return the dokonceno
 	 */
-	public boolean isDokonceno() {
-		return dokonceno;
-	}
-
-	/**
-	 * @param dokonceno the dokonceno to set
-	 */
-	public void setDokonceno(boolean dokonceno) {
-		this.dokonceno = dokonceno;
-	}
+	
 	
 	
 

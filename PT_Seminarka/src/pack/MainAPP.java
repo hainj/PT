@@ -6,8 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.Random;
-import java.util.Scanner;
-
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -17,7 +15,11 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 public class MainAPP extends JFrame {
-	
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private static boolean pause;
 	/**
 	 * @return the pause
@@ -39,17 +41,15 @@ public class MainAPP extends JFrame {
 
 	private static Thread sim;
 	private final static JFrame parent = new JFrame();
-	private final static String novaRadka = "\n";
 	private static JPanel tlacitka = new JPanel();
 	private static JTextArea textBlok = new JTextArea(20,20);
 	private static Mapa drawarea = new Mapa(700,550, false); //vytvori drawing areu o velikosti 500 x500
-	private static Scanner sc = new Scanner (System.in);
-	private static Random R = new Random();
+	private static Random r = new Random();
 
 	public static void main(String[] args) {
 		setPause(false);
-		
-		
+
+
 		final MainAPP frame = new MainAPP();
 		frame.setTitle("Postapokalipse");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -75,9 +75,9 @@ public class MainAPP extends JFrame {
 		tlacitka.add(tlacitkoSave);
 		tlacitka.add(tlacitkoLoad);
 		tlacitka.add(tlacitkoExit);
-	
-		
-		
+
+
+
 		textBlok.setColumns(20);
 		//textBlok.setBounds(515, 0, 40, 500);
 		JScrollPane textScroller = new JScrollPane();
@@ -87,7 +87,7 @@ public class MainAPP extends JFrame {
 		textScroller.setViewportView(textBlok);
 		frame.add(tlacitka,BorderLayout.SOUTH);
 		frame.repaint(); 
-		
+
 		frame.add(textScroller,BorderLayout.EAST);
 		textBlok.repaint();
 		tlacitka.repaint();
@@ -123,7 +123,7 @@ public class MainAPP extends JFrame {
 					{
 						x = generujSour();
 						y = generujSour();
-					}while(Generator.porovnejMesta (x,y,index) == true);
+					}while(Generator.porovnejMesta (x,y,index));
 
 					//pop up okno na nacitani poctu obyvatel novemu mestu
 
@@ -180,7 +180,7 @@ public class MainAPP extends JFrame {
 		//tlacitko na nacitani mapy - poloha mest a letist
 		tlacitkoLoad.addActionListener(new ActionListener()
 		{
-			
+
 
 			@Override
 			public void actionPerformed(ActionEvent arg0)
@@ -216,35 +216,36 @@ public class MainAPP extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				  JFileChooser chooser = new JFileChooser(); 
-				    chooser.setCurrentDirectory(new java.io.File("."));
-				    chooser.setDialogTitle("Slozka kam budou ulozeny logy");
-				    chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-				    //
-				    // disable the "All files" option.
-				    //
-				    chooser.setAcceptAllFileFilterUsed(false);
-				    chooser.showOpenDialog(null);
-				  
-				    File f = chooser.getSelectedFile();
-				    String str = null;
-				   try{
-				    str = f.getAbsolutePath();
-				    System.out.println(str);
-				    }
-				   catch(NullPointerException except){
-					   JOptionPane.showConfirmDialog(chooser, "Nevybrana zadna slozka", "Chooser", JOptionPane.DEFAULT_OPTION);
-					   return;
-				   }
-				   
-				   sim = new Thread(new Simulace(textBlok,Mapa.getPoleMest(), Mapa.getPoleLetist(), str));
-				   sim.start();
+				JFileChooser chooser = new JFileChooser(); 
+				chooser.setCurrentDirectory(new java.io.File("."));
+				chooser.setDialogTitle("Slozka kam budou ulozeny logy");
+				chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+				//
+				// disable the "All files" option.
+				//
+				chooser.setAcceptAllFileFilterUsed(false);
+				chooser.showOpenDialog(null);
+
+				File f = chooser.getSelectedFile();
+				String str = null;
+				try{
+					str = f.getAbsolutePath();
+					System.out.println(str);
+					sim = new Thread(new Simulace(textBlok,Mapa.getPoleMest(), Mapa.getPoleLetist(), str));
+					sim.start();
+				}
+				catch(NullPointerException except){
+					JOptionPane.showConfirmDialog(chooser, "Nevybrana zadna slozka", "Chooser", JOptionPane.DEFAULT_OPTION);
+					return;
+				}
+
+
 				//new Simulace(textBlok,Mapa.getPoleMest(), Mapa.getPoleLetist(), str);				
 			}
 		});
-		
+
 		tlacitkoPauza.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				if(pause){
@@ -261,7 +262,7 @@ public class MainAPP extends JFrame {
 
 	public static int generujSour ()
 	{
-		int x = R.nextInt(500);
+		int x = r.nextInt(500);
 		return x;
 	}
 

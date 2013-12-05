@@ -13,12 +13,13 @@ import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
+@SuppressWarnings("serial")
 public class Mapa extends JPanel {
 
-	public static ArrayList<Mesto>poleMest = new ArrayList<Mesto>();
+	public static ArrayList<Mesto>poleMest = new ArrayList<>();
 	public int width;
 	public int height;
-	public static ArrayList<Letiste>poleLetist = new ArrayList<Letiste>();
+	public static ArrayList<Letiste>poleLetist = new ArrayList<>();
 	Boolean ovladani = false;
 
 	/**
@@ -73,7 +74,7 @@ public class Mapa extends JPanel {
 
 	 public void setMesta(ArrayList<Mesto> poleMest)
 	 {
-		 this.poleMest = poleMest;
+		 Mapa.poleMest = poleMest;
 	 }
 
 	 public static void setLetiste(ArrayList<Letiste> poleLetiste)
@@ -88,7 +89,7 @@ public class Mapa extends JPanel {
 	 {
 		 super.paint(g);
 		 Graphics2D g2 = (Graphics2D) g;
-		 kresliMapu(g2, new Rectangle(0, 0, width, height));
+		 kresliMapu(g2, new Rectangle(0, 0, this.width, this.height));
 	 }
 
 	 /**
@@ -100,7 +101,7 @@ public class Mapa extends JPanel {
 	 {
 		 // vymazani platna
 		 g2.setColor(Color.WHITE);
-		 g2.fillRect(0, 0, width, height);
+		 g2.fillRect(0, 0, this.width, this.height);
 
 		 g2.setStroke(new BasicStroke(2));
 
@@ -113,7 +114,7 @@ public class Mapa extends JPanel {
 		 //g2.drawRect(502, 0, 700, 550);
 
 		 //ovladaci promenna - true program uz bezi a ma mapu nebo se spustil a je prazdny
-		 if(this.ovladani == true)
+		 if(this.ovladani)
 		 {
 			 //jeli spusteny program prazdny vygeneruje novou mapu
 			 if(poleMest.size()==0){
@@ -143,8 +144,6 @@ public class Mapa extends JPanel {
 		 //vykresleni cest mezi mesty
 		 g2.setStroke(new BasicStroke(1));
 		 g2.setColor(Color.BLUE);
-		 Rectangle rect = new Rectangle(501, 0,100 ,500);
-
 		 int indexMestPod2 = Generator.zjistiPod2(poleMest);
 
 		 for(int i = indexMestPod2+1; i <3000; i++)

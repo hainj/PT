@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class Mesto {
 
 	private double jidlo = 0;
-	private int jidlaTreba = 0;
+	private double jidlaTreba = 0;
 	private int obyvatel = 0;
 	private int x = 0;
 	private int y = 0;
@@ -15,12 +15,14 @@ public class Mesto {
 	private double vzdalenost = 100000;
 	private Mesto predchudce;
 	private Letiste odkud;
+	
 	private boolean hlad = true;
 	private boolean maCesty = true;
-	private int zasKdy;
-	private ArrayList<Vrtulnik> vrt = new ArrayList<Vrtulnik>();
-	private ArrayList<Auto> aut = new ArrayList<Auto>();
-	
+	private int zasKdy = Integer.MIN_VALUE;
+	private int zasDny = 2;
+	private final ArrayList<Vrtulnik> vrt = new ArrayList<>();
+	private ArrayList<Auto> aut = new ArrayList<>();
+
 
 
 
@@ -38,7 +40,7 @@ public class Mesto {
 		this.obyvatel = obyvatel;
 		this.heliport = heli;
 		//mesto potrebuje 2kg jidla na obyv na den - je mozno skladovat 3 dny
-		this.jidlaTreba = obyvatel*2*3;
+		this.jidlaTreba = obyvatel*2.0*3.0;
 	}
 
 	/**
@@ -64,7 +66,7 @@ public class Mesto {
 	 * @return the jidlo
 	 */
 	public double getJidlo() {
-		return jidlo;
+		return this.jidlo;
 	}
 
 	/**
@@ -77,14 +79,14 @@ public class Mesto {
 	/**
 	 * @return the jidlaTreba
 	 */
-	public int getJidlaTreba() {
-		return jidlaTreba;
+	public double getJidlaTreba() {
+		return this.jidlaTreba;
 	}
 
 	/**
 	 * @param jidlaTreba the jidlaTreba to set
 	 */
-	public void setJidlaTreba(int jidlaTreba) {
+	public void setJidlaTreba(double jidlaTreba) {
 		this.jidlaTreba = jidlaTreba;
 	}
 
@@ -92,7 +94,7 @@ public class Mesto {
 	 * @return the maCesty
 	 */
 	public boolean isMaCesty() {
-		return maCesty;
+		return this.maCesty;
 	}
 
 	/**
@@ -106,7 +108,7 @@ public class Mesto {
 	 * @return the vzdalenost
 	 */
 	public double getVzdalenost() {
-		return vzdalenost;
+		return this.vzdalenost;
 	}
 
 	/**
@@ -120,7 +122,7 @@ public class Mesto {
 	 * @return the predchudce
 	 */
 	public Mesto getPredchudce() {
-		return predchudce;
+		return this.predchudce;
 	}
 
 	/**
@@ -134,7 +136,7 @@ public class Mesto {
 	 * @return the odkud
 	 */
 	public Letiste getOdkud() {
-		return odkud;
+		return this.odkud;
 	}
 
 	/**
@@ -149,7 +151,7 @@ public class Mesto {
 	 * @return
 	 */
 	public boolean getHeliport() {
-		return heliport;
+		return this.heliport;
 	}
 
 	public void setHeliport(boolean heliport) {
@@ -157,7 +159,7 @@ public class Mesto {
 	}
 
 	public ArrayList<Mesto> getSousedi() {
-		return sousedi;
+		return this.sousedi;
 	}
 
 	public void setSousedi(ArrayList<Mesto> sousedi) {
@@ -165,7 +167,7 @@ public class Mesto {
 	}
 
 	public int getObyvatel() {
-		return obyvatel;
+		return this.obyvatel;
 	}
 
 	public void setObyvatel(int obyvatel) {
@@ -173,7 +175,7 @@ public class Mesto {
 	}
 
 	public int getX() {
-		return x;
+		return this.x;
 	}
 
 	public void setX(int x) {
@@ -181,18 +183,18 @@ public class Mesto {
 	}
 
 	public int getY() {
-		return y;
+		return this.y;
 	}
 
 	public void setY(int y) {
-		this.x = y;
+		this.y = y;
 	}
 
 	/**
 	 * @return the hlad
 	 */
 	public boolean getHlad() {
-		return hlad;
+		return this.hlad;
 	}
 
 	/**
@@ -205,26 +207,26 @@ public class Mesto {
 	@Override
 	public String toString() {
 		String str = "";
-		double x = 0;
+		double p = 0;
 		if(this.getJidlo()>this.getJidlaTreba()){
-			x = Math.floor(this.getJidlo());
+			p = Math.floor(this.getJidlo());
 		}
 		else{
-			x = Math.ceil(this.getJidlo());
+			p = Math.ceil(this.getJidlo());
 		}
 		if(this.isMaCesty()){
-			str = "Jidlo: " + x + "\n" + 
+			str = "Jidlo: " + p + "\n" + 
 					" Jidlo treba: " + this.getJidlaTreba() + "\n" + 
 					" Hlad: " + this.getHlad() + "\n" + 
 					" Vzdalenost: " + this.getVzdalenost();
 		}
 		else{
-			str = "Jidlo: " + x + "\n" +  
+			str = "Jidlo: " + p + "\n" +  
 					" Jidlo treba: " + this.getJidlaTreba() + "\n" + 
 					" Hlad: " + this.getHlad() + "\n" + 
 					" Vzdalenost: od mesta s heliportem " + this.getVzdalenost()+ "\n" +
 					" Vzdalenost od letiste: " + (this.getVzdalenost() + this.getPredchudce().getVzdalenost());
-					
+
 		}
 
 		return str;
@@ -234,7 +236,7 @@ public class Mesto {
 	 * @return the zasobPrv
 	 */
 	public int getZasobKdy() {
-		return zasKdy;
+		return this.zasKdy;
 	}
 
 	/**
@@ -245,10 +247,11 @@ public class Mesto {
 	}
 
 	/**
+	 * @return 
 	 * @return the vrt
 	 */
 	public ArrayList<Vrtulnik> getVrt() {
-		return vrt;
+		return this.vrt;
 	}
 
 	/**
@@ -256,7 +259,7 @@ public class Mesto {
 	 */
 	public void addVrt(ArrayList<Vrtulnik> vrt) {
 		for(int q = 0; q < vrt.size(); q++){
-		this.vrt.add(vrt.get(q));
+			this.vrt.add(vrt.get(q));
 		}
 	}
 
@@ -264,17 +267,48 @@ public class Mesto {
 	 * @return the aut
 	 */
 	public ArrayList<Auto> getAut() {
-		return aut;
+		return this.aut;
 	}
 
 	/**
 	 * @param aut the aut to add
 	 */
-	public void addAut(ArrayList<Auto> aut) {
-		for(int q = 0; q < aut.size(); q++){
-			this.aut.add(aut.get(q));
-			}
+	public void setAut(ArrayList<Auto> aut) {
+		
+			this.aut = aut;
+		
 	}
+
+	public double zaokr(){
+		double p = 0;
+		if(this.getJidlo()>this.getJidlaTreba()){
+			p = Math.floor(this.getJidlo());
+		}
+		else{
+			p = Math.ceil(this.getJidlo());
+		}
+		return p;
+
+	}
+	
+
+	/**
+	 * @return the zasDny
+	 */
+	public int getZasDny() {
+		return this.zasDny;
+	}
+
+	/**
+	 * @param zasDny the zasDny to set
+	 */
+	public void setZasDny(int zasDny) {
+		this.zasDny = zasDny;
+	}
+
+	/**
+	 * @return the prubeh
+	 */
 
 
 }
