@@ -385,12 +385,18 @@ public class Generator {
 
 
 	}
-
-	/*public static String cesta(Mesto mesto){
+	/*
+	public static String cesta(Auto auto){
 		ArrayList<String> str = new ArrayList<>();
-
-		str.add(String.valueOf(Mapa.getIndexMest(mesto.getPredchudce())));
-		str = rekurCesta(mesto.getPredchudce(), str);
+		Letiste let;
+		 int indexLet;
+		for(int i = 0; i <= auto.getUdalost().getMesto().getVzdLet().size(); i++){
+			let = auto.getUdalost().getMesto().getVzdLet().get(i).getLet();
+			if(let.equals(auto.getUdalost().getOdkudNak())){
+				indexLet = i;
+			}
+		}
+		
 
 		return null;
 

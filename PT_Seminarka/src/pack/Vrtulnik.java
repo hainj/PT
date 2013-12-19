@@ -1,7 +1,7 @@
 package pack;
 
 public class Vrtulnik {
-	
+	private int dokonKdy = 0;
 	private boolean naklada = false;
 	private boolean jede = false;
 
@@ -134,13 +134,15 @@ public class Vrtulnik {
 
 
 	
-	@Override
-	public String toString() {
-
-		String str = "";
+	public String vypisVrt(int i){
+		String str = "Vrtulnik " + i + "\n" + "Nalozeno " + 
+				(this.getDobaNaklada()*1000/30) + "\n" + "Ujeta vzdalenost od mesta s let " + 
+				this.getDobaJede()*(40/60) + "\n"
+				+ "Vylozeno " +(this.getDobaVyklada()*1000/30) + "\n" +"Cilove mesto: " + this.getUdalost().getMesto().vypisMesto()+ "\n" +"\n" ;
 		
 		return str;
 	}
+
 
 
 
@@ -212,6 +214,24 @@ public class Vrtulnik {
 	 */
 	public void setKonec(boolean konec) {
 		this.konec = konec;
+	}
+
+
+
+	/**
+	 * @return the dokonKdy
+	 */
+	public int getDokonKdy() {
+		return dokonKdy;
+	}
+
+
+
+	/**
+	 * @param dokonKdy the dokonKdy to set
+	 */
+	public void setDokonKdy(int dokonKdy) {
+		this.dokonKdy = dokonKdy;
 	}
 	
 }

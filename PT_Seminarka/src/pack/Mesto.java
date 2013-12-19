@@ -3,30 +3,69 @@ package pack;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * Trida konstruktoru mesta
+ * @author Cybra
+ *
+ */
 public class Mesto {
-
+	/**
+	 *Zda je mesto plne zasobeno
+	 */
 	private boolean zasobeno = false;
-	private int nas = 1;;
+	/**
+	 * nasobic dnu
+	 */
+	private int nas = 1;
+	/**
+	 * soucasny stav jidla
+	 */
 	private double jidlo = 0.0;
+	/**
+	 * jidlo potreba
+	 */
 	private double jidlaTreba = 0.0;
+	/**
+	 * pocet obyvatel
+	 */
 	private int obyvatel = 0;
+	/**
+	 * x-ova souradnice mesta
+	 */
 	private int x = 0;
+	/**
+	 * y-ova souradnice mesta
+	 */
 	private int y = 0;
+	/**
+	 * seznam sousedu mesta
+	 */
 	private List<Mesto> sousedi;
+	/**
+	 * Zda ma mesto heliport
+	 */
 	private boolean heliport;
 
+
+	/**
+	 * seznam vzdalenosti od letist
+	 */
+	private List<Vzdalenost> vzdLet = new ArrayList<>();
+	/**
+	 * Hlad mesta
+	 */
+	private boolean hlad = true;
+	/**
+	 * Mesto s cestami nebo bez
+	 */
+	private boolean maCesty = true;
+	/**
+	 * Kdy musi byt mesto opet zasobeno
+	 */
+	private int zasKdy = Integer.MIN_VALUE;
+	
 	
 
-	private List<Vzdalenost> vzdLet = new ArrayList<>();
-	
-	private boolean hlad = true;
-	private boolean maCesty = true;
-	private int zasKdy = Integer.MIN_VALUE;
-	private int zasDny = 2;
-	private final List<Vrtulnik> vrt = new ArrayList<>();
-	private List<Auto> aut = new ArrayList<>();
-	
 
 
 
@@ -38,13 +77,14 @@ public class Mesto {
 	 */
 	public Mesto(int x, int y, int obyvatel, boolean heli)
 	{
+
 		this.x = x;
 		this.y = y;
 		this.obyvatel = obyvatel;
 		this.heliport = heli;
 		//mesto potrebuje 2kg jidla na obyv na den - je mozno skladovat 3 dny
 		this.jidlaTreba = obyvatel*2.0*3.0;
-		
+
 	}
 
 	/**
@@ -55,7 +95,7 @@ public class Mesto {
 	 * @param sousedi pole sousedu mesta
 	 */
 	public Mesto( int x, int y, int obyvatel,ArrayList<Mesto> sousedi) {
-		super();
+
 		this.obyvatel = obyvatel;
 		this.x = x;
 		this.y = y;
@@ -66,43 +106,43 @@ public class Mesto {
 
 
 
-	/**
+	/**Getr soucasneho stavu jidla ve meste
 	 * @return the jidlo
 	 */
 	public double getJidlo() {
 		return this.jidlo;
 	}
 
-	/**
-	 * @param maxVyklad the jidlo to set
+	/**Jidlo soucasne ve meste
+	 * @param maxVyklad kolik jidla mame
 	 */
 	public void setJidlo(double maxVyklad) {
 		this.jidlo = maxVyklad;
 	}
 
-	/**
+	/**Getr kolik jidla je potreba pro mesto
 	 * @return the jidlaTreba
 	 */
 	public double getJidlaTreba() {
 		return this.jidlaTreba;
 	}
 
-	/**
+	/**Setr kolik jidla je treba dovezt
 	 * @param jidlaTreba the jidlaTreba to set
 	 */
 	public void setJidlaTreba(double jidlaTreba) {
 		this.jidlaTreba = jidlaTreba;
 	}
 
-	/**
+	/**Getr prommene cesty
 	 * @return the maCesty
 	 */
 	public boolean isMaCesty() {
 		return this.maCesty;
 	}
 
-	/**
-	 * @param maCesty the maCesty to set
+	/**Setr urcujici zda ma mesto cesty
+	 * @param maCesty true ma false nema
 	 */
 	public void setMaCesty(boolean maCesty) {
 		this.maCesty = maCesty;
@@ -116,72 +156,102 @@ public class Mesto {
 	public boolean getHeliport() {
 		return this.heliport;
 	}
-
+	/**
+	 * Setr heliportu
+	 * @param heliport heliport
+	 */
 	public void setHeliport(boolean heliport) {
 		this.heliport = heliport;
 	}
-
+	/**
+	 *  Getr seznamu sousedu
+	 * @return seznam sousedu
+	 */
 	public List<Mesto> getSousedi() {
 		return this.sousedi;
 	}
-
+	/**
+	 * Setr seznamu sousedu mesta
+	 * @param sousedi seznam sousedu
+	 */
 	public void setSousedi(List<Mesto> sousedi) {
 		this.sousedi = sousedi;
 	}
-
+	/**
+	 * Getr poctu obyvatel
+	 * @return pocet obyv
+	 */
 	public int getObyvatel() {
 		return this.obyvatel;
 	}
-
+	/**
+	 * Setr poctu obyvatel
+	 * @param obyvatel pocet obyvatel
+	 */
 	public void setObyvatel(int obyvatel) {
 		this.obyvatel = obyvatel;
 	}
-
+	/**
+	 * Getr x-ove sour
+	 * @return x-ova sour
+	 */
 	public int getX() {
 		return this.x;
 	}
-
+	/**
+	 * Setr x-ove sour
+	 * @param x x-ova sour
+	 */
 	public void setX(int x) {
 		this.x = x;
 	}
-
+	/**
+	 * Getr y-ove sour
+	 * @return y-ova sour
+	 */
 	public int getY() {
 		return this.y;
 	}
-
+	/**
+	 * Str y-ove sour
+	 * @param y y-ova sour
+	 */
 	public void setY(int y) {
 		this.y = y;
 	}
 
-	/**
+	/**Getr hladu
 	 * @return the hlad
 	 */
 	public boolean getHlad() {
 		return this.hlad;
 	}
 
-	/**
+	/**Setr hladu
 	 * @param hlad the hlad to set
 	 */
 	public void setHlad(boolean hlad) {
 		this.hlad = hlad;
 	}
-
-	@Override
-	public String toString() {
+	/**
+	 * Vypise mesto
+	 * @param i index mesta
+	 * @return string s info
+	 */
+	public String vypisMesto(int i){
 		String str = "";
-	
-		if(this.isMaCesty()){
-			str = "Jidlo: " + this.getJidlo() + "\n" + 
-					" Jidlo treba: " + this.getJidlaTreba() + "\n" + 
-					" Hlad: " + this.getHlad() + "\n";
-		}
-		else{
-			str = "Jidlo: " + this.getJidlo() + "\n" +  
-					" Jidlo treba: " + this.getJidlaTreba() + "\n" + 
-					" Hlad: " + this.getHlad() + "\n" ;
 
-		}
+
+		str = "Mesto "+ i + "\n" + 
+				"Obyvatel: "+ this.getObyvatel() + "\n" + 
+				"Jidlo: " + this.getJidlo() + "\n" + 
+				"Jidlo treba: " + this.getJidlaTreba() + "\n" + 
+				"Hlad: " + this.getHlad() + "\n" + 
+				"Cesty: " + this.isMaCesty() + "\n" +
+				"Heliport: " + this.getHeliport() + "\n";
+
+
+
 
 		return str;
 	}
@@ -194,84 +264,36 @@ public class Mesto {
 		this.zasKdy = zasobPrv;
 	}
 
-	/**
-	 * @return seznam vrtulniku 
-	 * 
-	 */
-	public List<Vrtulnik> getVrt() {
-		return this.vrt;
-	}
 
-	/**
-	 * @param vrt the vrt to set
-	 */
-	public void addVrt(ArrayList<Vrtulnik> vrt) {
-		for(int q = 0; q < vrt.size(); q++){
-			this.vrt.add(vrt.get(q));
-		}
-	}
 
-	/**
-	 * @return the aut
-	 */
-	public List<Auto> getAut() {
-		return this.aut;
-	}
-
-	/**
-	 * @param aut the aut to add
-	 */
-	public void addAut(ArrayList<Auto> aut) {
-		for(int q = 0; q < this.vrt.size(); q++){
-			this.aut.add(aut.get(q));
-		}
-	}
-
-	public double zaokr(){
-		double p = 0;
-		if(this.getJidlo()>this.getJidlaTreba()){
-			p = Math.floor(this.getJidlo());
-		}
-		else{
-			p = Math.ceil(this.getJidlo());
-		}
-		return p;
-
-	}
 	
 
-	/**
-	 * @return the zasDny
-	 */
-	public int getZasDny() {
-		return this.zasDny;
-	}
 
-	/**
-	 * @param zasDny the zasDny to set
-	 */
-	public void setZasDny(int zasDny) {
-		this.zasDny = zasDny;
-	}
+	
 
-	/**
-	 * @return the vzdLet
+	/**Getr pole vzdalenosti
+	 * @return the vzdLet pole vzdalenosti
 	 */
 	public List<Vzdalenost> getVzdLet() {
 		return this.vzdLet;
 	}
 
-	/**
-	 * @param vzdLet the vzdLet to set
+	/**Nastavuje pole vzdalenosti od letiste
+	 * @param vzdLet pole vzdalenosti
 	 */
 	public void setVzdLet(List<Vzdalenost> vzdLet) {
 		this.vzdLet = vzdLet;
 	}
+	/**
+	 * Prida do pole vzdalenosti dalsiho clena
+	 * @param mesto predchudce
+	 * @param vzdalen vzdalenost od letiste
+	 */
 	public void addVzd(Mesto mesto, double vzdalen) {
 		this.vzdLet.add(new Vzdalenost(mesto, vzdalen));
-		
+
 	}
-	/**
+	/**Boolean zda je mesto plne zasobeno
 	 * @return the zasobeno
 	 */
 	public boolean isZasobeno() {
@@ -280,28 +302,49 @@ public class Mesto {
 	public void setZasobeno(boolean zas){
 		this.zasobeno = zas;
 	}
-	/**
-	 * @return the zasKdy
+	/**Cas zasobeni mesta
+	 * @return kdy bylo mesto zasobeno
 	 */
 	public int getZasKdy() {
 		return this.zasKdy;
 	}
 
-	/**
-	 * @return the nas
+	/**Getr nasobice
+	 * @return nasobic dnu
 	 */
 	public int getNas() {
 		return nas;
 	}
 
-	/**
-	 * @param nas the nas to set
+	/**Nasobic dne
+	 * @param nastavuje nasobic dne
 	 */
 	public void setNas(int nas) {
 		this.nas = nas;
 	}
+	/**
+	 * Vypise informace o mestu
+	 * @return sting informaci
+	 */
+	public String vypisMesto() {
+		String str = "";
 
-	
+
+		str ="Obyvatel: "+ this.getObyvatel() + "\n" + 
+				"Jidlo: " + this.getJidlo() + "\n" + 
+				"Jidlo treba: " + this.getJidlaTreba() + "\n" + 
+				"Hlad: " + this.getHlad() + "\n" + 
+				"Cesty: " + this.isMaCesty() + "\n" +
+				"Heliport: " + this.getHeliport() + "\n";
 
 
+
+
+		return str;
+	}
 }
+
+
+
+
+

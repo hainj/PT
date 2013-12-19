@@ -13,8 +13,6 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 
 public class MainAPP extends JFrame {
 
@@ -22,7 +20,7 @@ public class MainAPP extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private static boolean pause;
+	static boolean pause;
 	/**
 	 * @return the pause
 	 */
@@ -41,10 +39,9 @@ public class MainAPP extends JFrame {
 
 
 
-	private static Thread sim;
-	private final static JFrame parent = new JFrame();
+	static Thread sim;
+	final static JFrame parent = new JFrame();
 	private static JPanel tlacitka = new JPanel();
-	private static JTextArea textBlok = new JTextArea(20,20);
 	static Mapa drawarea = new Mapa(700,550, false); //vytvori drawing areu o velikosti 500 x500
 	private static Random r = new Random();
 
@@ -61,7 +58,7 @@ public class MainAPP extends JFrame {
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 
-
+		JButton tlacitkoInfo = new JButton("Stat mest/aut/vrt");
 		JButton tlacitkoSave = new JButton ("Save");
 		JButton tlacitkoLoad = new JButton ("Load");
 		JButton tlacitkoNew = new JButton ("Nova mapa");
@@ -72,6 +69,7 @@ public class MainAPP extends JFrame {
 
 		tlacitka.add(tlacitkoStart);
 		tlacitka.add(tlacitkoPauza);
+		tlacitka.add(tlacitkoInfo);
 		tlacitka.add(tlacitkoNew);
 		tlacitka.add(tlacitkoNewCiti);
 		tlacitka.add(tlacitkoSave);
@@ -80,19 +78,62 @@ public class MainAPP extends JFrame {
 
 
 
-		textBlok.setColumns(20);
-		//textBlok.setBounds(515, 0, 40, 500);
-		JScrollPane textScroller = new JScrollPane();
-		//System.out.println(textBlok.getBounds().x);
-		textBlok.setLineWrap(true);
-		textBlok.setWrapStyleWord(true);
-		textScroller.setViewportView(textBlok);
+
 		frame.add(tlacitka,BorderLayout.SOUTH);
 		frame.repaint(); 
 
-		frame.add(textScroller,BorderLayout.EAST);
-		textBlok.repaint();
 		tlacitka.repaint();
+
+
+		tlacitkoInfo.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String[] moznosti = new String[] {"Auto", "Vrtulnik", "Mesto", "Cancel"};
+				int mozn = JOptionPane.showOptionDialog(null, "Statistiky", "Vyberte o cem chcete neco vedet", 
+						JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
+						null, moznosti, moznosti[0]);
+				if(mozn ==2){
+					int index = 0;
+					try{	
+						String ob = JOptionPane.showInputDialog(parent, "Vyberte mesto, o kterém chcete vìdìt(0 do" + (Mapa.poleMest.size()-1)+ "): ");
+						index = Integer.parseInt(ob);
+						Mesto mesto = Mapa.poleMest.get(index);
+						JOptionPane.showMessageDialog(parent, mesto.vypisMesto(index));
+					}catch(NumberFormatException exc)
+					{
+						JOptionPane.showMessageDialog(parent, "Prosim zadejte cislo");
+					}
+
+				}
+				if(mozn ==1){
+					int index = 0;
+					try{	
+						String ob = JOptionPane.showInputDialog(parent, "Vyberte vrtulnik, o kterém chcete vìdìt(0 do" + (Simulace.getVrtulniky().size()-1)+ "): ");
+						index = Integer.parseInt(ob);
+						Vrtulnik vrt = Simulace.getVrtulniky().get(index);
+						JOptionPane.showMessageDialog(parent, vrt.toString());
+					}catch(NumberFormatException exc)
+					{
+						JOptionPane.showMessageDialog(parent, "Zadejte prosim cislo");
+					}
+
+				}
+				if(mozn ==0){
+					int index = 0;
+					try{
+						String ob = JOptionPane.showInputDialog(parent, "Vyberte auto, o kterém chcete vìdìt(0 do" + (Simulace.getAuta().size()-1)+ "): ");
+						index = Integer.parseInt(ob);
+						Auto auto = Simulace.getAuta().get(index);
+						JOptionPane.showMessageDialog(parent, auto.toString());
+					}catch(NumberFormatException exc)
+					{
+						JOptionPane.showMessageDialog(parent, "Prosim zadejte cislo");
+					}
+
+				}
+			}
+		});
 
 
 
@@ -112,7 +153,7 @@ public class MainAPP extends JFrame {
 				//Mapa.kresleni(Mapa.g2);
 				drawarea.repaint();
 				frame.add(drawarea);
-				
+
 				frame.repaint();
 			}
 		});
@@ -123,7 +164,7 @@ public class MainAPP extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent arg0)
 			{
-			
+
 				if(Mapa.getPoleMest().size()!=0)
 				{
 					int x = 0;
@@ -144,7 +185,7 @@ public class MainAPP extends JFrame {
 						{
 							String ob = JOptionPane.showInputDialog(parent, "Zadej pocit obyvatel(max 2000): ");
 							obyv = Integer.parseInt(ob);
-							
+
 							break;
 						}catch(NumberFormatException e)
 						{
@@ -159,14 +200,14 @@ public class MainAPP extends JFrame {
 						System.out.println("Zadali jste vice nez 2000 obyv");
 					}
 					else{
-					Mapa.poleMest.add(new Mesto(x,y,obyv,true));
-					System.out.println(Mapa.getPoleMest().size());
-					index = Mapa.getPoleMest().size()-1;
-					Mapa.setOvladani(true);
-					Mapa.getPoleMest().get(index).setObyvatel(obyv);
-					Mapa.getPoleMest().get(index).setHeliport(false);
-					Generator.mestoBezSousVzdal(Mapa.getPoleMest().get(index), Mapa.getPoleMest());
-					
+						Mapa.poleMest.add(new Mesto(x,y,obyv,true));
+						System.out.println(Mapa.getPoleMest().size());
+						index = Mapa.getPoleMest().size()-1;
+						Mapa.setOvladani(true);
+						Mapa.getPoleMest().get(index).setObyvatel(obyv);
+						Mapa.getPoleMest().get(index).setHeliport(false);
+						Generator.mestoBezSousVzdal(Mapa.getPoleMest().get(index), Mapa.getPoleMest());
+
 					}
 					//drawarea.repaint();
 					frame.repaint();
@@ -236,20 +277,8 @@ public class MainAPP extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				int q;
-				while(true){
-				try
-				{
-					String ob = JOptionPane.showInputDialog(parent, "Zadejte ktere mesto chcete sledovat (od 0 do " + (Mapa.getPoleMest().size()-1) + "): ");
-					q = Integer.parseInt(ob);
-					
-					break;
-				}catch(NumberFormatException exc)
-				{
-					JOptionPane.showMessageDialog(parent, "Prosim zadejte cislo");
-				}
-				}
-				
+
+
 				JFileChooser chooser = new JFileChooser(); 
 				chooser.setCurrentDirectory(new java.io.File("."));
 				chooser.setDialogTitle("Slozka kam budou ulozeny logy");
@@ -265,10 +294,9 @@ public class MainAPP extends JFrame {
 				try{
 					str = f.getAbsolutePath();
 					System.out.println(str);
-					if(q >= 0 && q<Mapa.getPoleMest().size()){
-					sim = new Thread(new Simulace(textBlok,Mapa.getPoleMest(), Mapa.getPoleLetist(), str, q));
+					sim = new Thread(new Simulace(Mapa.getPoleMest(), Mapa.getPoleLetist(), str));
 					sim.start();
-					}
+
 				}
 				catch(NullPointerException except){
 					JOptionPane.showConfirmDialog(chooser, "Nevybrana zadna slozka", "Chooser", JOptionPane.DEFAULT_OPTION);

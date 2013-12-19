@@ -3,7 +3,7 @@ package pack;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JTextArea;
+
 
 public class Simulace implements Runnable {
 	private final int CAS = 10080;
@@ -12,35 +12,42 @@ public class Simulace implements Runnable {
 	private final double urazVzdalVrt = 150.0/60.0;
 	private final double maxAuto = 12000.0;
 	private final double maxVrt = 2000.0;
-
-	private final ArrayList<Udalost> udalosti = new ArrayList<>();
-	//private final ArrayList<Udalost> dokonUdalosti = new ArrayList<>();
-
-	//private int dobNaklad = 0;
-	private JTextArea textBlok;
-	private List<Auto> dokonAut = new ArrayList<>();
-	private List<Vrtulnik> dokonVrt = new ArrayList<>();
-	private List<Mesto> poleMest;
-	private List<Letiste> poleLetist;
-	private String cesta;
-	private List<Auto> auta = new ArrayList<>();
-	private List<Vrtulnik> vrtulniky = new ArrayList<>();
-	private int index;
-
 	/**
+	 * seznam mest
+	 */
+	private List<Mesto> poleMest;
+	/**
+	 * seznam letist
+	 */
+	private List<Letiste> poleLetist;
+	/**
+	 * Cesta k vystupnim souborum
+	 */
+	private String cesta;
+	/**
+	 * Seznam aut
+	 */
+	private static List<Auto> auta = new ArrayList<>();
+	
+	/**
+	 * Seznam vrtulniky
+	 */
+	private static List<Vrtulnik> vrtulniky = new ArrayList<>();
+	
+	
+	/**Konstruktor simulace
 	 * @param textBlok textblok
 	 * @param mesta pole mest
 	 * @param letiste pole letist
 	 * @param cesta cesta kam budou ulozeny logy
 	 */
-	public Simulace(JTextArea textBlok, List<Mesto> mesta,
-			List<Letiste> letiste, String cesta, int index) {
+	public Simulace( List<Mesto> mesta,
+			List<Letiste> letiste, String cesta) {
 
-		this.textBlok = textBlok;
+		
 		this.poleMest = mesta;
 		this.poleLetist = letiste;
 		this.cesta = cesta;
-		this.index = index;
 	}
 
 
@@ -50,7 +57,9 @@ public class Simulace implements Runnable {
 
 
 
-
+	/**
+	 * Pokusi se zastavit beh simulace, pri stisku tlacitka pauza
+	 */
 	private void pauza(){
 		try{
 
@@ -73,10 +82,17 @@ public class Simulace implements Runnable {
 		int op = 0;
 		int m = 1;
 		int u = 1;
+		int dny3 = 1;
 		for(int i = 0; i <= this.CAS; i++){
 			if(i == u *1440){
 				VypisLog.zapis(this.poleMest, this.cesta, u);
+				VypisLog.zapisAut(Simulace.auta, this.cesta, u);
+				VypisLog.zapisVrt(Simulace.vrtulniky, this.cesta, u);
 				u++;
+			}
+			if(i == (dny3*4320)){
+				VypisLog.zapis3Dny(this.poleMest, Simulace.auta, Simulace.vrtulniky, this.cesta, dny3);
+				dny3++;
 			}
 			/*for(int z = 0; z<5;z++){
 				System.out.println(Mapa.getPoleLetist().get(z).getMaxZasoben());
@@ -91,8 +107,8 @@ public class Simulace implements Runnable {
 			vytvorUdalosti();
 
 			//System.out.println(this.auta.size());
-			for(int q =0; q < this.auta.size(); q++){
-				Auto auto = this.auta.get(q);
+			for(int q =0; q < Simulace.getAuta().size(); q++){
+				Auto auto = Simulace.getAuta().get(q);
 				if(auto.isNaklada() || auto.isCeka()){
 
 
@@ -119,6 +135,7 @@ public class Simulace implements Runnable {
 					//System.out.println(auto.getUdalost().getMesto().getJidlo() + " " + auto.getUdalost().getMesto().getJidlaTreba());
 					auto.getUdalost().getOdkudNak().setMaxZasoben(auto.getUdalost().getOdkudNak().getMaxZasoben()-1);
 					auto.setDokonceno(false);
+					auto.setDokonKdy(i);
 					auto.setKonec(true);
 				}
 
@@ -126,9 +143,9 @@ public class Simulace implements Runnable {
 
 			}
 
-			for(int o =0; o < this.vrtulniky.size(); o++){
+			for(int o =0; o < Simulace.getVrtulniky().size(); o++){
 
-				Vrtulnik vrt = this.vrtulniky.get(o);
+				Vrtulnik vrt = Simulace.getVrtulniky().get(o);
 				if(vrt.isJede()){
 					letiHeli(vrt);
 					//System.out.println(vrt.getDobaJede() + "  " + vrt.getUdalost().getDobaLetu()+ vrt.getUdalost().getMesto());
@@ -139,6 +156,7 @@ public class Simulace implements Runnable {
 				if(vrt.isDokonceno()){
 					vrt.getUdalost().getMesto().setJidlo(vrt.getUdalost().getMesto().getJidlo() + vrt.getUdalost().getDobaNakl()*this.nakladMinuta);
 					vrt.setDokonceno(false);
+					vrt.setDokonKdy(i);
 					vrt.setKonec(true);
 				}
 
@@ -146,7 +164,8 @@ public class Simulace implements Runnable {
 			op=i;
 			//System.out.println(i + "  " +this.auta.get(9600).getDobaJede() +" " + this.auta.get(9600).getDobaNaklada() +" " + this.auta.get(9599).isDokonceno() );
 		}
-		System.out.println("Konec Simulace " + op + this.auta.size() +" " + this.vrtulniky.size());
+		VypisLog.souhrn(this.poleMest, auta, vrtulniky, this.cesta);
+		//System.out.println("Konec Simulace " + op + Simulace.getAuta().size() +" " + Simulace.getVrtulniky().size());
 	}
 
 
@@ -260,15 +279,16 @@ public class Simulace implements Runnable {
 
 		if(!autoPrelozeno(auto))
 			for(int z = 0; z < auto.getUdalost().getIndex().size(); z++){
-				Vrtulnik vrt = this.vrtulniky.get(auto.getUdalost().getIndex().get(z));
+				Vrtulnik vrt = Simulace.getVrtulniky().get(auto.getUdalost().getIndex().get(z));
 				if(vrt.isNaklada()){
 					//System.out.println(vrt.getUdalost().getDobaNakl());
 					if(vrt.getDobaNaklada()> vrt.getUdalost().getDobaNakl()){
+						vrt.setDobaNaklada(vrt.getUdalost().getDobaNakl());
 						vrt.setNaklada(false);
 						vrt.setJede(true);
 					}
 					else if(vrt.getUdalost().getDobaNakl() - vrt.getDobaNaklada()<1){
-						vrt.setDobaNaklada(vrt.getDobaNaklada() + 1.0 + q);
+						vrt.setDobaNaklada(vrt.getDobaNaklada() + 1.0);
 						//System.out.println(vrt.getDobaNaklada());
 						auto.setDobaPreklada(auto.getDobaPreklada() +vrt.getUdalost().getDobaNakl() - vrt.getDobaNaklada());
 					}
@@ -282,10 +302,10 @@ public class Simulace implements Runnable {
 			}
 	}
 
-	private boolean autoPrelozeno(Auto auto) {
+	private static boolean autoPrelozeno(Auto auto) {
 		boolean q = true;
 		for(int z = 0; z < auto.getUdalost().getIndex().size(); z++){
-			Vrtulnik vrt = this.vrtulniky.get(auto.getUdalost().getIndex().get(z));
+			Vrtulnik vrt = Simulace.getVrtulniky().get(auto.getUdalost().getIndex().get(z));
 			if(vrt.isNaklada()){
 				return false;		
 			}	
@@ -329,8 +349,8 @@ public class Simulace implements Runnable {
 			vrt.setNaklada(true);
 			//System.out.println(jidloTreb +"  " + auto.getDobaNaklada());
 			vrt.getUdalost().setDobaLetu(auto.getUdalost().getDobaLetu());
-			this.vrtulniky.add(vrt);
-			auto.getUdalost().getIndex().add(this.vrtulniky.size()-1);
+			Simulace.getVrtulniky().add(vrt);
+			auto.getUdalost().getIndex().add(Simulace.getVrtulniky().size()-1);
 
 
 		}
@@ -653,7 +673,7 @@ public class Simulace implements Runnable {
 
 					Auto auto = new Auto(ud);
 					auto.setCeka(true);
-					this.auta.add(auto);
+					Simulace.getAuta().add(auto);
 				}
 
 				//System.out.println(i + " " + this.auta.size() + " " + this.auta.get(i).getUdalost().getDobaNakl()*this.nakladMinuta);
@@ -666,6 +686,76 @@ public class Simulace implements Runnable {
 
 
 	}
+
+
+
+
+
+
+
+
+
+	/**
+	 * @return the vrtulniky
+	 */
+	public static List<Vrtulnik> getVrtulniky() {
+		return vrtulniky;
+	}
+
+
+
+
+
+
+
+
+
+	/**
+	 * @param vrtulniky the vrtulniky to set
+	 */
+	public static void setVrtulniky(List<Vrtulnik> vrtulniky) {
+		Simulace.vrtulniky = vrtulniky;
+	}
+
+
+
+
+
+
+
+
+
+	/**
+	 * @return the auta
+	 */
+	public static List<Auto> getAuta() {
+		return auta;
+	}
+
+
+
+
+
+
+
+
+
+	/**
+	 * @param auta the auta to set
+	 */
+	public static void setAuta(List<Auto> auta) {
+		Simulace.auta = auta;
+	}
+
+
+
+
+
+
+
+
+
+	
 
 
 

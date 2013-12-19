@@ -3,7 +3,7 @@ package pack;
 public class Auto {
 
 
-
+	private int dokonKdy = 0;
 	private static int pocet = 0;
 	//private double ujetaVzdalenost = 0.0;
 	//private String status;
@@ -210,10 +210,12 @@ public class Auto {
 
 
 
-	@Override
-	public String toString() {
-		String str = "  naklada: " + pocet + "\n" ;
-
+	public String vypisAuto(int i){
+		String str = "Vrtulnik "+ i  +"\n" + "Nalozeno " + 
+				(this.getUdalost().getDobaNakl()*1000/30) + "\n" + "Ujeta vzdalenost " + 
+				this.getDobaJede()*(40/60) + "\n"
+				+ "Vylozeno " +(this.getDobaVyklada()*1000/30) + "\n" +"Cilove mesto: " + this.getUdalost().getMesto()+ "\n";
+		
 		return str;
 	}
 
@@ -291,6 +293,26 @@ public class Auto {
 	 */
 	public void setKonec(boolean konec) {
 		this.konec = konec;
+	}
+
+
+
+
+	/**
+	 * @return the dokonKdy
+	 */
+	public int getDokonKdy() {
+		return dokonKdy;
+	}
+
+
+
+
+	/**
+	 * @param dokonKdy the dokonKdy to set
+	 */
+	public void setDokonKdy(int dokonKdy) {
+		this.dokonKdy = dokonKdy;
 	}
 
 
