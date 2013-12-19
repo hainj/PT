@@ -6,6 +6,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.Random;
+import java.util.concurrent.CancellationException;
+
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -43,7 +45,7 @@ public class MainAPP extends JFrame {
 	private final static JFrame parent = new JFrame();
 	private static JPanel tlacitka = new JPanel();
 	private static JTextArea textBlok = new JTextArea(20,20);
-	private static Mapa drawarea = new Mapa(700,550, false); //vytvori drawing areu o velikosti 500 x500
+	static Mapa drawarea = new Mapa(700,550, false); //vytvori drawing areu o velikosti 500 x500
 	private static Random r = new Random();
 
 	public static void main(String[] args) {
@@ -100,10 +102,17 @@ public class MainAPP extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent arg0)
 			{
+				System.out.println("aaaaa");
 				Mapa.getPoleLetist().clear();
 				Mapa.getPoleMest().clear();
-				drawarea = new Mapa (500 , 500, true);
+				//drawarea = new Mapa (500 , 500, true);
+				Mapa.setOvladani(true);
+				//new Generator();
+				//System.out.println(Mapa.poleLetist.size() + "   " + Mapa.poleMest.size());
+				//Mapa.kresleni(Mapa.g2);
 				drawarea.repaint();
+				frame.add(drawarea);
+				
 				frame.repaint();
 			}
 		});
@@ -114,11 +123,12 @@ public class MainAPP extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent arg0)
 			{
+			
 				if(Mapa.getPoleMest().size()!=0)
 				{
 					int x = 0;
 					int y = 0;
-					int index = Mapa.getPoleMest().size()-1;
+					int index = Mapa.getPoleMest().size();
 					do
 					{
 						x = generujSour();
@@ -140,15 +150,19 @@ public class MainAPP extends JFrame {
 						{
 							JOptionPane.showMessageDialog(parent, "Prosim zadejte cislo");
 						}
+						catch(CancellationException e){
+							break;
+						}
 					}
 
-					if(obyv > 2000){
+					if(obyv > 2000 || obyv <=0){
 						System.out.println("Zadali jste vice nez 2000 obyv");
-					}{
-					Mapa.getPoleMest().add(new Mesto(x,y,obyv,true));
-
+					}
+					else{
+					Mapa.poleMest.add(new Mesto(x,y,obyv,true));
+					System.out.println(Mapa.getPoleMest().size());
 					index = Mapa.getPoleMest().size()-1;
-
+					Mapa.setOvladani(true);
 					Mapa.getPoleMest().get(index).setObyvatel(obyv);
 					Mapa.getPoleMest().get(index).setHeliport(false);
 					Generator.mestoBezSousVzdal(Mapa.getPoleMest().get(index), Mapa.getPoleMest());
@@ -202,7 +216,7 @@ public class MainAPP extends JFrame {
 					Cteni.vstupMapa(souborF);
 				}
 
-				drawarea = new Mapa (500 , 500, true);
+				//drawarea = new Mapa (500 , 500, true);
 				drawarea.repaint();
 				frame.repaint();
 			}
@@ -217,6 +231,7 @@ public class MainAPP extends JFrame {
 				System.exit(0);
 			}
 		});
+		//simulace tlac
 		tlacitkoStart.addActionListener(new ActionListener() {
 
 			@Override

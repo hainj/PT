@@ -10,12 +10,14 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Cteni {
 	/**
 	 * Vypise mesta a letiste do souboru
 	 */
-	public static void vystupMapa(ArrayList<Mesto> poleMest, ArrayList<Letiste> let, File f, int bezSous) {
+	
+	public static void vystupMapa(List<Mesto> list, List<Letiste> list2, File f, int bezSous) {
 		// TODO Auto-generated method stub
 
 		FileOutputStream stream;
@@ -26,13 +28,13 @@ public class Cteni {
 			writer.append(String.valueOf(bezSous));
 			writer.newLine();
 			//vypise x, y a jidlo  letiste
-			for(int i = 0; i<let.size();i++){
-				writer.append(let.get(i).getX() + " " +  let.get(i).getY() + " " + let.get(i).getJidlo());
+			for(int i = 0; i<list2.size();i++){
+				writer.append(list2.get(i).getX() + " " +  list2.get(i).getY() + " " + list2.get(i).getJidlo());
 				writer.newLine();
 			}
 			//vypise x, y, pocet obyv mesta
-			for(int i = 0; i<poleMest.size();i++){
-				Mesto mesto = poleMest.get(i);
+			for(int i = 0; i<list.size();i++){
+				Mesto mesto = list.get(i);
 
 				writer.append(mesto.getX() + " " +  mesto.getY() + " " + mesto.getObyvatel() + " " + mesto.getHeliport());
 				writer.newLine();
@@ -42,11 +44,11 @@ public class Cteni {
 			writer.newLine();
 
 			//vypise sousedy letist
-			for (int j = 0; j<let.size(); j++){
+			for (int j = 0; j<list2.size(); j++){
 
 				String str = "";
-				for(int z = 0; z<let.get(j).getSousedi().size();z++){
-					str = str + Mapa.getIndexMest(let.get(j).getSousedi().get(z)) + " ";
+				for(int z = 0; z<list2.get(j).getSousedi().size();z++){
+					str = str + Mapa.getIndexMest(list2.get(j).getSousedi().get(z)) + " ";
 
 				}
 				writer.append(str);
@@ -58,8 +60,8 @@ public class Cteni {
 			writer.newLine();
 
 			//vypise sousedy mest
-			for(int i =  Generator.indexMestPod2+1; i<poleMest.size();i++){
-				Mesto mesto = poleMest.get(i);
+			for(int i =  Generator.indexMestPod2+1; i<list.size();i++){
+				Mesto mesto = list.get(i);
 				String str = "";
 				//System.out.println(i);
 				try {
@@ -114,7 +116,10 @@ public class Cteni {
 				Mapa.getPoleLetist().add(new Letiste(Integer.parseInt(s[0]), Integer.parseInt(s[1])));
 
 
-			}	
+			}
+			/*for(int i = 0; i<5;i++){
+				System.out.println(Mapa.getPoleLetist().get(i).getJidlo().size());
+			}*/
 			//Mapa.setLetiste(letist);
 			str = reader.readLine();
 			Mapa.getPoleMest().clear();
