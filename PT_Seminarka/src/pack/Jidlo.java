@@ -1,13 +1,23 @@
 package pack;
-
+/**
+ * Kontruktor jidla
+ * @author Jakub Hain, David Basta
+ *
+ */
 public class Jidlo {
+	/**
+	 * Jidlo
+	 */
 	private double jidlo;
+	/**
+	 * cas dodani
+	 */
 	private int dodano;
 	
 	
-	/**
-	 * @param jidlo
-	 * @param dodano
+	/**konstruktor jidla
+	 * @param jidlo jidlo
+	 * @param dodano cas dodani
 	 */
 	public Jidlo(double jidlo, int dodano) {
 		
@@ -16,7 +26,7 @@ public class Jidlo {
 	}
 
 
-	/**
+	/**getr jidla
 	 * @return the jidlo
 	 */
 	public double getJidlo() {
@@ -24,15 +34,15 @@ public class Jidlo {
 	}
 
 
-	/**
-	 * @param jidlo the jidlo to set
+	/**setr jidla
+	 * @param jidlo jidlo
 	 */
 	public void setJidlo(double jidlo) {
 		this.jidlo += jidlo;
 	}
 
 
-	/**
+	/**getr dodani
 	 * @return the dodano
 	 */
 	public int getDodano() {
@@ -40,8 +50,8 @@ public class Jidlo {
 	}
 
 
-	/**
-	 * @param dodano the dodano to set
+	/**setr dodani
+	 * @param dodano cas dodani
 	 */
 	public void setDodano(int dodano) {
 		this.dodano = dodano;

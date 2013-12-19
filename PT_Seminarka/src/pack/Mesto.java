@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 /**
  * Trida konstruktoru mesta
- * @author Cybra
+ * @author Jakub Hain, David Basta
  *
  */
 public class Mesto {

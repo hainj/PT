@@ -5,7 +5,11 @@
 package pack;
 
 import java.util.Comparator;
-
+/**
+ * Trida pomoci ktere radie mesta podle poctu obyvatel
+ * @author Jakub Hain, David Basta
+ *
+ */
 public class KomparatorMest implements Comparator<Mesto> {
 	@Override
 	public int compare(Mesto o1, Mesto o2) {

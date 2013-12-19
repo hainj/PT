@@ -13,16 +13,21 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-
+/**
+ * Hlavni trida vytvari tlacitka a vola vse dulezite
+ * @author Jakub Hain
+ *
+ */
 public class MainAPP extends JFrame {
 
+	
+	
 	/**
-	 * 
+	 * pauza simulace
 	 */
-	private static final long serialVersionUID = 1L;
 	static boolean pause;
-	/**
-	 * @return the pause
+	/**getr pause
+	 * @return pause
 	 */
 	public static boolean isPause() {
 		return pause;
@@ -30,8 +35,8 @@ public class MainAPP extends JFrame {
 
 
 
-	/**
-	 * @param pause the pause to set
+	/**Setr pause
+	 * @param pause pauza simulace
 	 */
 	public static void setPause(boolean pause) {
 		MainAPP.pause = pause;
@@ -323,7 +328,10 @@ public class MainAPP extends JFrame {
 	}
 
 
-
+	/**
+	 * generuje nahodne cislo
+	 * @return
+	 */
 	public static int generujSour ()
 	{
 		int x = r.nextInt(500);

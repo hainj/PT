@@ -8,17 +8,39 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.List;
 
-
+/**
+ * vypisuje jednotlive logy
+ * @author jakub Hain, David Basta
+ *
+ */
 
 public class VypisLog {
-
+	/**
+	 * pocet vrtulniku
+	 */
 	public static int pocVrt = 0;
+	/**
+	 * Celkovy naklad vrt
+	 */
 	public static double celkNaklVrt = 0;
+	/**
+	 * pocet aut
+	 */
 	public static int pocAut = 0;
+	/**
+	 * celkovy naklad aut
+	 */
 	public static double celkNaklAut = 0;
 
 
-
+	/**
+	 * Souhrny log za 3 dny
+	 * @param poleMest pole mest
+	 * @param poleAut pole Aut
+	 * @param poleVrt pole Vrtulniku
+	 * @param cesta cilova slozka
+	 * @param den 3/6 den
+	 */
 	public static void zapis3Dny(List<Mesto>poleMest, List<Auto> poleAut, List<Vrtulnik> poleVrt, String cesta, int den) {
 		FileOutputStream stream;
 		int pocetVrt = 0;
@@ -88,6 +110,13 @@ public class VypisLog {
 		}
 
 	}
+
+	/**
+	 * Log vrtulniku za kazdy den
+	 * @param poleVrt vrtulniky
+	 * @param cesta cilova slozka
+	 * @param den ktery den
+	 */
 	public static void zapisVrt(List<Vrtulnik> poleVrt, String cesta, int den) {
 		FileOutputStream stream;
 		File f = new File(cesta + "\\LogDenVrt" + den + ".txt");
@@ -115,7 +144,12 @@ public class VypisLog {
 		}
 
 	}
-
+	/**
+	 * Logy aut za den
+	 * @param poleAuta pole aut
+	 * @param cesta cilova slozka
+	 * @param den den
+	 */
 	public static void zapisAut(List<Auto> poleAuta, String cesta, int den) {
 		FileOutputStream stream;
 		File f = new File(cesta + "\\LogDenAuta" + den + ".txt");
@@ -140,7 +174,12 @@ public class VypisLog {
 		}
 
 	}
-
+	/**
+	 * Logy mest za den
+	 * @param poleMest pole mest
+	 * @param cesta cilova slozka
+	 * @param den den
+	 */
 	public static void zapis(List<Mesto> poleMest, String cesta, int den) {
 		FileOutputStream stream;
 		File f = new File(cesta + "\\LogDen" + den + ".txt");
@@ -150,7 +189,7 @@ public class VypisLog {
 			for(int t = 0; t<poleMest.size();t++){
 				writer.append(poleMest.get(t).vypisMesto(t));
 				writer.newLine();
-				
+
 
 
 			}
@@ -165,6 +204,14 @@ public class VypisLog {
 		}
 
 	}
+
+	/**
+	 * Souhrny lod za celou simulaci
+	 * @param poleMest pole mest
+	 * @param poleAut pole Aut
+	 * @param poleVrt pole Vrtulniku
+	 * @param cesta cilova slozka
+	 */
 	public static void souhrn(List<Mesto> poleMest, List<Auto> poleAut,
 			List<Vrtulnik> poleVrt, String cesta) {
 		FileOutputStream stream;
@@ -207,7 +254,7 @@ public class VypisLog {
 
 					}
 				}
-				
+
 
 			}
 			VypisLog.pocAut +=pocetAut; 

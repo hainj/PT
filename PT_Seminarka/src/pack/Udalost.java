@@ -4,14 +4,25 @@ import java.util.ArrayList;
 import java.util.List;
 /**
  * Udalosti plnene jednotlivimy vozidly
- * @author Cybra
+ * @author Jakub Hain, David Basta
  *
  */
 public class Udalost {
-
+	/**
+	 * zda je pouzit v udalosti vrtulnik
+	 */
 	private final boolean vrtulnik;
+	/**
+	 * letiste, z ktereho se budou brat suroviny
+	 */
 	private Letiste odkudNak;
+	/**
+	 * index vrtulnik nebo auto u udalosti, ktere na sebe navazuji
+	 */
 	private List<Integer> index = new ArrayList<>();
+	/**
+	 * cas uplneho dokonceni udalosti
+	 */
 	private double casDokon =Integer.MIN_VALUE;
 	/**
 	 * doba nakladky
@@ -73,131 +84,122 @@ public class Udalost {
 	}
 
 
-	/**
+	/**getr zda je pouzit vrtulnik
 	 * @return the vrtulnik
 	 */
 	public final boolean isVrtulnik() {
 		return this.vrtulnik;
 	}
 
-	/**
+	/**Getr casu dokonceni udalosti
 	 * @return the casDokon
 	 */
 	public double getCasDokon() {
 		return this.casDokon;
 	}
 
-	/**
-	 * @param casDokon the casDokon to set
+	/**setr casu dokonceni udalosti
+	 * @param casDokon cas dokonceni
 	 */
 	public void setCasDokon(double casDokon) {
 		this.casDokon = casDokon;
 	}
-
+	/**
+	 * doba nakladni
+	 * @return dobaNakl
+	 */
 	public double getDobaNakl() {
 		return this.dobaNakl;
 	}
 
-	/**
-	 * @param dobaNakl the dobaNakl to set
+	/**setr doby nakladani
+	 * @param dobaNakl trvani nakladani
 	 */
 	public void setDobaNakl(double dobaNakl) {
 		this.dobaNakl = dobaNakl;
 	}
 
-	/**
+	/**getr doby vykladani
 	 * @return the dobaVykl
 	 */
 	public double getDobaVykl() {
 		return this.dobaVykl;
 	}
 
-	/**
-	 * @param dobaVykl the dobaVykl to set
+	/**setr doby vykladni
+	 * @param dobaVykl doba vykladani
 	 */
 	public void setDobaVykl(double dobaVykl) {
 		this.dobaVykl = dobaVykl;
 	}
 
-	/**
-	 * @return the dobaPrekl
-	 */
-	public double getDobaPrekl() {
-		return this.dobaPrekl;
-	}
 
-	/**
-	 * @param dobaPrekl the dobaPrekl to set
-	 */
-	public void setDobaPrekl(double dobaPrekl) {
-		this.dobaPrekl = dobaPrekl;
-	}
 
-	/**
+	/**getr trvanirvani jizdy
 	 * @return the dobaJizd
 	 */
 	public double getDobaJizd() {
 		return this.dobaJizd;
 	}
 
-	/**
-	 * @param dobaJizd the dobaJizd to set
+	/**setr trvani jizdy
+	 * @param dobaJizd doba jizdy
 	 */
 	public void setDobaJizd(double dobaJizd) {
 		this.dobaJizd = dobaJizd;
 	}
 
-	/**
-	 * @return the dobaLetu
+	/**getr trvani letu
+	 * @return the dobaLetu trvani letu
 	 */
 	public double getDobaLetu() {
 		return this.dobaLetu;
 	}
 
-	/**
-	 * @param dobaLetu the dobaLetu to set
+	/**setr trvani letu
+	 * @param dobaLetu trvani letu
 	 */
 	public void setDobaLetu(double dobaLetu) {
 		this.dobaLetu = dobaLetu;
 	}
 
-	/**
+	/**getr ciloveho mesta udalosti
 	 * @return the mesto
 	 */
 	public Mesto getMesto() {
-		return mesto;
+		return this.mesto;
 	}
 
-	/**
-	 * @param mesto the mesto to set
+	/**setr ciloveho mesta udalosti
+	 * @param mesto cilove mesto
 	 */
 	public void setMesto(Mesto mesto) {
 		this.mesto = mesto;
 	}
 
-	/**
+	/**getr letiste kde se naklada auto
 	 * @return the odkudNak
 	 */
 	public Letiste getOdkudNak() {
-		return odkudNak;
+		return this.odkudNak;
 	}
 
-	/**
-	 * @param odkudNak the odkudNak to set
+	/**setr letiste kde se naklada auto
+	 * @param odkudNak Letiste odkud se naklada
 	 */
 	public void setOdkudNak(Letiste odkudNak) {
 		this.odkudNak = odkudNak;
 	}
 
-	/**
+	/**getr indexu vrt nebo aut 
 	 * @return the index
 	 */
 	public List<Integer> getIndex() {
-		return index;
+		return this.index;
 	}
 
-	/**
-	 * @param index the index to set
+	/**setr indexu vrtulniku a aut
+	 * @param index indexy
 	 */
 	public void setIndex(List<Integer> index) {
 		this.index = index;

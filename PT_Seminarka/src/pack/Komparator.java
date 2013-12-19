@@ -1,8 +1,13 @@
 package pack;
 
 import java.util.Comparator;
-
+/**
+ * Radi vzdalenost vzestupne
+ * @author Jakub Hain, David Basta
+ *
+ */
 public class Komparator implements Comparator <Vzdalenost>{
+	
 	@Override
 	public int compare(Vzdalenost arg0, Vzdalenost arg1) {
 		// TODO Auto-generated method stub

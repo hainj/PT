@@ -1,139 +1,147 @@
 package pack;
-
+/**
+ * Kontruktor vrtulniku
+ * @author Jakub Hain, David Basta
+ *
+ */
 public class Vrtulnik {
+	/**
+	 * Kdy byla cinnost dokoncena
+	 */
 	private int dokonKdy = 0;
-	private boolean naklada = false;
+	/**
+	 * Naklada-li vrtulnik
+	 */
+	private boolean naklada = false
+			/**
+			 * jede-li vrtulnik
+			 */;
 	private boolean jede = false;
-
+	/**
+	 * vyklada-li vrtulnik
+	 */
 	private boolean vyklada = false;
+	/**
+	 * dokoncil cinnost vrtulnik
+	 */
 	private boolean dokonceno = false;
+	/**
+	 * udalost kterou plni
+	 */
 	private Udalost udalost;
+	/**
+	 * doba nakladani
+	 */
 	private double dobaNaklada = 0;
+	/**
+	 * doba jizdy
+	 */
 	private double dobaJede = 0;
+	/**
+	 * doba vykladani
+	 */
 	private double dobaVyklada = 0;
+	/**
+	 * konec cinnosti
+	 */
 	private boolean konec = false;
 
-	private static int pocet = 0;
-	/**
-	 * @param udalost
+
+	/**Konstrukto vrtulniku
+	 * @param udalost udalost, kterou vrt plni
 	 */
 	public Vrtulnik(Udalost udalost) {
 		super();
 		this.udalost = udalost;
-		setPocet(getPocet() + 1);
+	
 	}
 
 
 
-	/**
-	 * @return the pocet
-	 */
-	public static int getPocet() {
-		return pocet;
-	}
 
 
 
-	/**
-	 * @param pocet the pocet to set
-	 */
-	public static void setPocet(int pocet) {
-		Vrtulnik.pocet = pocet;
-	}
-
-
-
-	/**
+	/**getr zda vrtulnik naklada
 	 * @return the naklada
 	 */
 	public boolean isNaklada() {
 		return this.naklada;
 	}
 
-	/**
-	 * @param naklada the naklada to set
+	/**Setr nakladni
+	 *@param naklada naklada-li
 	 */
 	public void setNaklada(boolean naklada) {
 		this.naklada = naklada;
 	}
 
-	/**
+	/**getr jede
 	 * @return the jede
 	 */
 	public boolean isJede() {
 		return this.jede;
 	}
 
-	/**
-	 * @param jede the jede to set
+	/**setr jede
+	 * @param jede jede
 	 */
 	public void setJede(boolean jede) {
 		this.jede = jede;
 	}
 
-	/**
+	/**getr vykladky
 	 * @return the vyklada
 	 */
 	public boolean isVyklada() {
 		return this.vyklada;
 	}
 
-	/**
-	 * @param vyklada the vyklada to set
+	/**setr vykladky
+	 * @param vyklada vyklada
 	 */
 	public void setVyklada(boolean vyklada) {
 		this.vyklada = vyklada;
 	}
 
-	/**
+	/**getr dokonceno
 	 * @return the dokonceno
 	 */
 	public boolean isDokonceno() {
 		return this.dokonceno;
 	}
 
-	/**
-	 * @param dokonceno the dokonceno to set
+	/**setr dokonceno
+	 * @param dokonceno dokonceno
 	 */
 	public void setDokonceno(boolean dokonceno) {
 		this.dokonceno = dokonceno;
 	}
 
-	/**
+	/**getr udalosti, kterou vrtulnik plani
 	 * @return the udalost
 	 */
 	public Udalost getUdalost() {
 		return this.udalost;
 	}
 
-	/**
-	 * @param udalost the udalost to set
+	/**setr udalosti
+	 * @param udalost udalost
 	 */
 	public void setUdalost(Udalost udalost) {
 		this.udalost = udalost;
 	}
 
 
+	
+	
 
-	boolean nalozeno = false;
-	
-	
-	/**
-	 * @return the nalozeno
-	 */
-	public boolean isNalozeno() {
-		return this.nalozeno;
-	}
+
 
 	/**
-	 * @param nalozeno the nalozeno to set
+	 * Vypis info o vrtulniku
+	 * @param i index rt
+	 * @return string informaci
 	 */
-	public void setNalozeno(boolean nalozeno) {
-		this.nalozeno = nalozeno;
-	}
-
-
-	
 	public String vypisVrt(int i){
 		String str = "Vrtulnik " + i + "\n" + "Nalozeno " + 
 				(this.getDobaNaklada()*1000/30) + "\n" + "Ujeta vzdalenost od mesta s let " + 
@@ -146,7 +154,7 @@ public class Vrtulnik {
 
 
 
-	/**
+	/**getr doba jizdy
 	 * @return the dobaJede
 	 */
 	public double getDobaJede() {
@@ -155,8 +163,8 @@ public class Vrtulnik {
 
 
 
-	/**
-	 * @param dobaJede the dobaJede to set
+	/**setr doby jizdy
+	 * @param dobaJede doba jizdy
 	 */
 	public void setDobaJede(double dobaJede) {
 		this.dobaJede = dobaJede;
@@ -164,7 +172,7 @@ public class Vrtulnik {
 
 
 
-	/**
+	/**getr doby vykladky
 	 * @return the dobaVyklada
 	 */
 	public double getDobaVyklada() {
@@ -173,8 +181,8 @@ public class Vrtulnik {
 
 
 
-	/**
-	 * @param dobaVyklada the dobaVyklada to set
+	/**setr vykladky
+	 * @param dobaVyklada
 	 */
 	public void setDobaVyklada(double dobaVyklada) {
 		this.dobaVyklada = dobaVyklada;
@@ -182,8 +190,8 @@ public class Vrtulnik {
 
 
 
-	/**
-	 * @return the dobaNaklada
+	/**getr doby nakladani
+	 * @return dobaNaklada
 	 */
 	public double getDobaNaklada() {
 		return this.dobaNaklada;
@@ -191,8 +199,8 @@ public class Vrtulnik {
 
 
 
-	/**
-	 * @param dobaNaklada the dobaNaklada to set
+	/**setr doby nakladani
+	 * @param dobaNaklada
 	 */
 	public void setDobaNaklada(double dobaNaklada) {
 		this.dobaNaklada = dobaNaklada;
@@ -200,8 +208,8 @@ public class Vrtulnik {
 
 
 
-	/**
-	 * @return the konec
+	/**getr konce vrtulniku
+	 * @return konec
 	 */
 	public boolean isKonec() {
 		return this.konec;
@@ -209,8 +217,8 @@ public class Vrtulnik {
 
 
 
-	/**
-	 * @param konec the konec to set
+	/**setr konce vrtulniky
+	 * @param konec
 	 */
 	public void setKonec(boolean konec) {
 		this.konec = konec;
@@ -218,8 +226,8 @@ public class Vrtulnik {
 
 
 
-	/**
-	 * @return the dokonKdy
+	/**getr casu dokonceni cinnosti
+	 * @return dokonKdy
 	 */
 	public int getDokonKdy() {
 		return dokonKdy;
@@ -227,8 +235,8 @@ public class Vrtulnik {
 
 
 
-	/**
-	 * @param dokonKdy the dokonKdy to set
+	/**setr casu dokonceni
+	 * @param dokonKdy dokonceni cinnosti
 	 */
 	public void setDokonKdy(int dokonKdy) {
 		this.dokonKdy = dokonKdy;

@@ -11,12 +11,19 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+* Nacte a zapise data do souboru
+* @author Jakub Hain, David Basta
+*
+*/
 public class Cteni {
 	/**
-	 * Vypise mesta a letiste do souboru
+	 * Vypise data do souboru
+	 * @param list seznam mest
+	 * @param list2 seznam letist
+	 * @param f cilovy soubor
+	 * @param bezSous pocet mest bez sousedu
 	 */
-	
 	public static void vystupMapa(List<Mesto> list, List<Letiste> list2, File f, int bezSous) {
 		// TODO Auto-generated method stub
 

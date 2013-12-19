@@ -13,28 +13,45 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JPanel;
-import javax.swing.RepaintManager;
-
+/**
+ * Vykresluje mapu
+ * @author Jakub Hain, David Basta
+ *
+ */
 @SuppressWarnings("serial")
 public class Mapa extends JPanel {
-
+	/**
+	 * seznam mest
+	 */
 	public static List<Mesto>poleMest = new ArrayList<>();
+	/**
+	 * sirka panelu
+	 */
 	public int width;
+	/**
+	 * vyska panelu
+	 */
 	public int height;
+	/**
+	 * seznam letist
+	 */
 	public static List<Letiste>poleLetist = new ArrayList<>();
+	/**
+	 * nacist def mapu nebo vytvori novou
+	 */
 	static Boolean ovladani = false;
 	
 
-	/**
-	 * @param ovladani the ovladani to set
+	/**setr ovladani
+	 * @param ovladani ovladani
 	 */
 	public static void setOvladani(Boolean ovladani) {
 		Mapa.ovladani = ovladani;
 	}
 	/**
 	 * Konstruktor tridy mapa 
-	 * @param sirka
-	 * @param vyska
+	 * @param sirka sirka panelu
+	 * @param vyska vyska panelu
 	 */
 	public Mapa (int sirka, int vyska, Boolean ovladani)
 	{
@@ -55,7 +72,7 @@ public class Mapa extends JPanel {
 
 	/**
 	 * Prida mesto do seznamu poli
-	 * @param mesto
+	 * @param mesto pridane mesto
 	 */
 	public static void addPoleMest(Mesto mesto) {
 		poleMest.add(mesto);
@@ -76,16 +93,25 @@ public class Mapa extends JPanel {
 		}
 		return -1;
 	}
-
+	/**
+	 * getr pole mest
+	 * @return pole mest
+	 */
 	public static List<Mesto> getPoleMest() {
 		return poleMest;
 	}
-
+	/**
+	 * setr pole mest
+	 * @param poleMest pole mest
+	 */
 	public static void setMesta(List<Mesto> poleMest)
 	{
 		Mapa.poleMest = poleMest;
 	}
-
+	/**
+	 * setr seznamu letist
+	 * @param poleLetiste seznam letist
+	 */
 	public static void setLetiste(List<Letiste> poleLetiste)
 	{
 		Mapa.poleLetist = poleLetiste;
@@ -103,8 +129,8 @@ public class Mapa extends JPanel {
 
 	/**
 	 * Dale rozvedena kreslici metoda, kresli pomoci Graphics2D
-	 * @param g2
-	 * @param drawingArea
+	 * @param g2 graphics2d
+	 * @param drawingArea obdelnik
 	 */
 	public void kresliMapu(Graphics2D g2, Rectangle drawingArea)
 	{
@@ -127,7 +153,7 @@ public class Mapa extends JPanel {
 		{
 			//jeli spusteny program prazdny vygeneruje novou mapu
 			if(poleMest.size()==0){
-				System.out.println("aaaaaaaa");
+				//System.out.println("aaaaaaaa");
 				new Generator();
 			}
 
@@ -147,7 +173,7 @@ public class Mapa extends JPanel {
 	/**
 	 * metoda vykreslujici mesta letiste a cesty
 	 * zabranuje opakovani kodu
-	 * @param g2
+	 * @param g2 grphics2d
 	 */
 	public static void kresleni(Graphics2D g2)
 	{

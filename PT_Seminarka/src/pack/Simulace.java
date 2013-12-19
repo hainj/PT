@@ -3,14 +3,36 @@ package pack;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * Simulace humanitarni pomoci
+ * @author Jakub Hain, David Basta
+ *
+ */
 
 public class Simulace implements Runnable {
+	/**
+	 * doba trvani aplikace
+	 */
 	private final int CAS = 10080;
+	/**
+	 *Nalozeny naklad za minutu
+	 */
 	private final double nakladMinuta = 1000.0/30.0;
+	/**
+	 *Urazena vzdalenost auta za minutu
+	 */
 	private final double urazenaVzdal = 40.0/60.0;
+	/**
+	 *Urazena vzdalenost vrt za minutu
+	 */
 	private final double urazVzdalVrt = 150.0/60.0;
+	/**
+	 * Maximalni naklad auta
+	 */
 	private final double maxAuto = 12000.0;
+	/**
+	 * Maximalni naklad vrtulniku
+	 */
 	private final double maxVrt = 2000.0;
 	/**
 	 * seznam mest
@@ -28,13 +50,13 @@ public class Simulace implements Runnable {
 	 * Seznam aut
 	 */
 	private static List<Auto> auta = new ArrayList<>();
-	
+
 	/**
 	 * Seznam vrtulniky
 	 */
 	private static List<Vrtulnik> vrtulniky = new ArrayList<>();
-	
-	
+
+
 	/**Konstruktor simulace
 	 * @param textBlok textblok
 	 * @param mesta pole mest
@@ -44,7 +66,7 @@ public class Simulace implements Runnable {
 	public Simulace( List<Mesto> mesta,
 			List<Letiste> letiste, String cesta) {
 
-		
+
 		this.poleMest = mesta;
 		this.poleLetist = letiste;
 		this.cesta = cesta;
@@ -74,7 +96,9 @@ public class Simulace implements Runnable {
 
 
 
-
+	/**
+	 * Prubeh programu
+	 */
 	@Override
 	public void run() {
 
@@ -168,24 +192,10 @@ public class Simulace implements Runnable {
 		//System.out.println("Konec Simulace " + op + Simulace.getAuta().size() +" " + Simulace.getVrtulniky().size());
 	}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	/**
+	 * naklada mesta, stara se o nastaveni hladu a odcita zasoby
+	 * @param i soucasny cas
+	 */
 	private void nalozeniMest(int i) {
 		for(int n = 0; n < this.poleMest.size();n++){
 			Mesto pomMesto = this.poleMest.get(n);
@@ -230,7 +240,10 @@ public class Simulace implements Runnable {
 
 
 
-
+	/**
+	 * Vykladani helikoptery 
+	 * @param vrt vrtulnik
+	 */
 	private static void vyklHeli(Vrtulnik vrt) {
 		if(vrt.getDobaVyklada()>vrt.getUdalost().getDobaNakl()){
 			vrt.setDobaVyklada(vrt.getUdalost().getDobaNakl());
@@ -250,7 +263,10 @@ public class Simulace implements Runnable {
 
 
 
-
+	/**
+	 * Stara se o let helikoptery do mesta
+	 * @param vrt vrtulnik
+	 */
 	private static void letiHeli(Vrtulnik vrt) {
 		if(vrt.getDobaJede()>vrt.getUdalost().getDobaLetu()){
 			vrt.setDobaJede(vrt.getUdalost().getDobaLetu());
@@ -271,7 +287,11 @@ public class Simulace implements Runnable {
 
 
 
-
+	/**
+	 * Stara se o prekladani nakladu vozidla do vrtulniku
+	 * @param auto auto, z ktereho se preklada
+	 * @param q index auta
+	 */
 	private void preklAuto(Auto auto, int q) {
 		if(!auto.isHeli()){
 			vytvorHeli(auto, q);
@@ -301,7 +321,11 @@ public class Simulace implements Runnable {
 
 			}
 	}
-
+	/**
+	 * Zjistuje zda auto naplnilo vsechny vrtulniky
+	 * @param auto auto
+	 * @return boolean 
+	 */
 	private static boolean autoPrelozeno(Auto auto) {
 		boolean q = true;
 		for(int z = 0; z < auto.getUdalost().getIndex().size(); z++){
@@ -325,7 +349,11 @@ public class Simulace implements Runnable {
 
 
 
-
+	/**
+	 * Vytvori vrtulniky
+	 * @param auto auto
+	 * @param q2 index auta
+	 */
 	private void vytvorHeli(Auto auto, int q2) {
 		double zasJidla = auto.getDobaNaklada()*this.nakladMinuta;
 		double jidVrt =zasJidla/this.maxVrt;
@@ -363,7 +391,10 @@ public class Simulace implements Runnable {
 
 
 
-
+	/**
+	 * pridava zasoby na letiste
+	 * @param i soucasny cas
+	 */
 	private void pridejZasLet(int i) {
 
 		for(int q = 0; q < this.poleLetist.size(); q++){
@@ -381,7 +412,11 @@ public class Simulace implements Runnable {
 
 
 
-
+	/**
+	 * kontroluje zkazenost potravy
+	 * @param letiste letiste
+	 * @param i cas
+	 */
 	private static void kontZkazene(Letiste letiste, int i) {
 		for(int w = 0; w < letiste.getJidlo().size();w++){
 			if(letiste.getJidlo().get(w).getDodano()+4320==i){
@@ -411,7 +446,10 @@ public class Simulace implements Runnable {
 
 
 
-
+	/**
+	 * vyklada auto
+	 * @param auto auto
+	 */
 	private static void vyklAuto(Auto auto) {
 		if(auto.getDobaVyklada()>auto.getUdalost().getDobaNakl()){
 			auto.setDobaVyklada(auto.getUdalost().getDobaNakl());
@@ -431,7 +469,10 @@ public class Simulace implements Runnable {
 
 
 
-
+	/**
+	 * Jízda auta
+	 * @param auto auto
+	 */
 	private static void jedeAuto(Auto auto) {
 		if(auto.getDobaJede()>auto.getUdalost().getDobaJizd()){
 			auto.setJede(false);
@@ -451,7 +492,10 @@ public class Simulace implements Runnable {
 
 
 
-
+	/**
+	 * Rozhoduje o nakladani auta z letiste
+	 * @param auto auto
+	 */
 	private void naklAuto(Auto auto) {
 		if(auto.isCeka()){
 			zkontZasoby(auto);
@@ -471,7 +515,10 @@ public class Simulace implements Runnable {
 
 
 
-
+	/**
+	 * Naklada auto
+	 * @param auto auto
+	 */
 	private static void pridejNaklad(Auto auto) {
 		List<Jidlo> jid = auto.getUdalost().getOdkudNak().getJidlo();	
 		if(jid.size() ==0){
@@ -490,7 +537,7 @@ public class Simulace implements Runnable {
 				auto.setJede(true);
 			}
 			else if((auto.getUdalost().getDobaNakl() - auto.getDobaNaklada())<1.0){
-				
+
 				auto.getUdalost().getOdkudNak().getJidlo().get(0).setJidlo(auto.getUdalost().getDobaNakl() - auto.getDobaNaklada());
 				auto.setDobaNaklada(auto.getDobaNaklada()+1.0);
 				//System.out.println("abcfg" + auto.getDobaNaklada());
@@ -513,7 +560,10 @@ public class Simulace implements Runnable {
 
 
 
-
+	/**
+	 * Zjistuje odkud se budou auta zasobovat
+	 * @param auto auto
+	 */
 	private void zkontZasoby(Auto auto) {
 
 
@@ -611,7 +661,11 @@ public class Simulace implements Runnable {
 
 
 
-
+	/**
+	 * Zda jsou na letisti nejake zasoby
+	 * @param let letiste
+	 * @return boolean
+	 */
 	private static boolean kontrolaZasobLet(Letiste let) {
 		if(let.getJidlo().size() ==0){
 			return false;
@@ -634,10 +688,12 @@ public class Simulace implements Runnable {
 
 
 
-
+	/**
+	 * Vytvori vsechy udalosti aut
+	 */
 	private void vytvorUdalosti() {
 		for(int i = this.poleMest.size()- 1; i >= 0;i--){
-			
+
 			Mesto pomMesto = this.poleMest.get(i);
 			if(pomMesto.getHlad()){
 				Udalost ud;
@@ -695,7 +751,7 @@ public class Simulace implements Runnable {
 
 
 
-	/**
+	/** getr seznamu vrtulniku
 	 * @return the vrtulniky
 	 */
 	public static List<Vrtulnik> getVrtulniky() {
@@ -710,8 +766,8 @@ public class Simulace implements Runnable {
 
 
 
-	/**
-	 * @param vrtulniky the vrtulniky to set
+	/**setr seznamu vrtulniku
+	 * @param vrtulniky seznam vrtulniku
 	 */
 	public static void setVrtulniky(List<Vrtulnik> vrtulniky) {
 		Simulace.vrtulniky = vrtulniky;
@@ -725,7 +781,7 @@ public class Simulace implements Runnable {
 
 
 
-	/**
+	/**getr seznamu aut
 	 * @return the auta
 	 */
 	public static List<Auto> getAuta() {
@@ -740,7 +796,7 @@ public class Simulace implements Runnable {
 
 
 
-	/**
+	/**setr seznamu aut
 	 * @param auta the auta to set
 	 */
 	public static void setAuta(List<Auto> auta) {
@@ -755,7 +811,7 @@ public class Simulace implements Runnable {
 
 
 
-	
+
 
 
 

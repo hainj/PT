@@ -10,10 +10,25 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 import java.util.Random;
+/**
+* Generuje veskera potrebna dat k mape a k simulaci
+* @author Jakub Hain, David Basta
+*
+*/
+
 
 public class Generator {
+	/**
+	 * matice vzdalenosti
+	 */
 	public static double matice[][] = new double [3005][3000];
+	/**
+	 * random
+	 */
 	static Random r = new Random();
+	/**
+	 * 30% mest pod 2000 obyv
+	 */
 	public static int indexMestPod2 = 0;
 
 	/**
@@ -43,7 +58,11 @@ public class Generator {
 		}
 	}
 	
-	
+	/**
+	 * Konstruktor s parametry
+	 * @param poleMest  seznam mest
+	 * @param poleLetist seznam letist
+	 */
 	public Generator(List<Mesto> poleMest, List<Letiste> poleLetist) {
 		vytvorMatici(poleMest, poleLetist, indexMestPod2+1);
 
@@ -290,7 +309,11 @@ public class Generator {
 		}
 	}
 
-
+	/**
+	 * Vygeneruje vzdalenosti od letiste ke kazdemu mestu
+	 * @param letiste letiste
+	 * @param indexLet index letiste
+	 */
 	public static void dijkstra(Letiste letiste, int indexLet){
 		Queue<Mesto> fronta=new LinkedList<>();
 		Mesto pom;
@@ -335,7 +358,11 @@ public class Generator {
 
 		
 	}
-
+	/**
+	 * Generuje vzdalenost od mest s heliportem k nasemu mestu
+	 * @param mest mesto bez cest
+	 * @param mesta seznam mest
+	 */
 	public static void mestoBezSousVzdal(Mesto mest, List<Mesto>mesta){
 
 		List<Vzdalenost> vzdal= new ArrayList<>();
@@ -355,7 +382,12 @@ public class Generator {
 	}
 
 
-
+	/**
+	 * Vytvori matici vzdalenosti mezi mesty
+	 * @param list seznam mest
+	 * @param list2 seznam letist
+	 * @param min pocet mest bez cest
+	 */
 	public static void vytvorMatici(List<Mesto> list, List<Letiste> list2, int min){
 
 		for(int i = 0; i< list2.size();i++){
