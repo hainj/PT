@@ -3,6 +3,8 @@ package pack;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 /**
  * Simulace humanitarni pomoci
  * @author Jakub Hain, David Basta
@@ -58,7 +60,7 @@ public class Simulace implements Runnable {
 
 
 	/**Konstruktor simulace
-	 * @param textBlok textblok
+	
 	 * @param mesta pole mest
 	 * @param letiste pole letist
 	 * @param cesta cesta kam budou ulozeny logy
@@ -189,6 +191,7 @@ public class Simulace implements Runnable {
 			//System.out.println(i + "  " +this.auta.get(9600).getDobaJede() +" " + this.auta.get(9600).getDobaNaklada() +" " + this.auta.get(9599).isDokonceno() );
 		}
 		VypisLog.souhrn(this.poleMest, auta, vrtulniky, this.cesta);
+		JOptionPane.showMessageDialog(MainAPP.parent, "Simulace Dokoncena", "Simulace",JOptionPane.INFORMATION_MESSAGE);
 		//System.out.println("Konec Simulace " + op + Simulace.getAuta().size() +" " + Simulace.getVrtulniky().size());
 	}
 

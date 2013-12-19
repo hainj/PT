@@ -317,7 +317,7 @@ public class Mesto {
 	}
 
 	/**Nasobic dne
-	 * @param nastavuje nasobic dne
+	 * @param nas nasobic dne
 	 */
 	public void setNas(int nas) {
 		this.nas = nas;

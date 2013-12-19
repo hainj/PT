@@ -117,7 +117,7 @@ public class MainAPP extends JFrame {
 						String ob = JOptionPane.showInputDialog(parent, "Vyberte vrtulnik, o kterém chcete vìdìt(0 do" + (Simulace.getVrtulniky().size()-1)+ "): ");
 						index = Integer.parseInt(ob);
 						Vrtulnik vrt = Simulace.getVrtulniky().get(index);
-						JOptionPane.showMessageDialog(parent, vrt.toString());
+						JOptionPane.showMessageDialog(parent, vrt.vypisVrt(index));
 					}catch(NumberFormatException exc)
 					{
 						JOptionPane.showMessageDialog(parent, "Zadejte prosim cislo");
@@ -130,7 +130,7 @@ public class MainAPP extends JFrame {
 						String ob = JOptionPane.showInputDialog(parent, "Vyberte auto, o kterém chcete vìdìt(0 do" + (Simulace.getAuta().size()-1)+ "): ");
 						index = Integer.parseInt(ob);
 						Auto auto = Simulace.getAuta().get(index);
-						JOptionPane.showMessageDialog(parent, auto.toString());
+						JOptionPane.showMessageDialog(parent, auto.vypisAuto(index));
 					}catch(NumberFormatException exc)
 					{
 						JOptionPane.showMessageDialog(parent, "Prosim zadejte cislo");
@@ -184,36 +184,38 @@ public class MainAPP extends JFrame {
 					//pop up okno na nacitani poctu obyvatel novemu mestu
 
 					int obyv = 0;
-					while(true)
-					{
+					
 						try
 						{
 							String ob = JOptionPane.showInputDialog(parent, "Zadej pocit obyvatel(max 2000): ");
+							System.out.println(ob);
 							obyv = Integer.parseInt(ob);
+							if(obyv > 2000 || obyv <=0 ){
+								System.out.println("Zadali jste vice nebo mene nez 2000 obyv");
+							}
+							else{
+								Mapa.poleMest.add(new Mesto(x,y,obyv,true));
+								System.out.println(Mapa.getPoleMest().size());
+								index = Mapa.getPoleMest().size()-1;
+								Mapa.setOvladani(true);
+								Mapa.getPoleMest().get(index).setObyvatel(obyv);
+								Mapa.getPoleMest().get(index).setHeliport(false);
+								Generator.mestoBezSousVzdal(Mapa.getPoleMest().get(index), Mapa.getPoleMest());
+								JOptionPane.showMessageDialog(parent, "Pridano mesto");
 
-							break;
+							}
+							
 						}catch(NumberFormatException e)
 						{
-							JOptionPane.showMessageDialog(parent, "Prosim zadejte cislo");
+							JOptionPane.showMessageDialog(parent, "Prosim priste zadejte cislo");
+							
 						}
 						catch(CancellationException e){
-							break;
+							JOptionPane.showMessageDialog(parent, "Tak zadny mesto");
 						}
-					}
+					
 
-					if(obyv > 2000 || obyv <=0){
-						System.out.println("Zadali jste vice nez 2000 obyv");
-					}
-					else{
-						Mapa.poleMest.add(new Mesto(x,y,obyv,true));
-						System.out.println(Mapa.getPoleMest().size());
-						index = Mapa.getPoleMest().size()-1;
-						Mapa.setOvladani(true);
-						Mapa.getPoleMest().get(index).setObyvatel(obyv);
-						Mapa.getPoleMest().get(index).setHeliport(false);
-						Generator.mestoBezSousVzdal(Mapa.getPoleMest().get(index), Mapa.getPoleMest());
-
-					}
+					
 					//drawarea.repaint();
 					frame.repaint();
 				}
@@ -250,13 +252,14 @@ public class MainAPP extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent arg0)
 			{
-				Mapa.getPoleLetist().clear();
-				Mapa.getPoleMest().clear();
+				
 				JFileChooser filec = new JFileChooser(); 
 
 				filec.showOpenDialog(null);
 				File souborF = filec.getSelectedFile(); 
 				if(souborF != null){ 
+					Mapa.getPoleLetist().clear();
+					Mapa.getPoleMest().clear();
 					System.out.println(souborF.getAbsolutePath());
 					//Cteni cteni = null;
 					Cteni.vstupMapa(souborF);
@@ -330,7 +333,7 @@ public class MainAPP extends JFrame {
 
 	/**
 	 * generuje nahodne cislo
-	 * @return
+	 * @return nahodne cislo
 	 */
 	public static int generujSour ()
 	{
