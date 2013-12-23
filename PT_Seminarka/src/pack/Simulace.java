@@ -104,7 +104,7 @@ public class Simulace implements Runnable {
 	@Override
 	public void run() {
 
-
+		reset();
 		int op = 0;
 		int m = 1;
 		int u = 1;
@@ -194,6 +194,31 @@ public class Simulace implements Runnable {
 		JOptionPane.showMessageDialog(MainAPP.parent, "Simulace Dokoncena", "Simulace",JOptionPane.INFORMATION_MESSAGE);
 		//System.out.println("Konec Simulace " + op + Simulace.getAuta().size() +" " + Simulace.getVrtulniky().size());
 	}
+
+	private void reset() {
+		// TODO Auto-generated method stub
+		Simulace.getAuta().clear();
+		Simulace.getVrtulniky().clear();
+		for(int i = 0; i < this.poleMest.size();i++){
+			this.poleMest.get(i).setJidlo(0);
+			this.poleMest.get(i).setHlad(true);
+			this.poleMest.get(i).setNas(1);
+			this.poleMest.get(i).setZasobeno(false);
+			this.poleMest.get(i).setZasKdy(Integer.MIN_VALUE);
+			
+		}
+		for(int q = 0; q <poleLetist.size();q++){
+			poleLetist.get(q).getJidlo().clear();
+			poleLetist.get(q).getJidlo().add(new Jidlo(15000,0));
+		}
+	}
+
+
+
+
+
+
+
 
 	/**
 	 * naklada mesta, stara se o nastaveni hladu a odcita zasoby

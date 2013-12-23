@@ -92,7 +92,7 @@ public class VypisLog {
 			writer.newLine();
 			writer.append("Pomoci "+ pocetAut + " aut: " + celkNakladAut);
 			writer.newLine();
-			writer.append("Celkove bylo pouzito " + (pocetAut+pocetVrt) + " a rovezlo se " + (celkNakladAut+celkNakladVrt));
+			writer.append("Celkove bylo pouzito " + (pocetAut+pocetVrt) + " vozidel a rovezlo se " + (celkNakladAut+celkNakladVrt));
 			writer.newLine();
 			VypisLog.pocAut +=pocetAut; 
 			VypisLog.pocVrt +=pocetVrt;
@@ -267,7 +267,7 @@ public class VypisLog {
 			writer.newLine();
 			writer.append("Pomoci "+ VypisLog.pocAut + " aut: " + VypisLog.celkNaklAut);
 			writer.newLine();
-			writer.append("Celkove bylo pouzito " + (VypisLog.pocAut+VypisLog.pocVrt) + " a rovezlo se " + (VypisLog.celkNaklAut+VypisLog.celkNaklVrt));
+			writer.append("Celkove bylo pouzito " + (VypisLog.pocAut+VypisLog.pocVrt) + " vozidel a rovezlo se " + (VypisLog.celkNaklAut+VypisLog.celkNaklVrt));
 			writer.newLine();
 
 

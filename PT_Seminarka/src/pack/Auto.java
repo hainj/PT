@@ -234,7 +234,7 @@ public class Auto {
 	 * @return string informaci
 	 */
 	public String vypisAuto(int i){
-		String str = "Vrtulnik "+ i  +"\n" + "Nalozeno " + 
+		String str = "Auto "+ i  +"\n" + "Nalozeno " + 
 				(this.getUdalost().getDobaNakl()*1000/30) + "\n" + "Ujeta vzdalenost " + 
 				this.getDobaJede()*(40/60) + "\n"
 				+ "Vylozeno " +(this.getDobaVyklada()*1000/30) + "\n" +"Cilove mesto: " + this.getUdalost().getMesto()+ "\n";

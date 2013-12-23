@@ -124,7 +124,7 @@ public class MainAPP extends JFrame {
 					}
 
 				}
-				if(mozn ==0){
+				if(mozn == 0){
 					int index = 0;
 					try{
 						String ob = JOptionPane.showInputDialog(parent, "Vyberte auto, o kterém chcete vìdìt(0 do" + (Simulace.getAuta().size()-1)+ "): ");
