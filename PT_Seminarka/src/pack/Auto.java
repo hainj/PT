@@ -1,4 +1,7 @@
 package pack;
+
+import java.util.List;
+
 /**
  * Trida Auto obsahujici konstruktory aut
  * @author Jakub Hain, David Basta
@@ -6,35 +9,11 @@ package pack;
  */
 public class Auto {
 
-	/**
-	 * Kdy auto dokoncilo svuj ukol
-	 */
-	private int dokonKdy = 0;
 	
-	/**
-	 * Zda auto naklad
-	 */
-	private boolean naklada = false;
-	/**
-	 * Zda auto jede
-	 */
-	private boolean jede = false;
-	/**
-	 * auto vyklada
-	 */
-	private boolean vyklada = false;
-	/**
-	 * Auto dokoncilo cinost
-	 */
-	private boolean dokonceno = false;
-	/**
-	 * Auto ceka na zacatek sveho ukolu
-	 */
-	private boolean ceka = true;
 	/**
 	 * Udalost, kterou auto plni
 	 */
-	private Udalost udalost;
+	private List<Udalost> udalost;
 	/**
 	 * Zasobuje-li mesto vrtulnikem
 	 */
@@ -59,12 +38,13 @@ public class Auto {
 	 * doba vykladky do mesta
 	 */
 	private double dobaVyklada = 0;
+	private boolean dokonceno;
 	
 
 	/**Kontruktor auta
 	 * @param udalost udalost, kterou auto plni
 	 */
-	public Auto(Udalost udalost) {
+	public Auto(List<Udalost> udalost) {
 	
 		this.udalost = udalost;
 	}
@@ -72,54 +52,6 @@ public class Auto {
 
 
 
-	/**Getr naklada
-	 * @return the naklada
-	 */
-	public boolean isNaklada() {
-		return this.naklada;
-	}
-
-
-	/**setr naklada
-	 * @param naklada the naklada to set
-	 */
-	public void setNaklada(boolean naklada) {
-		this.naklada = naklada;
-	}
-
-
-	/**getr jede
-	 * @return jede
-	 */
-	public boolean isJede() {
-		return this.jede;
-	}
-
-
-	/**setr jede
-	 * @param jede jede-li auto
-	 */
-	public void setJede(boolean jede) {
-		this.jede = jede;
-	}
-
-
-
-
-	/**Getr vyklada
-	 * @return vyklada
-	 */
-	public boolean isVyklada() {
-		return this.vyklada;
-	}
-
-
-	/**Setr vyklada-li auto
-	 * @param vyklada vyklada-li auto
-	 */
-	public void setVyklada(boolean vyklada) {
-		this.vyklada = vyklada;
-	}
 
 
 	/**getr dokonceni cin
@@ -141,7 +73,7 @@ public class Auto {
 	/**Getr udalosti
 	 * @return udalost
 	 */
-	public Udalost getUdalost() {
+	public List<Udalost> getUdalost() {
 		return this.udalost;
 	}
 
@@ -149,18 +81,11 @@ public class Auto {
 	/**Setr udalosti
 	 * @param udalost udalost
 	 */
-	public void setUdalost(Udalost udalost) {
+	public void setUdalost(List<Udalost> udalost) {
 		this.udalost = udalost;
 	}
 
-	/**
-	 * getr naklada auto
-	 * @return naklada
-	 */
-	public boolean getnaklada() {
-		return this.naklada;
-	}
-
+	
 
 
 	
@@ -235,28 +160,13 @@ public class Auto {
 	 */
 	public String vypisAuto(int i){
 		String str = "Auto "+ i  +"\n" + "Nalozeno " + 
-				(this.getUdalost().getDobaNakl()*1000/30) + "\n" + "Ujeta vzdalenost " + 
+				//(this.getUdalost().getDobaNakl()*1000/30) + "\n" + "Ujeta vzdalenost " + 
 				this.getDobaJede()*(40/60) + "\n"
-				+ "Vylozeno " +(this.getDobaVyklada()*1000/30) + "\n" +"Cilove mesto: " + this.getUdalost().getMesto()+ "\n";
+				+ "Vylozeno " +(this.getDobaVyklada()*1000/30) + "\n" +"Cilove mesto: " + this.getUdalost().get(0).getMesto()+ "\n";
 		
 		return str;
 	}
 
-
-	/**Getr ceka-li auto
-	 * @return ceka
-	 */
-	public boolean isCeka() {
-		return this.ceka;
-	}
-
-
-	/**setr cekani auta
-	 * @param ceka ceka-li
-	 */
-	public void setCeka(boolean ceka) {
-		this.ceka = ceka;
-	}
 
 
 
@@ -296,28 +206,6 @@ public class Auto {
 	public void setKonec(boolean konec) {
 		this.konec = konec;
 	}
-
-
-
-
-	/**getr kdy byla cinnost ukoncena
-	 * @return dokonKdy
-	 */
-	public int getDokonKdy() {
-		return this.dokonKdy;
-	}
-
-
-
-
-	/**setr kdy byla cinnost dokoncena
-	 * @param dokonKdy dokonce v minutach
-	 */
-	public void setDokonKdy(int dokonKdy) {
-		this.dokonKdy = dokonKdy;
-	}
-
-
 
 
 

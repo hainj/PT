@@ -60,7 +60,7 @@ public class Simulace implements Runnable {
 
 
 	/**Konstruktor simulace
-	
+
 	 * @param mesta pole mest
 	 * @param letiste pole letist
 	 * @param cesta cesta kam budou ulozeny logy
@@ -105,7 +105,6 @@ public class Simulace implements Runnable {
 	public void run() {
 
 		reset();
-		int op = 0;
 		int m = 1;
 		int u = 1;
 		int dny3 = 1;
@@ -123,6 +122,7 @@ public class Simulace implements Runnable {
 			/*for(int z = 0; z<5;z++){
 				System.out.println(Mapa.getPoleLetist().get(z).getMaxZasoben());
 			}*/
+			System.out.println(i);
 			nalozeniMest(i);
 			if(i == m*60){
 				pridejZasLet(i);
@@ -135,38 +135,45 @@ public class Simulace implements Runnable {
 			//System.out.println(this.auta.size());
 			for(int q =0; q < Simulace.getAuta().size(); q++){
 				Auto auto = Simulace.getAuta().get(q);
-				if(auto.isNaklada() || auto.isCeka()){
+
+				for(int d = 0;d < auto.getUdalost().size(); d++){
+
+					Udalost udalostAuto = auto.getUdalost().get(d);
+					if(udalostAuto.isSoucasUdal() && !udalostAuto.isKonec() && !auto.isKonec()){
+						if(udalostAuto.isNaklada() || udalostAuto.isCeka()){
 
 
-					naklAuto(auto);
+							naklAuto(auto, udalostAuto);
 
-				}
-				if(auto.isJede()){
-					jedeAuto(auto);
-				}
-				if(auto.isVyklada()){
-					if(auto.getUdalost().isVrtulnik()){
-						preklAuto(auto, q);
-						/*try{System.out.println(vrtulniky.get(this.auta.get(6).getUdalost().getIndex().get(0)).getDobaNaklada() + "  " + vrtulniky.get(this.auta.get(6).getUdalost().getIndex().get(0)).getUdalost().getDobaNakl() + "   " + auto.getDobaPreklada());
+						}
+						if(udalostAuto.isJede()){
+							jedeAuto(auto,udalostAuto);
+						}
+						if(udalostAuto.isVyklada()){
+							if(auto.getUdalost().get(d).isVrtulnik()){
+								preklAuto(auto, q);
+								/*try{System.out.println(vrtulniky.get(this.auta.get(6).getUdalost().getIndex().get(0)).getDobaNaklada() + "  " + vrtulniky.get(this.auta.get(6).getUdalost().getIndex().get(0)).getUdalost().getDobaNakl() + "   " + auto.getDobaPreklada());
 						}catch(IndexOutOfBoundsException e){
 
 						}*/
-					}else{
-						vyklAuto(auto);
+							}else{
+								vyklAuto(auto, udalostAuto, d);
+							}
+
+						}
+						if(udalostAuto.isDokonceno() && !udalostAuto.isVrtulnik()){
+							udalostAuto.getMesto().setJidlo(udalostAuto.getMesto().getJidlo() + udalostAuto.getDobaNakl()*this.nakladMinuta);
+							//System.out.println(auto.getUdalost().getMesto().getJidlo() + " " + auto.getUdalost().getMesto().getJidlaTreba());
+							//udalostAuto.getOdkudNak().setMaxZasoben(udalostAuto.getOdkudNak().getMaxZasoben()-1);
+							udalostAuto.setDokonceno(false);
+							udalostAuto.setDokonKdy(i);
+							udalostAuto.setKonec(true);
+						}
+
+						//System.out.println(i+" " + q + " " + auto.isCeka() + " " + auto.getDobaJede() + " " + auto.getUdalost().getDobaJizd());
 					}
-
 				}
-				if(auto.isDokonceno() && !auto.getUdalost().isVrtulnik()){
-					auto.getUdalost().getMesto().setJidlo(auto.getUdalost().getMesto().getJidlo() + auto.getUdalost().getDobaNakl()*this.nakladMinuta);
-					//System.out.println(auto.getUdalost().getMesto().getJidlo() + " " + auto.getUdalost().getMesto().getJidlaTreba());
-					auto.getUdalost().getOdkudNak().setMaxZasoben(auto.getUdalost().getOdkudNak().getMaxZasoben()-1);
-					auto.setDokonceno(false);
-					auto.setDokonKdy(i);
-					auto.setKonec(true);
-				}
-
-				//System.out.println(i+" " + q + " " + auto.isCeka() + " " + auto.getDobaJede() + " " + auto.getUdalost().getDobaJizd());
-
+				dokonAuto(auto);
 			}
 
 			for(int o =0; o < Simulace.getVrtulniky().size(); o++){
@@ -187,13 +194,30 @@ public class Simulace implements Runnable {
 				}
 
 			}
-			op=i;
-			//System.out.println(i + "  " +this.auta.get(9600).getDobaJede() +" " + this.auta.get(9600).getDobaNaklada() +" " + this.auta.get(9599).isDokonceno() );
 		}
 		VypisLog.souhrn(this.poleMest, auta, vrtulniky, this.cesta);
 		JOptionPane.showMessageDialog(MainAPP.parent, "Simulace Dokoncena", "Simulace",JOptionPane.INFORMATION_MESSAGE);
 		//System.out.println("Konec Simulace " + op + Simulace.getAuta().size() +" " + Simulace.getVrtulniky().size());
 	}
+
+	private static void dokonAuto(Auto auto) {
+		boolean dokon = true;
+		for(int o =0; o <auto.getUdalost().size(); o++){
+			if(!auto.getUdalost().get(o).isKonec()){
+				dokon = false;
+			}
+		}
+		if(dokon){
+			auto.setKonec(true);
+		}
+	}
+
+
+
+
+
+
+
 
 	private void reset() {
 		// TODO Auto-generated method stub
@@ -205,11 +229,11 @@ public class Simulace implements Runnable {
 			this.poleMest.get(i).setNas(1);
 			this.poleMest.get(i).setZasobeno(false);
 			this.poleMest.get(i).setZasKdy(Integer.MIN_VALUE);
-			
+
 		}
-		for(int q = 0; q <poleLetist.size();q++){
-			poleLetist.get(q).getJidlo().clear();
-			poleLetist.get(q).getJidlo().add(new Jidlo(15000,0));
+		for(int q = 0; q <this.poleLetist.size();q++){
+			this.poleLetist.get(q).getJidlo().clear();
+			this.poleLetist.get(q).getJidlo().add(new Jidlo(15000,0));
 		}
 	}
 
@@ -226,25 +250,41 @@ public class Simulace implements Runnable {
 	 */
 	private void nalozeniMest(int i) {
 		for(int n = 0; n < this.poleMest.size();n++){
+
 			Mesto pomMesto = this.poleMest.get(n);
-			if(pomMesto.getZasKdy() == i - pomMesto.getNas()*1300){
-				if(Math.abs(pomMesto.getJidlo() - pomMesto.getJidlaTreba()*2/3)<=0.002 ){
-					pomMesto.setHlad(true);
+			if(!pomMesto.getCasVytUd().isEmpty() && (pomMesto.getCasVytUd().size() > pomMesto.getIndexVytUd())){
+				if(pomMesto.getCasVytUd().get(pomMesto.getIndexVytUd()) == i){
+					{
+						pomMesto.setHlad(true);
+						pomMesto.setIndexVytUd(pomMesto.getIndexVytUd() + 1);
+					}
 				}
 			}
-			if(pomMesto.getZasKdy() == i - pomMesto.getNas()*1440){
+			if(!pomMesto.getCasOdcZas().isEmpty() && (pomMesto.getCasOdcZas().size()> pomMesto.getIndexOdc())){
+				if(pomMesto.getCasOdcZas().get(pomMesto.getIndexOdc()) == i){
 
-				//pomMesto.setZasobeno(false);
-				pomMesto.setNas(pomMesto.getNas() +1);
-				pomMesto.setJidlo(pomMesto.getJidlo()-pomMesto.getJidlaTreba()/3);
+					//pomMesto.setZasobeno(false);
+					pomMesto.setIndexOdc(pomMesto.getIndexOdc() + 1);
+					pomMesto.setJidlo(pomMesto.getJidlo()-pomMesto.getJidlaTreba()/3);
 
 
 
+				}
 			}
-			else if(Math.abs(pomMesto.getJidlo()- pomMesto.getJidlaTreba()) <0.002){
+			if(Math.abs(pomMesto.getJidlo()- pomMesto.getJidlaTreba()) <0.002){
 				if(!pomMesto.isZasobeno()){
 					pomMesto.setJidlo(pomMesto.getJidlaTreba());
-					pomMesto.setZasKdy(i);
+					int k = 0;
+					int den = 1440;
+					int celk = 0;
+					while((celk = k*den+i)<this.CAS){
+						pomMesto.getCasOdcZas().add(celk);
+						k++;
+					}
+					for(int r = 2; r < pomMesto.getCasOdcZas().size(); r += 2){
+						pomMesto.getCasVytUd().add((int) (pomMesto.getCasOdcZas().get(r) - (pomMesto.getJidlaTreba()/3)/this.nakladMinuta));
+
+					}
 					pomMesto.setNas(1);
 					pomMesto.setZasobeno(true);
 				}
@@ -253,8 +293,9 @@ public class Simulace implements Runnable {
 
 			}
 
+
 			if(pomMesto.getJidlo()<0){
-				System.out.println("sakra");
+				System.out.println("sakra " + Mapa.getIndexMest(pomMesto) + " " + pomMesto.getJidlo());
 			}
 
 		}
@@ -326,8 +367,8 @@ public class Simulace implements Runnable {
 		}
 
 		if(!autoPrelozeno(auto))
-			for(int z = 0; z < auto.getUdalost().getIndex().size(); z++){
-				Vrtulnik vrt = Simulace.getVrtulniky().get(auto.getUdalost().getIndex().get(z));
+			for(int z = 0; z < auto.getUdalost().get(0).getIndex().size(); z++){
+				Vrtulnik vrt = Simulace.getVrtulniky().get(auto.getUdalost().get(0).getIndex().get(z));
 				if(vrt.isNaklada()){
 					//System.out.println(vrt.getUdalost().getDobaNakl());
 					if(vrt.getDobaNaklada()> vrt.getUdalost().getDobaNakl()){
@@ -356,15 +397,15 @@ public class Simulace implements Runnable {
 	 */
 	private static boolean autoPrelozeno(Auto auto) {
 		boolean q = true;
-		for(int z = 0; z < auto.getUdalost().getIndex().size(); z++){
-			Vrtulnik vrt = Simulace.getVrtulniky().get(auto.getUdalost().getIndex().get(z));
+		for(int z = 0; z < auto.getUdalost().get(0).getIndex().size(); z++){
+			Vrtulnik vrt = Simulace.getVrtulniky().get(auto.getUdalost().get(0).getIndex().get(z));
 			if(vrt.isNaklada()){
 				return false;		
 			}	
 		}
-		auto.setDokonceno(true);
-		auto.getUdalost().getOdkudNak().setMaxZasoben(auto.getUdalost().getOdkudNak().getMaxZasoben()-1);
-		auto.setVyklada(false);
+		auto.getUdalost().get(0).setDokonceno(true);
+		auto.getUdalost().get(0).getOdkudNak().setMaxZasoben(auto.getUdalost().get(0).getOdkudNak().getMaxZasoben()-1);
+		auto.getUdalost().get(0).setVyklada(false);
 		return q;
 
 	}
@@ -399,14 +440,14 @@ public class Simulace implements Runnable {
 			}
 			jidloTreb = jidloTreb/this.nakladMinuta;
 			//System.out.println(jidloTreb*this.nakladMinuta);
-			Udalost ud = new Udalost(auto.getUdalost().getMesto(), true, jidloTreb);
+			Udalost ud = new Udalost(auto.getUdalost().get(0).getMesto(), true, jidloTreb);
 			Vrtulnik vrt = new Vrtulnik(ud);
 			vrt.getUdalost().getIndex().add(q2);
 			vrt.setNaklada(true);
 			//System.out.println(jidloTreb +"  " + auto.getDobaNaklada());
-			vrt.getUdalost().setDobaLetu(auto.getUdalost().getDobaLetu());
+			vrt.getUdalost().setDobaLetu(auto.getUdalost().get(0).getDobaLetu());
 			Simulace.getVrtulniky().add(vrt);
-			auto.getUdalost().getIndex().add(Simulace.getVrtulniky().size()-1);
+			auto.getUdalost().get(0).getIndex().add(Simulace.getVrtulniky().size()-1);
 
 
 		}
@@ -477,12 +518,21 @@ public class Simulace implements Runnable {
 	/**
 	 * vyklada auto
 	 * @param auto auto
+	 * @param udalostAuto 
+	 * @param d 
 	 */
-	private static void vyklAuto(Auto auto) {
-		if(auto.getDobaVyklada()>auto.getUdalost().getDobaNakl()){
-			auto.setDobaVyklada(auto.getUdalost().getDobaNakl());
-			auto.setVyklada(false);
-			auto.setDokonceno(true);
+	private static void vyklAuto(Auto auto, Udalost udalostAuto, int d) {
+		if(auto.getDobaVyklada()>udalostAuto.getDobaNakl()){
+			auto.setDobaVyklada(udalostAuto.getDobaNakl());
+			udalostAuto.setVyklada(false);
+			udalostAuto.setDokonceno(true);
+			if(d ==0 && auto.getUdalost().size()==2){
+				auto.getUdalost().get(0).setSoucasUdal(false);
+				auto.getUdalost().get(1).setSoucasUdal(true);
+				auto.getUdalost().get(1).setJede(true);
+				auto.setDobaJede(0);
+				auto.setDobaVyklada(0);
+			}
 		}
 		else{
 			auto.setDobaVyklada(auto.getDobaVyklada() + 1.0);
@@ -500,12 +550,13 @@ public class Simulace implements Runnable {
 	/**
 	 * Jízda auta
 	 * @param auto auto
+	 * @param udalostAuto 
 	 */
-	private static void jedeAuto(Auto auto) {
-		if(auto.getDobaJede()>auto.getUdalost().getDobaJizd()){
-			auto.setJede(false);
-			auto.setVyklada(true);
-			auto.setDobaJede(auto.getUdalost().getDobaJizd());
+	private static void jedeAuto(Auto auto, Udalost udalostAuto) {
+		if(auto.getDobaJede()>udalostAuto.getDobaJizd()){
+			udalostAuto.setJede(false);
+			udalostAuto.setVyklada(true);
+			auto.setDobaJede(udalostAuto.getDobaJizd());
 		}
 		else{
 			auto.setDobaJede(auto.getDobaJede() + 1.0);
@@ -524,14 +575,14 @@ public class Simulace implements Runnable {
 	 * Rozhoduje o nakladani auta z letiste
 	 * @param auto auto
 	 */
-	private void naklAuto(Auto auto) {
-		if(auto.isCeka()){
-			zkontZasoby(auto);
+	private void naklAuto(Auto auto, Udalost udal) {
+		if(udal.isCeka()){
+			zkontZasoby(auto, udal);
 		}
 		//System.out.println(auto.isCeka());
-		if(!auto.isCeka()){
+		if(!udal.isCeka()){
 
-			pridejNaklad(auto);		
+			pridejNaklad(auto, udal);		
 		}
 
 	}
@@ -546,9 +597,10 @@ public class Simulace implements Runnable {
 	/**
 	 * Naklada auto
 	 * @param auto auto
+	 * @param udal 
 	 */
-	private static void pridejNaklad(Auto auto) {
-		List<Jidlo> jid = auto.getUdalost().getOdkudNak().getJidlo();	
+	private static void pridejNaklad(Auto auto, Udalost udal) {
+		List<Jidlo> jid = udal.getOdkudNak().getJidlo();	
 		if(jid.size() ==0){
 			return;
 		}
@@ -559,21 +611,28 @@ public class Simulace implements Runnable {
 					return;
 				}
 			}
-			if(auto.getDobaNaklada() > auto.getUdalost().getDobaNakl()){
-				auto.setNaklada(false);
-				auto.setDobaNaklada(auto.getUdalost().getDobaNakl());
-				auto.setJede(true);
-			}
-			else if((auto.getUdalost().getDobaNakl() - auto.getDobaNaklada())<1.0){
+			double celkDobaNakl = 0;
+			for(int o = 0; o < auto.getUdalost().size();o++){
 
-				auto.getUdalost().getOdkudNak().getJidlo().get(0).setJidlo(auto.getUdalost().getDobaNakl() - auto.getDobaNaklada());
+				celkDobaNakl += auto.getUdalost().get(o).getDobaNakl();
+
+			}
+
+			if(auto.getDobaNaklada() > celkDobaNakl){
+				udal.setNaklada(false);
+				auto.setDobaNaklada(celkDobaNakl);
+				udal.setJede(true);
+			}
+			else if((celkDobaNakl - auto.getDobaNaklada())<1.0){
+
+				udal.getOdkudNak().getJidlo().get(0).setJidlo(celkDobaNakl - auto.getDobaNaklada());
 				auto.setDobaNaklada(auto.getDobaNaklada()+1.0);
 				//System.out.println("abcfg" + auto.getDobaNaklada());
 			}else{
 				//System.out.println("abc" + auto.getDobaNaklada());
 
 				auto.setDobaNaklada(auto.getDobaNaklada()+1.0);
-				auto.getUdalost().getOdkudNak().getJidlo().get(0).setJidlo(-1.0);
+				udal.getOdkudNak().getJidlo().get(0).setJidlo(-1.0);
 				//System.out.println("abcf" + auto.getDobaNaklada());
 			}
 
@@ -591,21 +650,22 @@ public class Simulace implements Runnable {
 	/**
 	 * Zjistuje odkud se budou auta zasobovat
 	 * @param auto auto
+	 * @param udal 
 	 */
-	private void zkontZasoby(Auto auto) {
+	private void zkontZasoby(Auto auto, Udalost udal) {
 
 
 		//System.out.println(vzd.get(i).getLet().getJidlo().size());
 		//System.out.println( vzd.get(i).getLet());
-		if(auto.getUdalost().isVrtulnik()){
+		if(udal.isVrtulnik()){
 			double minVzdSeZas=10000.0;
 			int indexVzd = 0;
 			int indexMesta = 0;
 			double p = 0;
 
 
-			for(int q = 0; q < auto.getUdalost().getMesto().getVzdLet().size();q++){
-				Mesto pomMesto = auto.getUdalost().getMesto().getVzdLet().get(q).getMesto(); 
+			for(int q = 0; q < udal.getMesto().getVzdLet().size();q++){
+				Mesto pomMesto = udal.getMesto().getVzdLet().get(q).getMesto(); 
 
 
 
@@ -617,7 +677,7 @@ public class Simulace implements Runnable {
 
 
 						if(minVzdSeZas>
-						(p = auto.getUdalost().getMesto().getVzdLet().get(q).vzdalenost
+						(p = udal.getMesto().getVzdLet().get(q).vzdalenost
 						+ pomMesto.getVzdLet().get(l).vzdalenost)){
 
 
@@ -636,22 +696,22 @@ public class Simulace implements Runnable {
 
 			}
 
-			Letiste let =auto.getUdalost().getMesto().getVzdLet().
+			Letiste let =udal.getMesto().getVzdLet().
 					get(indexMesta).getMesto().getVzdLet().get(indexVzd).getLet();
 
-			auto.getUdalost().setDobaLetu(auto.getUdalost().getMesto().getVzdLet().
+			udal.setDobaLetu(udal.getMesto().getVzdLet().
 					get(indexMesta).vzdalenost/this.urazVzdalVrt);
 
-			auto.getUdalost().setDobaJizd(auto.getUdalost().getMesto().getVzdLet().
+			udal.setDobaJizd(udal.getMesto().getVzdLet().
 					get(indexMesta).getMesto().getVzdLet().get(indexVzd).vzdalenost/this.urazenaVzdal);
 
-			auto.getUdalost().setOdkudNak(let);
+			udal.setOdkudNak(let);
 			let.setMaxZasoben(let.getMaxZasoben()+1);
-			auto.setCeka(false);
-			auto.setNaklada(true);
+			udal.setCeka(false);
+			udal.setNaklada(true);
 		}
 		else{
-			List <Vzdalenost> vzd = auto.getUdalost().getMesto().getVzdLet();
+			List <Vzdalenost> vzd = udal.getMesto().getVzdLet();
 			for(int i = 0; i < vzd.size(); i++){
 				List<Jidlo> jid = vzd.get(i).getLet().getJidlo();
 
@@ -667,11 +727,11 @@ public class Simulace implements Runnable {
 						continue;
 
 					}else {
-						auto.getUdalost().setDobaJizd(vzd.get(i).vzdalenost/this.urazenaVzdal);
-						auto.getUdalost().setOdkudNak(vzd.get(i).getLet());
-						auto.setCeka(false);
+						udal.setDobaJizd(vzd.get(i).vzdalenost/this.urazenaVzdal);
+						udal.setOdkudNak(vzd.get(i).getLet());
+						udal.setCeka(false);
 						vzd.get(i).getLet().setMaxZasoben(vzd.get(i).getLet().getMaxZasoben() + 1);
-						auto.setNaklada(true);
+						udal.setNaklada(true);
 						break;
 					}
 				}
@@ -724,44 +784,71 @@ public class Simulace implements Runnable {
 
 			Mesto pomMesto = this.poleMest.get(i);
 			if(pomMesto.getHlad()){
-				Udalost ud;
-				int zasTreba = (int) (pomMesto.getJidlaTreba() - pomMesto.getJidlo());
+				if(Mapa.getIndexMest(pomMesto)==5){
+					System.out.println("vytvoreno");
+				}
+				boolean prodluz = false;
+				int zasTreba ; 
+
+				if(pomMesto.isPrvniUd()){
+					zasTreba = (int) (pomMesto.getJidlaTreba() - pomMesto.getNalJinAut());
+					pomMesto.setPrvniUd(false);
+				}else{
+					zasTreba = (int) (pomMesto.getJidlaTreba()*2/3 -pomMesto.getNalJinAut());
+
+				}
+
 				double jidAuta =zasTreba/this.maxAuto;
 				int pocetAut = (int) Math.ceil(jidAuta);
 				//System.out.println(" aut" + pocetAut);
 				//System.out.println(jidAuta);
+
 				for(int q = 0; q < pocetAut; q++){
 					double jidloTreb;
 					double x;
 					double dobaNakl;
+					List<Udalost> pomoc = new ArrayList<>(); 
 
 					if((x= zasTreba % this.maxAuto) == 0){
 						jidloTreb= this.maxAuto;
+						prodluz = false;
 
 					}else{
 						jidloTreb = x;
 						zasTreba = (int) (zasTreba - x);
-						//System.out.println(x);
+						prodluz = true;
 
 
 					}
+
 					dobaNakl = jidloTreb/this.nakladMinuta;
 					//System.out.println(x);
 
 					if(pomMesto.isMaCesty()){
-						ud = new Udalost(pomMesto, false, dobaNakl);
+						pomoc.add(new Udalost(pomMesto, false, dobaNakl));
+						if (prodluz) {
+							Udalost ud = najdinezaMesto(pomMesto, x);
+
+							if(ud != null){
+								ud.setCeka(false);
+								ud.setSoucasUdal(false);
+								ud.setDobaJizd(Generator.matice[5+Mapa.getIndexMest(pomMesto)][Mapa.getIndexMest(ud.getMesto())]/this.nakladMinuta);
+								pomoc.add(ud);
+							}
+						}
 					}
 					else{
-						ud = new Udalost(pomMesto, true, dobaNakl);
+						pomoc.add(new Udalost(pomMesto, true, dobaNakl));
 					}
 
-					Auto auto = new Auto(ud);
-					auto.setCeka(true);
+					Auto auto = new Auto(pomoc);
+					//auto.setCeka(true);
 					Simulace.getAuta().add(auto);
 				}
 
 				//System.out.println(i + " " + this.auta.size() + " " + this.auta.get(i).getUdalost().getDobaNakl()*this.nakladMinuta);
 				pomMesto.setHlad(false);
+				pomMesto.setNalJinAut(0);
 
 			}
 
@@ -771,6 +858,30 @@ public class Simulace implements Runnable {
 
 	}
 
+
+
+
+
+
+
+
+
+	private Udalost najdinezaMesto(Mesto pomMesto, double x) {
+
+		double p;
+		for(int z = 0; z < pomMesto.getSousedi().size(); z++){
+			Mesto docasMesto = pomMesto.getSousedi().get(z);
+			if((p = docasMesto.getJidlaTreba()%this.maxAuto) !=0 && docasMesto.getHlad() && docasMesto.getNalJinAut() == 0){
+				if(( x + p) < this.maxAuto){
+					docasMesto.setNalJinAut(p);
+					//System.out.println(docasMesto.getNalJinAut());
+					Udalost ud = new Udalost(docasMesto, false, p/this.nakladMinuta);					
+					return ud;
+				}	
+			}	
+		}
+		return null;
+	}
 
 
 

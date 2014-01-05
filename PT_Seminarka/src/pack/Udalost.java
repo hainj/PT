@@ -8,6 +8,35 @@ import java.util.List;
  *
  */
 public class Udalost {
+	
+	private boolean soucasUdal = true;
+	private boolean konec = false;
+	
+	/**
+	 * Kdy auto dokoncilo svuj ukol
+	 */
+	private int dokonKdy = 0;
+	
+	/**
+	 * Zda auto naklad
+	 */
+	private boolean naklada = false;
+	/**
+	 * Zda auto jede
+	 */
+	private boolean jede = false;
+	/**
+	 * auto vyklada
+	 */
+	private boolean vyklada = false;
+	/**
+	 * Auto dokoncilo cinost
+	 */
+	private boolean dokonceno = false;
+	/**
+	 * Auto ceka na zacatek sveho ukolu
+	 */
+	private boolean ceka = true;
 	/**
 	 * zda je pouzit v udalosti vrtulnik
 	 */
@@ -32,10 +61,6 @@ public class Udalost {
 	 * doba vykladani
 	 */
 	private double dobaVykl;
-	/**
-	 * doba prekladu
-	 */
-	private double dobaPrekl;
 	/**
 	 * doba jizdy
 	 */
@@ -204,6 +229,137 @@ public class Udalost {
 	public void setIndex(List<Integer> index) {
 		this.index = index;
 	}
+
+
+	/**
+	 * @return the dokonKdy
+	 */
+	public int getDokonKdy() {
+		return dokonKdy;
+	}
+
+
+	/**
+	 * @param dokonKdy the dokonKdy to set
+	 */
+	public void setDokonKdy(int dokonKdy) {
+		this.dokonKdy = dokonKdy;
+	}
+
+
+	/**
+	 * @return the naklada
+	 */
+	public boolean isNaklada() {
+		return naklada;
+	}
+
+
+	/**
+	 * @param naklada the naklada to set
+	 */
+	public void setNaklada(boolean naklada) {
+		this.naklada = naklada;
+	}
+
+
+	/**
+	 * @return the jede
+	 */
+	public boolean isJede() {
+		return jede;
+	}
+
+
+	/**
+	 * @param jede the jede to set
+	 */
+	public void setJede(boolean jede) {
+		this.jede = jede;
+	}
+
+
+	/**
+	 * @return the vyklada
+	 */
+	public boolean isVyklada() {
+		return vyklada;
+	}
+
+
+	/**
+	 * @param vyklada the vyklada to set
+	 */
+	public void setVyklada(boolean vyklada) {
+		this.vyklada = vyklada;
+	}
+
+
+	/**
+	 * @return the dokonceno
+	 */
+	public boolean isDokonceno() {
+		return dokonceno;
+	}
+
+
+	/**
+	 * @param dokonceno the dokonceno to set
+	 */
+	public void setDokonceno(boolean dokonceno) {
+		this.dokonceno = dokonceno;
+	}
+
+
+	/**
+	 * @return the ceka
+	 */
+	public boolean isCeka() {
+		return ceka;
+	}
+
+
+	/**
+	 * @param ceka the ceka to set
+	 */
+	public void setCeka(boolean ceka) {
+		this.ceka = ceka;
+	}
+
+
+	/**
+	 * @return the konec
+	 */
+	public boolean isKonec() {
+		return konec;
+	}
+
+
+	/**
+	 * @param konec the konec to set
+	 */
+	public void setKonec(boolean konec) {
+		this.konec = konec;
+	}
+
+
+	/**
+	 * @return the soucasUdal
+	 */
+	public boolean isSoucasUdal() {
+		return soucasUdal;
+	}
+
+
+	/**
+	 * @param soucasUdal the soucasUdal to set
+	 */
+	public void setSoucasUdal(boolean soucasUdal) {
+		this.soucasUdal = soucasUdal;
+	}
+
+
+	
 
 
 }

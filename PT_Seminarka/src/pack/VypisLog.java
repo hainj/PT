@@ -74,12 +74,12 @@ public class VypisLog {
 				}
 
 				for(int t = 0; t<poleAut.size();t++){
-					if(poleAut.get(t).getDokonKdy()>((den-1)*4320) && poleAut.get(t).getDokonKdy()
-							<=den*4320 &&poleAut.get(t).getUdalost().getMesto().equals(poleMest.get(z))
-							&& !poleAut.get(t).getUdalost().isVrtulnik()){
+					if(poleAut.get(t).getUdalost().get(0).getDokonKdy()>((den-1)*4320) && poleAut.get(t).getUdalost().get(0).getDokonKdy()
+							<=den*4320 &&poleAut.get(t).getUdalost().get(0).getMesto().equals(poleMest.get(z))
+							&& !poleAut.get(t).getUdalost().get(0).isVrtulnik()){
 
 						pocetAut ++;
-						celkNakladAut += poleAut.get(t).getUdalost().getDobaNakl()*1000/30;
+						celkNakladAut += poleAut.get(t).getUdalost().get(0).getDobaNakl()*1000/30;
 
 
 					}

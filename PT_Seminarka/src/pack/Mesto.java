@@ -9,6 +9,18 @@ import java.util.List;
  *
  */
 public class Mesto {
+	private boolean prvniUd = true;
+	private int indexOdc = 1;
+	private int indexVytUd = 0;
+	
+	/**
+	 * Cas nastyveni hladu na true
+	 */
+	private List <Integer> casVytUd = new ArrayList<>();
+	/**
+	 * Casy kdy se maji odecist zasoby
+	 */
+	private List<Integer> casOdcZas  = new ArrayList<>();
 	/**
 	 *Zda je mesto plne zasobeno
 	 */
@@ -63,8 +75,10 @@ public class Mesto {
 	 * Kdy musi byt mesto opet zasobeno
 	 */
 	private int zasKdy = Integer.MIN_VALUE;
-	
-	
+	/**
+	 * Zasoby, ktere budou privezeny autem z jineho mesta
+	 */
+	private double nalJinAut = 0;
 
 
 
@@ -192,6 +206,34 @@ public class Mesto {
 		this.obyvatel = obyvatel;
 	}
 	/**
+	 * @return the casVytUd
+	 */
+	public List<Integer> getCasVytUd() {
+		return casVytUd;
+	}
+
+	/**
+	 * @param casVytUd the casVytUd to set
+	 */
+	public void setCasVytUd(List<Integer> casVytUd) {
+		this.casVytUd = casVytUd;
+	}
+
+	/**
+	 * @return the casOdcZas
+	 */
+	public List<Integer> getCasOdcZas() {
+		return casOdcZas;
+	}
+
+	/**
+	 * @param casOdcZas the casOdcZas to set
+	 */
+	public void setCasOdcZas(List<Integer> casOdcZas) {
+		this.casOdcZas = casOdcZas;
+	}
+
+	/**
 	 * Getr x-ove sour
 	 * @return x-ova sour
 	 */
@@ -313,7 +355,7 @@ public class Mesto {
 	 * @return nasobic dnu
 	 */
 	public int getNas() {
-		return nas;
+		return this.nas;
 	}
 
 	/**Nasobic dne
@@ -341,6 +383,62 @@ public class Mesto {
 
 
 		return str;
+	}
+
+	/**
+	 * @return the nalJinAut
+	 */
+	public double getNalJinAut() {
+		return this.nalJinAut;
+	}
+
+	/**
+	 * @param p the nalJinAut to set
+	 */
+	public void setNalJinAut(double p) {
+		this.nalJinAut = p;
+	}
+
+	/**
+	 * @return the indexOdc
+	 */
+	public int getIndexOdc() {
+		return indexOdc;
+	}
+
+	/**
+	 * @param indexOdc the indexOdc to set
+	 */
+	public void setIndexOdc(int indexOdc) {
+		this.indexOdc = indexOdc;
+	}
+
+	/**
+	 * @return the indexVytUd
+	 */
+	public int getIndexVytUd() {
+		return indexVytUd;
+	}
+
+	/**
+	 * @param indexVytUd the indexVytUd to set
+	 */
+	public void setIndexVytUd(int indexVytUd) {
+		this.indexVytUd = indexVytUd;
+	}
+
+	/**
+	 * @return the prvniUd
+	 */
+	public boolean isPrvniUd() {
+		return prvniUd;
+	}
+
+	/**
+	 * @param prvniUd the prvniUd to set
+	 */
+	public void setPrvniUd(boolean prvniUd) {
+		this.prvniUd = prvniUd;
 	}
 }
 
