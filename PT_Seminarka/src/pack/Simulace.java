@@ -122,7 +122,7 @@ public class Simulace implements Runnable {
 			/*for(int z = 0; z<5;z++){
 				System.out.println(Mapa.getPoleLetist().get(z).getMaxZasoben());
 			}*/
-			System.out.println(i);
+			//System.out.println(i);
 			nalozeniMest(i);
 			if(i == m*60){
 				pridejZasLet(i);
@@ -465,7 +465,7 @@ public class Simulace implements Runnable {
 			vrt.setNaklada(true);
 			//System.out.println(jidloTreb +"  " + auto.getDobaNaklada());
 			vrt.getUdalost().setDobaLetu(auto.getUdalost().get(0).getDobaLetu());
-			System.out.println(vrt.getUdalost().getDobaLetu());
+			//System.out.println(vrt.getUdalost().getDobaLetu());
 			Simulace.getVrtulniky().add(vrt);
 			auto.getUdalost().get(0).getIndex().add(Simulace.getVrtulniky().size()-1);
 

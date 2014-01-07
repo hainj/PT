@@ -202,7 +202,7 @@ public class Auto {
 				if(ud.isDokonceno() || ud.isKonec()){
 					str +="Dokoncena" + "\n";
 					str +="Soucasne nalozeno: 0" +"\n";
-					str += "Vylozeno: " + this.getDobaVyklada()*(1000.0/30.0) + "\n";
+					str += "Vylozeno: " + ud.getDobaNakl()*(1000.0/30.0) + "\n";
 					str +="Ujeta vzdalenost: " + ud.getDobaJizd()*(40.0/60.0) +"\n";
 				}
 			
