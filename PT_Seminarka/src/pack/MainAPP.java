@@ -117,7 +117,7 @@ public class MainAPP extends JFrame {
 						String ob = JOptionPane.showInputDialog(parent, "Vyberte vrtulnik, o kterém chcete vìdìt(0 do" + (Simulace.getVrtulniky().size()-1)+ "): ");
 						index = Integer.parseInt(ob);
 						Vrtulnik vrt = Simulace.getVrtulniky().get(index);
-						JOptionPane.showMessageDialog(parent, vrt.vypisVrt(index));
+						JOptionPane.showMessageDialog(parent, vrt.vypisVrt(index, vrt));
 					}catch(NumberFormatException exc)
 					{
 						JOptionPane.showMessageDialog(parent, "Zadejte prosim cislo");
@@ -130,7 +130,7 @@ public class MainAPP extends JFrame {
 						String ob = JOptionPane.showInputDialog(parent, "Vyberte auto, o kterém chcete vìdìt(0 do" + (Simulace.getAuta().size()-1)+ "): ");
 						index = Integer.parseInt(ob);
 						Auto auto = Simulace.getAuta().get(index);
-						JOptionPane.showMessageDialog(parent, auto.vypisAuto(index));
+						JOptionPane.showMessageDialog(parent, auto.vypisAuto(index, auto));
 					}catch(NumberFormatException exc)
 					{
 						JOptionPane.showMessageDialog(parent, "Prosim zadejte cislo");

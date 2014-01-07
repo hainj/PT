@@ -8,33 +8,38 @@ import java.util.List;
  *
  */
 public class Udalost {
-	
+	/**
+	 * Pokud je udalost prave vyuzivana true jinak false
+	 */
 	private boolean soucasUdal = true;
+	/**
+	 * Zda je udalost ukoncena
+	 */
 	private boolean konec = false;
 	
 	/**
-	 * Kdy auto dokoncilo svuj ukol
+	 * Kdy udalost dokoncilo svuj ukol
 	 */
 	private int dokonKdy = 0;
 	
 	/**
-	 * Zda auto naklad
+	 * Zda udalost naklad
 	 */
 	private boolean naklada = false;
 	/**
-	 * Zda auto jede
+	 * Zda udalost jede
 	 */
 	private boolean jede = false;
 	/**
-	 * auto vyklada
+	 * udalost vyklada
 	 */
 	private boolean vyklada = false;
 	/**
-	 * Auto dokoncilo cinost
+	 * udalost dokoncilo cinost
 	 */
 	private boolean dokonceno = false;
 	/**
-	 * Auto ceka na zacatek sveho ukolu
+	 * udalost ceka na zacatek sveho ukolu
 	 */
 	private boolean ceka = true;
 	/**
@@ -46,7 +51,7 @@ public class Udalost {
 	 */
 	private Letiste odkudNak;
 	/**
-	 * index vrtulnik nebo auto u udalosti, ktere na sebe navazuji
+	 * index vrtulnik nebo udalost u udalosti, ktere na sebe navazuji
 	 */
 	private List<Integer> index = new ArrayList<>();
 	/**
@@ -202,14 +207,14 @@ public class Udalost {
 		this.mesto = mesto;
 	}
 
-	/**getr letiste kde se naklada auto
+	/**getr letiste kde se naklada udalost
 	 * @return the odkudNak
 	 */
 	public Letiste getOdkudNak() {
 		return this.odkudNak;
 	}
 
-	/**setr letiste kde se naklada auto
+	/**setr letiste kde se naklada udalost
 	 * @param odkudNak Letiste odkud se naklada
 	 */
 	public void setOdkudNak(Letiste odkudNak) {
@@ -231,55 +236,55 @@ public class Udalost {
 	}
 
 
-	/**
-	 * @return the dokonKdy
+	/**Getr kdy byla udalost dokoncena
+	 * @return dokonKdy minuta dokonceni udal
 	 */
 	public int getDokonKdy() {
 		return dokonKdy;
 	}
 
 
-	/**
-	 * @param dokonKdy the dokonKdy to set
+	/**Setr kdy byla udalost dokoncena
+	 * @param dokonKdy int minuty kdy byla dokoncena
 	 */
 	public void setDokonKdy(int dokonKdy) {
 		this.dokonKdy = dokonKdy;
 	}
 
 
-	/**
-	 * @return the naklada
+	/**Getr naklada
+	 * @return naklada boolean zda naklada
 	 */
 	public boolean isNaklada() {
 		return naklada;
 	}
 
 
-	/**
-	 * @param naklada the naklada to set
+	/**Setr naklada
+	 * @param naklada boolean pokud naklada
 	 */
 	public void setNaklada(boolean naklada) {
 		this.naklada = naklada;
 	}
 
 
-	/**
-	 * @return the jede
+	/**Getr zda auto jede
+	 * @return jede boolean zda auto jede
 	 */
 	public boolean isJede() {
 		return jede;
 	}
 
 
-	/**
-	 * @param jede the jede to set
+	/**Setr zda auto plnici udalost prave jede
+	 * @param jede boolean jestli autojede
 	 */
 	public void setJede(boolean jede) {
 		this.jede = jede;
 	}
 
 
-	/**
+	/**Getr vyklada
 	 * @return the vyklada
 	 */
 	public boolean isVyklada() {
@@ -287,72 +292,72 @@ public class Udalost {
 	}
 
 
-	/**
-	 * @param vyklada the vyklada to set
+	/**Setr vykladani udalosti
+	 * @param vyklada boolean zda vyklada
 	 */
 	public void setVyklada(boolean vyklada) {
 		this.vyklada = vyklada;
 	}
 
 
-	/**
-	 * @return the dokonceno
+	/**Getr zda je udalost dokoncena
+	 * @return dokonceno
 	 */
 	public boolean isDokonceno() {
 		return dokonceno;
 	}
 
 
-	/**
-	 * @param dokonceno the dokonceno to set
+	/**Setr zda je udalost dokoncena uplne
+	 * @param dokonceno boolean dokonceni udalosti
 	 */
 	public void setDokonceno(boolean dokonceno) {
 		this.dokonceno = dokonceno;
 	}
 
 
-	/**
-	 * @return the ceka
+	/**Getr jestli udalost ceka na prideleni letiste
+	 * @return ceka bollean cekani na prideleni let
 	 */
 	public boolean isCeka() {
 		return ceka;
 	}
 
 
-	/**
-	 * @param ceka the ceka to set
+	/**Setr zda udalost ceka na prideleni letiste
+	 * @param ceka boolean zda ceka
 	 */
 	public void setCeka(boolean ceka) {
 		this.ceka = ceka;
 	}
 
 
-	/**
-	 * @return the konec
+	/**Konec udalosti
+	 * @return konec boolean konce udalosti
 	 */
 	public boolean isKonec() {
 		return konec;
 	}
 
 
-	/**
-	 * @param konec the konec to set
+	/**Setr konce udalosti
+	 * @param konec boolen zda je udalost ukoncena
 	 */
 	public void setKonec(boolean konec) {
 		this.konec = konec;
 	}
 
 
-	/**
-	 * @return the soucasUdal
+	/**Getr zda je udalost prave pouzivana
+	 * @return the soucasUdal boolean soucasna udalost
 	 */
 	public boolean isSoucasUdal() {
 		return soucasUdal;
 	}
 
 
-	/**
-	 * @param soucasUdal the soucasUdal to set
+	/**Setr soucasne udalosti, tedy udalosti, ktere je prave provadena
+	 * @param soucasUdal boolean zda je udalost souc pouzivana
 	 */
 	public void setSoucasUdal(boolean soucasUdal) {
 		this.soucasUdal = soucasUdal;

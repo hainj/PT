@@ -74,14 +74,17 @@ public class VypisLog {
 				}
 
 				for(int t = 0; t<poleAut.size();t++){
-					if(poleAut.get(t).getUdalost().get(0).getDokonKdy()>((den-1)*4320) && poleAut.get(t).getUdalost().get(0).getDokonKdy()
-							<=den*4320 &&poleAut.get(t).getUdalost().get(0).getMesto().equals(poleMest.get(z))
-							&& !poleAut.get(t).getUdalost().get(0).isVrtulnik()){
+					for(int k = 0; k< poleAut.get(t).getUdalost().size(); k++){
+						Udalost ud = poleAut.get(t).getUdalost().get(k);
+						if(ud.getDokonKdy()>((den-1)*4320) && ud.getDokonKdy()
+								<=den*4320 &&ud.getMesto().equals(poleMest.get(z))
+								&& !ud.isVrtulnik()){
 
-						pocetAut ++;
-						celkNakladAut += poleAut.get(t).getUdalost().get(0).getDobaNakl()*1000/30;
+							pocetAut ++;
+							celkNakladAut += ud.getDobaNakl()*1000/30;
 
 
+						}
 					}
 				}
 
@@ -125,7 +128,7 @@ public class VypisLog {
 			BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(stream));
 			for(int t = 0; t<poleVrt.size();t++){
 				if(poleVrt.get(t).getDokonKdy()>((den-1)*1400) && poleVrt.get(t).getDokonKdy()<=den*1440){
-					writer.append(poleVrt.get(t).vypisVrt(t));
+					writer.append(poleVrt.get(t).vypisVrt(t, poleVrt.get(t)));
 					writer.newLine();
 
 
@@ -157,7 +160,8 @@ public class VypisLog {
 			stream = new FileOutputStream(f);
 			BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(stream));
 			for(int t = 0; t<poleAuta.size();t++){
-				writer.append(poleAuta.get(t).vypisAuto(t));
+				/**----DOPIS TO NA AUTO A INDEX + OPRAV TY 0---**/
+				writer.append(poleAuta.get(t).vypisAuto(t, poleAuta.get(t)));
 				writer.newLine();
 
 
@@ -180,7 +184,7 @@ public class VypisLog {
 	 * @param cesta cilova slozka
 	 * @param den den
 	 */
-	public static void zapis(List<Mesto> poleMest, String cesta, int den) {
+	public static void zapis(List<Mesto> poleMest, List<Auto> auta, List<Vrtulnik> vrtulniky, String cesta, int den) {
 		FileOutputStream stream;
 		File f = new File(cesta + "\\LogDen" + den + ".txt");
 		try {
@@ -189,10 +193,45 @@ public class VypisLog {
 			for(int t = 0; t<poleMest.size();t++){
 				writer.append(poleMest.get(t).vypisMesto(t));
 				writer.newLine();
+				for(int k = 0; k<auta.size();k++){
+					for(int q = 0; q < auta.get(k).getUdalost().size(); q++){
+						Udalost ud =auta.get(k).getUdalost().get(q);
+						Mesto mesto = auta.get(k).getUdalost().get(q).getMesto();
+						if((ud.getDokonKdy()>((den-1)*1434) && ud.getDokonKdy()
+								<=den*1440) || ud.getCasDokon() ==0){
+							if(mesto.equals(poleMest.get(t))){
+								/**----DOPIS TO NA AUTO A INDEX---**/
+								writer.append("Auto " + k);
+								writer.newLine();
+
+
+							}
+						}
+					}
+				}
+				if(!poleMest.get(t).isMaCesty()){
+					
+					writer.newLine();
+				}
+
+				for(int q = 0; q < vrtulniky.size(); q++){
+					Mesto mesto = vrtulniky.get(q).getUdalost().getMesto();
+					if(mesto.equals(poleMest.get(t))){
+						/**----DOPIS TO NA VRTULNIK A INDEX---**/
+						if((vrtulniky.get(q).getDokonKdy()>((den-1)*1434) && vrtulniky.get(q).getDokonKdy()
+								<=den*1440) || vrtulniky.get(q).getDokonKdy() ==0){
+							writer.append("Vrtulnik " + q);
+							writer.newLine();
+						}
+					}
 
 
 
+				}
+				writer.newLine();
 			}
+
+
 			writer.close();
 			stream.close();
 		} catch (FileNotFoundException e) {
@@ -244,14 +283,18 @@ public class VypisLog {
 				}
 
 				for(int t = 0; t<poleAut.size();t++){
-					if(poleAut.get(t).getDokonKdy()>(6*4320) && poleAut.get(t).getDokonKdy()
-							<=7*1440 &&poleAut.get(t).getUdalost().getMesto().equals(poleMest.get(z))
-							&& !poleAut.get(t).getUdalost().isVrtulnik()){
-
-						pocetAut ++;
-						celkNakladAut += poleAut.get(t).getUdalost().getDobaNakl()*1000/30;
-
-
+					boolean autoZapoc = false;
+					for(int q =0; q<poleAut.get(t).getUdalost().size();q++){
+						Udalost ud = poleAut.get(t).getUdalost().get(q);
+						if(ud.getDokonKdy()>(6*4320) && ud.getDokonKdy()
+								<=7*1440 &&ud.getMesto().equals(poleMest.get(z))
+								&& !ud.isVrtulnik()){
+							if(!autoZapoc){
+								pocetAut ++;
+							}
+							celkNakladAut += ud.getDobaNakl()*1000/30;
+							autoZapoc = true;
+						}
 					}
 				}
 

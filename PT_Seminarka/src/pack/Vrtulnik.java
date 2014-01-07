@@ -53,7 +53,7 @@ public class Vrtulnik {
 	public Vrtulnik(Udalost udalost) {
 		super();
 		this.udalost = udalost;
-	
+
 	}
 
 
@@ -132,24 +132,59 @@ public class Vrtulnik {
 	}
 
 
-	
-	
+
+
 
 
 
 	/**
 	 * Vypis info o vrtulniku
-	 * @param i index rt
+	 * @param i index vrtulniku
+	 * @param vrt vrtulnik ke ktremu se to vztahuje
 	 * @return string informaci
 	 */
-	public String vypisVrt(int i){
-		String str = "Vrtulnik " + i + "\n" + "Nalozeno " + 
-				(this.getDobaNaklada()*1000/30) + "\n" + "Ujeta vzdalenost od mesta s let " + 
-				this.getDobaJede()*(40/60) + "\n"
-				+ "Vylozeno " +(this.getDobaVyklada()*1000/30) + "\n" +"Cilove mesto: " + this.getUdalost().getMesto().vypisMesto()+ "\n" +"\n" ;
+	public String vypisVrt(int i, Vrtulnik vrt){
+		String str = "Vrtulnik " + i + "\n";
+		str += "Potreba nalozit: " + ((1000.0 / 30.0)*vrt.getUdalost().getDobaNakl()) + "\n";
 		
+
+		Udalost ud = vrt.getUdalost();
+		str +="Udalost 0"+" \n";
+
+		str +="Cilove mesto: " + Mapa.getIndexMest(vrt.getUdalost().getMesto()) + "\n" ;
+		str += "Vyklad: " + vrt.getUdalost().getDobaNakl()*(1000.0/30.0) + "\n";
+		str += "Stav udalosti: ";
+
+		if(vrt.isNaklada()){
+			str +="Naklada" + "\n";
+			str +="Soucasne nalozeno: " + this.getDobaNaklada()*(1000.0/30.0) + "\n";
+			str +="Uletena vzdalenost: 0" + "\n";
+		}
+		if(vrt.isJede()){
+			str +="Jede" + "\n";
+			str +="Soucasne nalozeno: " + this.getDobaNaklada()*(1000.0/30.0) + "\n";
+			str +="Uletena vzdalenost: " + this.getDobaJede()*(40.0/60.0) +"\n";
+		}
+		if(vrt.isVyklada()){
+			str +="Vyklada" + "\n";
+			str +="Soucasne nalozeno: " + (this.getDobaNaklada()*(1000.0/30.0)-this.getDobaVyklada()*(1000.0/30.0)) + "\n";
+			str += "Vylozeno: " + this.getDobaVyklada()*(1000.0/30.0) + "\n";
+			str +="Uletena vzdalenost: " + ud.getDobaLetu()*(40.0/60.0) +"\n";
+		}
+		if(vrt.isDokonceno() || vrt.isKonec()){
+			str +="Dokoncena" + "\n";
+			str +="Soucasne nalozeno: 0" +"\n";
+			str += "Vylozeno: " + this.getDobaVyklada()*(1000.0/30.0) + "\n";
+			str +="Uletena vzdalenost: " + ud.getDobaJizd()*(40.0/60.0) +"\n";
+		}
+
+
+
+
+
 		return str;
 	}
+
 
 
 
@@ -241,5 +276,5 @@ public class Vrtulnik {
 	public void setDokonKdy(int dokonKdy) {
 		this.dokonKdy = dokonKdy;
 	}
-	
+
 }

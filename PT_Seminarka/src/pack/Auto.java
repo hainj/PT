@@ -38,11 +38,14 @@ public class Auto {
 	 * doba vykladky do mesta
 	 */
 	private double dobaVyklada = 0;
+	/**
+	 * Pokud auto splnilo vsechny udalosti true jinak false
+	 */
 	private boolean dokonceno;
 	
 
 	/**Kontruktor auta
-	 * @param udalost udalost, kterou auto plni
+	 * @param udalost seznam udalosti, ktere auto plni
 	 */
 	public Auto(List<Udalost> udalost) {
 	
@@ -54,7 +57,7 @@ public class Auto {
 
 
 
-	/**getr dokonceni cin
+	/**getr dokonceni cinnosti
 	 * @return dokonceno
 	 */
 	public boolean isDokonceno() {
@@ -70,16 +73,16 @@ public class Auto {
 	}
 
 
-	/**Getr udalosti
-	 * @return udalost
+	/**Getr seznamu udalosti
+	 * @return udalost seznam udalosti
 	 */
 	public List<Udalost> getUdalost() {
 		return this.udalost;
 	}
 
 
-	/**Setr udalosti
-	 * @param udalost udalost
+	/**Setr seznamu udalosti
+	 * @param udalost seznam udalosti
 	 */
 	public void setUdalost(List<Udalost> udalost) {
 		this.udalost = udalost;
@@ -158,11 +161,54 @@ public class Auto {
 	 * @param i index auta
 	 * @return string informaci
 	 */
-	public String vypisAuto(int i){
-		String str = "Auto "+ i  +"\n" + "Nalozeno " + 
-				//(this.getUdalost().getDobaNakl()*1000/30) + "\n" + "Ujeta vzdalenost " + 
-				this.getDobaJede()*(40/60) + "\n"
-				+ "Vylozeno " +(this.getDobaVyklada()*1000/30) + "\n" +"Cilove mesto: " + this.getUdalost().get(0).getMesto()+ "\n";
+	public String vypisAuto(int i, Auto auto){
+		String str = "Auto "+ i  +"\n";
+		
+		double  potrebaNaloz = 0;
+		for(int k = 0; k < auto.getUdalost().size(); k++){
+			
+			potrebaNaloz += auto.getUdalost().get(k).getDobaNakl();
+			
+		}
+		/*System.out.println(potrebaNaloz);*/
+		str += "Potreba nalozit: " + (1000.0 / 30.0)*potrebaNaloz + "\n";
+		double vyklad = 0;
+		for(int k = 0; k < auto.getUdalost().size(); k++){
+			Udalost ud = auto.getUdalost().get(k);
+			str +="Udalost " + k + " \n";
+			
+				str +="Cilove mesto: " + Mapa.getIndexMest(auto.getUdalost().get(k).getMesto()) + "\n" ;
+				str += "Vyklad: " + auto.getUdalost().get(k).getDobaNakl()*(1000.0/30.0) + "\n";
+				str += "Stav udalosti: ";
+				if(ud.isCeka()){
+					str +="Ceka na prideleni letiste" + "\n";
+				}
+				if(ud.isNaklada()){
+					str +="Naklada" + "\n";
+					str +="Soucasne nalozeno: " + this.getDobaNaklada()*(1000.0/30.0) + "\n";
+					str +="Ujeta vzdalenost: 0" + "\n";
+				}
+				if(ud.isJede()){
+					str +="Jede" + "\n";
+					str +="Soucasne nalozeno: " + this.getDobaNaklada()*(1000.0/30.0) + "\n";
+					str +="Ujeta vzdalenost: " + this.getDobaJede()*(40.0/60.0) +"\n";
+				}
+				if(ud.isVyklada()){
+					str +="Vyklada" + "\n";
+					str +="Soucasne nalozeno: " + (this.getDobaNaklada()*(1000.0/30.0)-this.getDobaVyklada()*(1000.0/30.0)) + "\n";
+					str += "Vylozeno: " + this.getDobaVyklada()*(1000.0/30.0) + "\n";
+					str +="Ujeta vzdalenost: " + ud.getDobaJizd()*(40.0/60.0) +"\n";
+				}
+				if(ud.isDokonceno() || ud.isKonec()){
+					str +="Dokoncena" + "\n";
+					str +="Soucasne nalozeno: 0" +"\n";
+					str += "Vylozeno: " + this.getDobaVyklada()*(1000.0/30.0) + "\n";
+					str +="Ujeta vzdalenost: " + ud.getDobaJizd()*(40.0/60.0) +"\n";
+				}
+			
+				
+			
+		}
 		
 		return str;
 	}
